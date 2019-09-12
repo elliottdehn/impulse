@@ -15,6 +15,7 @@ The game tests the user's impulse control, patience, working memory, focus, reac
 6. Practice dependency injection
 7. Test my code effectively
 8. Deliver usable functionality frequently
+9. Springboard off of what I learn to create a more complicated project (Memebox)
 
 # MVP Design Considerations
 I would like to be able to:
