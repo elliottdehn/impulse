@@ -16,6 +16,7 @@ The game tests the user's impulse control, patience, working memory, focus, reac
 7. Test my code effectively
 8. Deliver usable functionality frequently
 9. Springboard off of what I learn to create a more complicated project (Memebox)
+10. Exercise some creative muscles by making the application visually appealing through a mixture of animations and visual design.
 
 # MVP Design Considerations
 I would like to be able to:
