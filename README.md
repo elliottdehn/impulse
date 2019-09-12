@@ -23,3 +23,4 @@ I would like to be able to:
 2. Use different game mechanics without concern for how the game is specifically displayed or a specific game state.
 3. Change how the game state is represented without concern for specific game mechanics or specific display strategies
 4. Deploy on both iOS and Android using one code base
+5. Re-use much of my abstractions and framework to create other, completely different 2D games
