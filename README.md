@@ -12,12 +12,11 @@ The game tests the user's impulse control, patience, working memory, focus, reac
 3. Become more fluent in the mobile platform
 4. Practice MVP architecture in order to create better code
 5. Deploy the application on iOS and Android using a single code base
-6. Practice dependency injection
+6. Practice dependency injection and other SOLID principles
 7. Test my code effectively
 8. Deliver usable functionality iteratively and frequently
 9. Springboard off of what I learn to create a more complicated project (Memebox)
 10. Exercise some creative muscles by making the application visually appealing through a mixture of animations and visual design.
-11. Practice and understand the benefits of dependency inversion (as well as apply other SOLID principles).
 
 # MVP Design Considerations
 I would like to be able to:
