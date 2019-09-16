@@ -1,5 +1,5 @@
 # IMPULSE!
-Just a simple 2D game made purely in Flutter using MVP design (inspired by a medical exam)
+Just a simple 2D mobile game made purely in Flutter using MVP design (inspired by a medical exam)
 
 # Gameplay
 Users are flashed a symbol, and are expected to respond within a certain time frame by tapping the screen. If the user does not tap in time, they lose. If the user taps again, prior to the next symbol being flashed, they lose. If the user taps a special symbol (the letter X, for now), they lose.
