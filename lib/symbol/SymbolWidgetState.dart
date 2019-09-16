@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:impulse/symbol/ISymbolEventListener.dart';
 import 'package:impulse/symbol/SymbolWidget.dart';
 import 'package:impulse/symbol/SymbolWidgetPresenter.dart';
+import 'package:impulse/widgets/death/DeathWidget.dart';
 
 class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListener {
 
@@ -36,8 +37,20 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
     });
   }
 
-  //I need someone to tell me when and to what to change my symbol
-  //I need someone to tell me when to change my symbol's visibility
+  @override
+  killUser() {
+    _launchDeathScreen();
+  }
+
+  _launchDeathScreen(){
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return DeathWidget(10,20,30);
+        }
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,4 +78,5 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
       )
     );
   }
+
 }

@@ -1,11 +1,11 @@
-import 'package:impulse/IPresenter.dart';
+import 'package:impulse/IAppStateListener.dart';
 import 'package:impulse/state/IAppStateManager.dart';
 import 'package:impulse/state/AppStateStore.dart';
 
 class AppStateManager implements IAppStateManager {
 
   var state = new AppStateStore();
-  List<IPresenter> presenters = [];
+  List<IAppStateListener> presenters = [];
 
   @override
   Object getStateValue(AppStateKey key) {
@@ -26,7 +26,7 @@ class AppStateManager implements IAppStateManager {
 
   @override
   notifyListeners(AppStateKey key, value){
-    for(IPresenter presenter in presenters){
+    for(IAppStateListener presenter in presenters){
       if(presenter.shouldNotifyForKeyStateChange(key)){
         presenter.onModelChanged(key, value);
       }
@@ -34,7 +34,7 @@ class AppStateManager implements IAppStateManager {
   }
 
   @override
-  addStateListener(IPresenter presenter) {
+  addStateListener(IAppStateListener presenter) {
     presenters.add(presenter);
   }
 
