@@ -33,7 +33,8 @@ I would like to be able to:
 4. Make the random letter invisible after a breif period of time
 
 # Planned Features (the order in which they will be added)
-1. If the user taps when the symbol is an X, send them to a death/retry screen
+0. Create a death/retry screen
+1. If the user taps when the symbol is an X, send them to the death/retry screen
 2. Create a game statistics widget to display: score, # of symbols tapped, average reaction time
 3. When the user taps on a symbol that is not an X, update the game statistics and display them to the user
 4. Display the final game statistics on the death/retry screen
