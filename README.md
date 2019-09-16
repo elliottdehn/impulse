@@ -28,9 +28,9 @@ I would like to be able to:
 
 # Implemented Features (in the order they were added)
 1. Generate a random letter when the user taps the text box
-2. Generate a random letter periodically
+2. Generate a random letter periodically, automatically
 3. Generate a random letter using an interval generation algorithm that I control
-4. Make the random letter invisible after a breif period of time
+4. Make the random letter invisible after a brief period of time, irrespective of the letter generation interval
 
 # Planned Features (the order in which they will be added)
 0. Create a death/retry screen
