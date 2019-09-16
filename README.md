@@ -47,5 +47,6 @@ I would like to be able to:
 10. Add a minimum amount of time the window can shrink to so the game doesn't become impossible
 
 # Beyond the minimum viable product
-11. Come up with various "distractions" that can be added as the game progresses, to make it harder.
-12. Add some distractions.
+11. Instead of using a text box to display letters, use modular asset files and display those
+12. Come up with various "distractions" that can be added as the game progresses, to make it even harder.
+13. Add some distractions.
