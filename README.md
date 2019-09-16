@@ -46,8 +46,9 @@ I would like to be able to:
 9. Make the game progressively harder by decreasing how long the player has to react as the game progresses
 10. Add a minimum amount of time the window can shrink to so the game doesn't become impossible
 11. Ensure the game is visually appealing by polling friends and family. Modify appearance as needed.
+12. Deploy and release to the Google Play Store
 
 # Beyond the minimum viable product
-12. Instead of using a text box to display letters, use modular asset files and display those
-13. Come up with various "distractions" that can be added as the game progresses, to make it even harder.
-14. Add some distractions.
+13. Instead of using a text box to display letters, use modular asset files and display those
+14. Come up with various "distractions" that can be added as the game progresses, to make it even harder.
+15. Add some distractions.
