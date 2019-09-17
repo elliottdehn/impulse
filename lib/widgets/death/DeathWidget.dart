@@ -17,16 +17,8 @@ class DeathWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          '$_score',
+          'Oops! Do not tap the X!',
           style: Theme.of(context).textTheme.display1.apply(color: Color.fromRGBO(255, 255, 255, 1.0))
-        ),
-        Text(
-            '$_streak',
-            style: Theme.of(context).textTheme.display1.apply(color: Color.fromRGBO(255, 255, 255, 1.0))
-        ),
-        Text(
-          '$_avgReaction',
-            style: Theme.of(context).textTheme.display1.apply(color: Color.fromRGBO(255, 255, 255, 1.0))
         ),
         RaisedButton(
           onPressed: (){

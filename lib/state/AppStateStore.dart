@@ -24,7 +24,7 @@ class _AppConfig {
   static final int intervalSymbolFast = 1000; //milliseconds
   static final int intervalSymbolMedium = 2000; //milliseconds
   static final int intervalSymbolSlow = 3000; //milliseconds
-  static final int symbolVisibilityDuration = 100; //milliseconds
+  static final int symbolVisibilityDuration = 125; //milliseconds
 
   static final List<String> failureLetters = ["X"];
   static final List<String> successLetters =

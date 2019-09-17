@@ -11,7 +11,7 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
 
   SymbolWidgetPresenter _presenter;
 
-  String _symbol;
+  String _symbol = "";
   double _opacity;
 
   SymbolWidgetState(){
@@ -54,26 +54,26 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Opacity(
-        opacity: _opacity,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () { onReact(); },
-                child:
+    return GestureDetector(
+      onTapDown: (TapDownDetails t) { onReact(); },
+      child:
+        Scaffold(
+        body: Opacity(
+          opacity: _opacity,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
                 Text(
-                  '$_symbol',
-                  style: Theme.of(context).textTheme.display1
-                      .apply(fontSizeFactor: 8.0, color: Color.fromRGBO(0, 0, 0, 1.0))
-                ),
-              ),
-            ],
+                    '$_symbol',
+                    style: Theme.of(context).textTheme.display1
+                        .apply(fontSizeFactor: 8.0, color: Color.fromRGBO(0, 0, 0, 1.0))
+                  ),
+                ],
+            ),
           ),
         ),
-      )
+      ),
     );
   }
 
