@@ -43,7 +43,7 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
   }
 
   _launchDeathScreen(){
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return DeathWidget(10,20,30);
@@ -55,9 +55,6 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Test"),
-      ),
       body: Opacity(
         opacity: _opacity,
         child: Center(
@@ -69,7 +66,8 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
                 child:
                 Text(
                   '$_symbol',
-                  style: Theme.of(context).textTheme.display1.apply(fontSizeFactor: 4.0),
+                  style: Theme.of(context).textTheme.display1
+                      .apply(fontSizeFactor: 8.0, color: Color.fromRGBO(0, 0, 0, 1.0))
                 ),
               ),
             ],

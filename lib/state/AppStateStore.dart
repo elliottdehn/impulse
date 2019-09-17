@@ -61,7 +61,9 @@ class _AppState {
   static Map<AppStateKey, Object> _keyValueMap = {
     AppStateKey.SYMBOL:null,
     AppStateKey.SCORE:0,
-    AppStateKey.PLAYER_IS_ALIVE:true
+    AppStateKey.PLAYER_IS_ALIVE:true,
+    AppStateKey.REACTION_WINDOW:700,
+    AppStateKey.SYMBOL_TAPPED:false
   };
 
 }
@@ -69,5 +71,7 @@ class _AppState {
 enum AppStateKey {
   SYMBOL,
   SCORE,
-  PLAYER_IS_ALIVE
+  PLAYER_IS_ALIVE,
+  REACTION_WINDOW,
+  SYMBOL_TAPPED
 }

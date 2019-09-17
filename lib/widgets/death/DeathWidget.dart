@@ -30,7 +30,7 @@ class DeathWidget extends StatelessWidget {
         ),
         RaisedButton(
           onPressed: (){
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (BuildContext context) {
                   return new SymbolWidget();
