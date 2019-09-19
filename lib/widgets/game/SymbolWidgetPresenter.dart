@@ -1,20 +1,16 @@
 import 'dart:async';
 
-import 'package:impulse/IAppStateListener.dart';
-import 'package:impulse/generator/IGeneratorInterval.dart';
-import 'package:impulse/generator/IGeneratorSuccess.dart';
-import 'package:impulse/generator/IGeneratorSymbolVisibilityTime.dart';
-import 'package:impulse/generator/impl/interval/GeneratorIntervalRotating.dart';
-import 'package:impulse/generator/impl/success/GeneratorSuccessOdds.dart';
-import 'package:impulse/generator/impl/symbol/GeneratorLettersRandom.dart';
-import 'package:impulse/generator/impl/visibility/GeneratorSymbolVisibilityTimeConfig.dart';
+import 'package:impulse/state/IAppStateListener.dart';
+import 'package:impulse/oracles/IOracle.dart';
+import 'package:impulse/oracles/impl/interval/OracleIntervalRotating.dart';
+import 'package:impulse/oracles/impl/success/OracleKillerSymbolOdds.dart';
+import 'package:impulse/oracles/impl/symbol/OracleSymbolsRandom.dart';
+import 'package:impulse/oracles/impl/visibility/OracleSymbolVisibilityConstant.dart';
 import 'package:impulse/state/AppStateStore.dart';
-import 'package:impulse/generator/IGeneratorSymbol.dart';
 import 'package:impulse/state/AppStateManager.dart';
 import 'package:impulse/state/IAppStateManager.dart';
-import 'package:impulse/strategy/IDeathEvaluator.dart';
-import 'package:impulse/strategy/impl/survival/DeathEvaluatorNoLives.dart';
-import 'package:impulse/symbol/ISymbolEventListener.dart';
+import 'package:impulse/oracles/impl/death/OracleDeathNoLives.dart';
+import 'package:impulse/widgets/game/ISymbolEventListener.dart';
 
 class SymbolWidgetPresenter implements IAppStateListener {
 
@@ -23,12 +19,11 @@ class SymbolWidgetPresenter implements IAppStateListener {
   //model
   IAppStateManager stateManager = new AppStateManager();
   //generators
-  IGeneratorSymbol symbolGenerator;
-  IGeneratorSuccess successGenerator;
-  IGeneratorInterval intervalGenerator;
-  IGeneratorSymbolVisibilityTime visibilityTimeGenerator;
-  //strategies
-  IDeathEvaluator deathChecker;
+  IOracle symbolGenerator = OracleSymbolsRandom();
+  IOracle successGenerator = OracleKillerSymbolOdds();
+  IOracle intervalGenerator = OracleIntervalRotating();
+  IOracle visibilityTimeGenerator = OracleSymbolVisibilityConstant();
+  IOracle deathChecker = OracleDeathNoLives();
   //config
   final List<AppStateKey> keyListeners = [AppStateKey.SYMBOL, AppStateKey.PLAYER_IS_ALIVE];
   //timers
@@ -37,14 +32,6 @@ class SymbolWidgetPresenter implements IAppStateListener {
 
   SymbolWidgetPresenter(this.symbolWidgetState){
     stateManager.addStateListener(this);
-
-    symbolGenerator = new GeneratorLettersRandom(stateManager);
-    successGenerator = new GeneratorSuccessOdds(stateManager);
-    intervalGenerator = new GeneratorIntervalRotating(stateManager);
-    visibilityTimeGenerator = new GeneratorSymbolVisibilityTimeConfig(stateManager);
-
-    deathChecker = new DeathEvaluatorNoLives(stateManager);
-
     newSymbolTimer = _createNewSymbolTimer();
     symbolVisibilityTimer = _createNewSymbolVisibilityTimer();
   }
@@ -54,26 +41,25 @@ class SymbolWidgetPresenter implements IAppStateListener {
   }
 
   _createNewSymbolVisibilityTime(){
-    return Duration(milliseconds: visibilityTimeGenerator.generateVisibilityTime());
+    return Duration(milliseconds: visibilityTimeGenerator.getAnswer());
   }
   _createNewSymbolTimer(){
     return new Timer(_createNewSymbolInterval(), () => _updateSymbolEvent());
   }
   _createNewSymbolInterval(){
-    return Duration(milliseconds: intervalGenerator.generateInterval());
+    return Duration(milliseconds: intervalGenerator.getAnswer());
   }
 
   playerReacted(){
     stateManager.updateState(
         AppStateKey.PLAYER_IS_ALIVE,
-        deathChecker.willPlayerSurvive());
+        deathChecker.getAnswer());
   }
 
   _updateSymbolEvent(){
     stateManager.updateState(
         AppStateKey.SYMBOL,
-        symbolGenerator.generate(successGenerator.generateIsFailureSymbol())
-    );
+        symbolGenerator.getAnswer());
   }
 
   _updateSymbol(String s){

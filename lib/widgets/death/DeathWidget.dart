@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:impulse/symbol/SymbolWidget.dart';
+import 'package:impulse/widgets/game/SymbolWidget.dart';
 
 class DeathWidget extends StatelessWidget {
 

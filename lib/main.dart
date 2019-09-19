@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:impulse/symbol/SymbolWidget.dart';
+import 'package:impulse/widgets/game/SymbolWidget.dart';
 
 void main() => runApp(MyApp());
 

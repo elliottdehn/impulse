@@ -62,16 +62,19 @@ class _AppState {
     AppStateKey.SYMBOL:null,
     AppStateKey.SCORE:0,
     AppStateKey.PLAYER_IS_ALIVE:true,
-    AppStateKey.REACTION_WINDOW:700,
-    AppStateKey.SYMBOL_TAPPED:false
+    AppStateKey.REACTION_WINDOW:1000,
+    AppStateKey.SYMBOL_TAPPED:false,
   };
 
 }
 
 enum AppStateKey {
   SYMBOL,
-  SCORE,
+  SYMBOL_VISIBLE,
+  SYMBOL_TAPPED,
+  SUCCESS_INDICATOR_VISIBLE, //To be used
   PLAYER_IS_ALIVE,
-  REACTION_WINDOW,
-  SYMBOL_TAPPED
+  LIVES, //To be used
+  SCORE, //To be used
+  REACTION_WINDOW //To be used
 }

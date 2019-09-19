@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:impulse/symbol/ISymbolEventListener.dart';
-import 'package:impulse/symbol/SymbolWidget.dart';
-import 'package:impulse/symbol/SymbolWidgetPresenter.dart';
+import 'package:impulse/widgets/game/ISymbolEventListener.dart';
+import 'package:impulse/widgets/game/SymbolWidget.dart';
+import 'package:impulse/widgets/game/SymbolWidgetPresenter.dart';
 import 'package:impulse/widgets/death/DeathWidget.dart';
 
 class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListener {

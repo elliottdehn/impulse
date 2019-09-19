@@ -1,5 +1,5 @@
 import 'package:impulse/state/AppStateStore.dart';
-import 'package:impulse/IAppStateListener.dart';
+import 'package:impulse/state/IAppStateListener.dart';
 
 class IAppStateManager{
   updateState(AppStateKey key, var value){}

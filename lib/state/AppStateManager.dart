@@ -1,4 +1,4 @@
-import 'package:impulse/IAppStateListener.dart';
+import 'package:impulse/state/IAppStateListener.dart';
 import 'package:impulse/state/IAppStateManager.dart';
 import 'package:impulse/state/AppStateStore.dart';
 
