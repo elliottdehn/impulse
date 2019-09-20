@@ -13,7 +13,8 @@ class OracleDeathNoLives extends Oracle {
   @override
   getAnswer() {
     var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
-    return !_failSymbols.contains(currentSymbol);
+    return (_failSymbols.contains(currentSymbol) && manager.getStateValue(AppStateKey.SYMBOL_TAPPED))
+    || (!_failSymbols.contains(currentSymbol) && !manager.getStateValue(AppStateKey.SYMBOL_TAPPED));
   }
 
 }

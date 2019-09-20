@@ -17,7 +17,7 @@ class DeathWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          'Oops! Do not tap the X!',
+          'Oops!',
           style: Theme.of(context).textTheme.display1.apply(color: Color.fromRGBO(255, 255, 255, 1.0))
         ),
         RaisedButton(

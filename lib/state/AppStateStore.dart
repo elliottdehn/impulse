@@ -62,7 +62,7 @@ class _AppState {
     AppStateKey.SYMBOL:null,
     AppStateKey.SCORE:0,
     AppStateKey.PLAYER_IS_ALIVE:true,
-    AppStateKey.REACTION_WINDOW:1000,
+    AppStateKey.REACTION_WINDOW:700,
     AppStateKey.SYMBOL_TAPPED:false,
   };
 

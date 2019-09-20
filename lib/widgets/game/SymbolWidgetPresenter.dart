@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:impulse/oracles/impl/reaction/OracleReactionWindowConstant.dart';
 import 'package:impulse/state/IAppStateListener.dart';
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/interval/OracleIntervalRotating.dart';
@@ -24,16 +25,25 @@ class SymbolWidgetPresenter implements IAppStateListener {
   IOracle intervalGenerator = OracleIntervalRotating();
   IOracle visibilityTimeGenerator = OracleSymbolVisibilityConstant();
   IOracle deathChecker = OracleDeathNoLives();
+  IOracle windowGenerator = OracleReactionWindowConstant();
   //config
   final List<AppStateKey> keyListeners = [AppStateKey.SYMBOL, AppStateKey.PLAYER_IS_ALIVE];
   //timers
   Timer newSymbolTimer;
   Timer symbolVisibilityTimer;
+  Timer tapEnforcementTimer;
 
   SymbolWidgetPresenter(this.symbolWidgetState){
     stateManager.addStateListener(this);
     newSymbolTimer = _createNewSymbolTimer();
-    symbolVisibilityTimer = _createNewSymbolVisibilityTimer();
+  }
+
+  _createNewTapEnforcementTimer(){
+    return new Timer(_createNewTapEnforcementTime(), () => _enforceTaps());
+  }
+
+  _createNewTapEnforcementTime(){
+    return new Duration(milliseconds: windowGenerator.getAnswer());
   }
 
   _createNewSymbolVisibilityTimer(){
@@ -51,9 +61,12 @@ class SymbolWidgetPresenter implements IAppStateListener {
   }
 
   playerReacted(){
-    stateManager.updateState(
-        AppStateKey.PLAYER_IS_ALIVE,
-        deathChecker.getAnswer());
+    stateManager.updateState(AppStateKey.SYMBOL_TAPPED, true);
+    if(deathChecker.getAnswer()) {
+      stateManager.updateState(
+          AppStateKey.PLAYER_IS_ALIVE,
+          false);
+    }
   }
 
   _updateSymbolEvent(){
@@ -62,8 +75,16 @@ class SymbolWidgetPresenter implements IAppStateListener {
         symbolGenerator.getAnswer());
   }
 
+  _enforceTaps(){
+    if(deathChecker.getAnswer()){
+      _killUser();
+    }
+  }
+
   _updateSymbol(String s){
     symbolWidgetState.setSymbol(s);
+    symbolVisibilityTimer = _createNewSymbolVisibilityTimer();
+    tapEnforcementTimer = _createNewTapEnforcementTimer();
   }
 
   _hideSymbol(){
@@ -75,6 +96,9 @@ class SymbolWidgetPresenter implements IAppStateListener {
   }
 
   _killUser(){
+    newSymbolTimer = null;
+    symbolVisibilityTimer = null;
+    tapEnforcementTimer = null;
     symbolWidgetState.killUser();
   }
 
@@ -84,7 +108,7 @@ class SymbolWidgetPresenter implements IAppStateListener {
       _updateSymbol(value as String);
       _showSymbol();
       newSymbolTimer = _createNewSymbolTimer();
-      symbolVisibilityTimer = _createNewSymbolVisibilityTimer();
+      stateManager.updateState(AppStateKey.SYMBOL_TAPPED, false);
     } else if(key == AppStateKey.PLAYER_IS_ALIVE && value as bool == false){
       _killUser();
     }
