@@ -77,14 +77,12 @@ class SymbolWidgetPresenter implements IAppStateListener {
 
   _enforceTaps(){
     if(deathChecker.getAnswer()){
-      _killUser();
+      stateManager.updateState(AppStateKey.PLAYER_IS_ALIVE, false);
     }
   }
 
   _updateSymbol(String s){
     symbolWidgetState.setSymbol(s);
-    symbolVisibilityTimer = _createNewSymbolVisibilityTimer();
-    tapEnforcementTimer = _createNewTapEnforcementTimer();
   }
 
   _hideSymbol(){
@@ -108,6 +106,8 @@ class SymbolWidgetPresenter implements IAppStateListener {
       _updateSymbol(value as String);
       _showSymbol();
       newSymbolTimer = _createNewSymbolTimer();
+      symbolVisibilityTimer = _createNewSymbolVisibilityTimer();
+      tapEnforcementTimer = _createNewTapEnforcementTimer();
       stateManager.updateState(AppStateKey.SYMBOL_TAPPED, false);
     } else if(key == AppStateKey.PLAYER_IS_ALIVE && value as bool == false){
       _killUser();

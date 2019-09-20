@@ -19,7 +19,7 @@ class AppStateStore {
 
 class _AppConfig {
 
-  static final double failureSymbolOdds = 0.15;
+  static final double failureSymbolOdds = 0.20;
 
   static final int intervalSymbolFast = 1000; //milliseconds
   static final int intervalSymbolMedium = 2000; //milliseconds
@@ -62,7 +62,7 @@ class _AppState {
     AppStateKey.SYMBOL:null,
     AppStateKey.SCORE:0,
     AppStateKey.PLAYER_IS_ALIVE:true,
-    AppStateKey.REACTION_WINDOW:700,
+    AppStateKey.REACTION_WINDOW:950,
     AppStateKey.SYMBOL_TAPPED:false,
   };
 
