@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:impulse/widgets/game/ISymbolEventListener.dart';
-import 'package:impulse/widgets/game/SymbolWidget.dart';
-import 'package:impulse/widgets/game/SymbolWidgetPresenter.dart';
-import 'package:impulse/widgets/death/DeathWidget.dart';
+import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
+import 'package:impulse/widgets/game/symbol/SymbolWidgetPresenter.dart';
+import 'package:impulse/widgets/death/DeathScreen.dart';
+
+import 'ISymbolEventListener.dart';
 
 class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListener {
 
@@ -46,7 +47,7 @@ class SymbolWidgetState extends State<SymbolWidget> implements ISymbolEventListe
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return DeathWidget(10,20,30);
+          return DeathScreen(10,20,30);
         }
       )
     );

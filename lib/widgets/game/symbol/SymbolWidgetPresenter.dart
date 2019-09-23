@@ -11,7 +11,8 @@ import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/state/AppStateManager.dart';
 import 'package:impulse/state/IAppStateManager.dart';
 import 'package:impulse/oracles/impl/death/OracleDeathNoLives.dart';
-import 'package:impulse/widgets/game/ISymbolEventListener.dart';
+
+import 'ISymbolEventListener.dart';
 
 class SymbolWidgetPresenter implements IAppStateListener {
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:impulse/widgets/game/SymbolWidget.dart';
+import 'package:impulse/widgets/game/GameScreen.dart';
 
-class DeathWidget extends StatelessWidget {
+class DeathScreen extends StatelessWidget {
 
   final int _score;
   final int _streak;
   final int _avgReaction;
 
-  DeathWidget(this._score, this._streak, this._avgReaction);
+  DeathScreen(this._score, this._streak, this._avgReaction);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class DeathWidget extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return new SymbolWidget();
+                  return GameScreen();
                 }
               )
             );

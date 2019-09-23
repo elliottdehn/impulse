@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:impulse/widgets/game/SymbolWidget.dart';
+import 'package:impulse/widgets/game/GameScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SymbolWidget(),
+      home: GameScreen(),
     );
   }
 }
