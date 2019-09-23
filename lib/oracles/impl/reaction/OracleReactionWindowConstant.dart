@@ -6,7 +6,7 @@ class OracleReactionWindowConstant extends Oracle {
 
   @override
   getAnswer() {
-    return manager.getStateValue(AppStateKey.REACTION_WINDOW);
+    return manager.getConfigValue(AppConfigKey.BASE_REACTION_WINDOW);
   }
 
 }

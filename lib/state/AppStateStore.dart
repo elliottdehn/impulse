@@ -44,7 +44,8 @@ class _AppConfig {
     AppConfigKey.INTERVAL_SYMBOL_SLOw:intervalSymbolSlow,
     AppConfigKey.FAILURE_SYMBOL_ODDS:failureSymbolOdds,
     AppConfigKey.SYMBOL_VISIBILITY_DURATION:symbolVisibilityDuration,
-    AppConfigKey.LIVES_START:livesStart
+    AppConfigKey.LIVES_START:livesStart,
+    AppConfigKey.BASE_REACTION_WINDOW:baseReactionWindow
   };
 
 }
@@ -57,22 +58,24 @@ enum AppConfigKey{
   INTERVAL_SYMBOL_SLOw,
   FAILURE_SYMBOL_ODDS,
   SYMBOL_VISIBILITY_DURATION,
-  LIVES_START
+  LIVES_START,
+  BASE_REACTION_WINDOW
 }
 
 class _AppState {
 
   static Map<AppStateKey, Object> _keyValueMap = {
     AppStateKey.SYMBOL:null,
-    AppStateKey.PLAYER_IS_ALIVE:true,
-    AppStateKey.REACTION_WINDOW:700,
-    AppStateKey.SYMBOL_TAPPED:false,
+    AppStateKey.PLAYER_IS_ALIVE:true, //not needed
+    AppStateKey.SYMBOL_SHOWN_TIME:null, //DateTime
+    AppStateKey.SYMBOL_TAPPED:false, //not needed
+    AppStateKey.SYMBOL_TAPPED_COUNT:0,
     AppStateKey.LIVES:3,
     AppStateKey.REACTION_TIMES:[],
     AppStateKey.NORMAL_SYMBOL_STREAK:0,
     AppStateKey.KILLER_SYMBOL_STREAK:0,
     AppStateKey.NORMAL_SYMBOL_TOTAL:0,
-    AppStateKey.KILLER_SYMBOL_TOTAL:0
+    AppStateKey.KILLER_SYMBOL_TOTAL:0,
   };
 
 }
@@ -81,7 +84,7 @@ enum AppStateKey {
   SYMBOL,
   SYMBOL_VISIBLE,
   SYMBOL_TAPPED,
-  SUCCESS_INDICATOR_VISIBLE, //To be used
+  SYMBOL_TAPPED_COUNT,
   PLAYER_IS_ALIVE,
   LIVES,
   REACTION_TIMES,
@@ -89,5 +92,6 @@ enum AppStateKey {
   KILLER_SYMBOL_STREAK,
   NORMAL_SYMBOL_TOTAL,
   KILLER_SYMBOL_TOTAL,
-  REACTION_WINDOW
+  REACTION_WINDOW,
+  SYMBOL_SHOWN_TIME
 }
