@@ -7,6 +7,7 @@ class ReactionWindowWidget extends StatefulWidget {
 }
 
 class ReactionWindowState extends State<ReactionWindowWidget> with SingleTickerProviderStateMixin {
+  //TODO Set up this widget to work correctly
 
   Animation<double> _animation;
   AnimationController _controller;

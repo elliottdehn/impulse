@@ -4,6 +4,7 @@ import 'package:impulse/widgets/IStateBuilder.dart';
 import 'ScoreState.dart';
 
 class ScoreStateBuilder implements IStateBuilder {
+  
   @override
   IState buildState() {
     // TODO: implement buildState

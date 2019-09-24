@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:impulse/widgets/game/GameScreen.dart';
+import 'package:impulse/widgets/app/AppScreenWidget.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,8 +12,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GameScreen(),
+      home: AppScreenWidget(),
     );
   }
+
 }
 

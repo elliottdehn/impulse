@@ -14,7 +14,7 @@ class ScoreWidgetState extends State<ScoreWidget> implements IStateUpdateListene
   IPresenter presenter;
 
   ScoreWidgetState(){
-    presenter = ScoreWidgetPresenter();
+    presenter = ScoreWidgetPresenter(this);
   }
 
   @override
@@ -26,10 +26,10 @@ class ScoreWidgetState extends State<ScoreWidget> implements IStateUpdateListene
   @override
   onStateUpdate(IState newState) {
     _setState(newState as ScoreState);
-    _updateState();
+    _updateView();
   }
 
-  _updateState(){
+  _updateView(){
     setState(() {
     });
   }

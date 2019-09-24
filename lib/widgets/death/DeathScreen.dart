@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:impulse/widgets/game/GameScreen.dart';
+import 'package:impulse/widgets/ScreenID.dart';
+import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 
 class DeathScreen extends StatelessWidget {
 
-  final int _score;
-  final int _streak;
-  final int _avgReaction;
-
-  DeathScreen(this._score, this._streak, this._avgReaction);
+  DeathScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +19,7 @@ class DeathScreen extends StatelessWidget {
         ),
         RaisedButton(
           onPressed: (){
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return GameScreen();
-                }
-              )
-            );
+            ScreenChangeNotification(screen: ScreenID.GAME).dispatch(context);
           },
           child: Text(
             'Play Again',

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
+import 'package:impulse/widgets/ScreenID.dart';
+import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 
 import 'LivesState.dart';
 import 'LivesWidget.dart';
@@ -40,6 +42,11 @@ class LivesWidgetState extends State<LivesWidget> implements IStateUpdateListene
 
   @override
   Widget build(BuildContext context) {
+
+    if(_lives == 0) {
+      ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
+    }
+
     String livesString = "";
     for(var i = 0; i < _lives; i++){
       livesString += "♥";
