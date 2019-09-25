@@ -28,9 +28,7 @@ class SymbolWidgetState extends State<SymbolWidget> implements IStateUpdateListe
   @override
   initState(){
     super.initState();
-    SymbolState state = _presenter.initState();
     _opacity = 0.0;
-
   }
 
   @override
@@ -61,9 +59,6 @@ class SymbolWidgetState extends State<SymbolWidget> implements IStateUpdateListe
   _onSymbolHide(){
     _opacity = 0.0;
     setState((){});
-  }
-
-  _onTapEnforcement(){
   }
 
   @override

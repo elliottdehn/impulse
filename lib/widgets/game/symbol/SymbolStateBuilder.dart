@@ -1,6 +1,6 @@
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/interval/OracleIntervalRotating.dart';
-import 'package:impulse/oracles/impl/reaction/OracleReactionWindowConstant.dart';
+import 'package:impulse/oracles/impl/window/OracleReactionWindowConstant.dart';
 import 'package:impulse/oracles/impl/symbol/OracleSymbolsRandom.dart';
 import 'package:impulse/oracles/impl/visibility/OracleSymbolVisibilityConstant.dart';
 import 'package:impulse/widgets/IState.dart';

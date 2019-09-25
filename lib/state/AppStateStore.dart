@@ -28,7 +28,7 @@ class _AppConfig {
   static final int baseReactionWindow = 700; //milliseconds
   static final int livesStart = 3;
 
-  static final List<String> failureLetters = ["X"];
+  static final List<String> failureLetters = ["X", "", null];
   static final List<String> successLetters =
   [ "A", "B", "C", "D", "E", "F",
     "G", "H", "I", "J", "K", "L",

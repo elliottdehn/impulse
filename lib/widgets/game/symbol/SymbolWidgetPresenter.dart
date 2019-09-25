@@ -1,4 +1,5 @@
-import 'package:impulse/state/IAppStateListener.dart';
+import 'package:impulse/state/AppStateUpdateListener.dart';
+import 'package:impulse/state/IAppStateUpdateHandler.dart';
 import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/transcribers/ITranscriber.dart';
 import 'package:impulse/transcribers/impl/NewSymbolTranscriber.dart';
@@ -10,7 +11,7 @@ import 'package:impulse/widgets/game/symbol/SymbolStateBuilder.dart';
 import '../../IPresenter.dart';
 
 
-class SymbolWidgetPresenter implements IPresenter, IAppStateListener {
+class SymbolWidgetPresenter with AppStateUpdateListener implements IPresenter, IAppStateUpdateHandler {
 
   //view(ish)
   IStateUpdateListener symbolWidgetState;
@@ -21,9 +22,12 @@ class SymbolWidgetPresenter implements IPresenter, IAppStateListener {
   //state builder
   final IStateBuilder stateBuilder = SymbolStateBuilder();
 
-  SymbolWidgetPresenter(this.symbolWidgetState);
-  //TODO: Hook up the manager listening w/ out depending on it
+  SymbolWidgetPresenter(this.symbolWidgetState){
+    listen(this);
+  }
+
   //TODO: Hook up the view sending events to the presenter
+  //TODO: Finish out the animation view
 
   @override
   void onModelChanged(AppStateKey key, value) {

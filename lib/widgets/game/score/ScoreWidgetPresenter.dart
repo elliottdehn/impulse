@@ -1,7 +1,7 @@
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/score/ScoreOracle.dart';
 import 'package:impulse/state/AppStateStore.dart';
-import 'package:impulse/state/IAppStateListener.dart';
+import 'package:impulse/state/IAppStateUpdateHandler.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
@@ -9,7 +9,7 @@ import 'package:impulse/widgets/game/score/ScoreStateBuilder.dart';
 
 import 'ScoreState.dart';
 
-class ScoreWidgetPresenter implements IPresenter, IAppStateListener{
+class ScoreWidgetPresenter implements IPresenter, IAppStateUpdateHandler{
 
   final ScoreStateBuilder stateBuilder = ScoreStateBuilder();
   final IOracle currentScore = ScoreOracle();

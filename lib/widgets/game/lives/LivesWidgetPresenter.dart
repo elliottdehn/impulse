@@ -1,12 +1,12 @@
 import 'package:impulse/state/AppStateStore.dart';
-import 'package:impulse/state/IAppStateListener.dart';
+import 'package:impulse/state/IAppStateUpdateHandler.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateBuilder.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/lives/LivesStateBuilder.dart';
 
-class LivesWidgetPresenter implements IPresenter, IAppStateListener {
+class LivesWidgetPresenter implements IPresenter, IAppStateUpdateHandler {
 
   final IStateBuilder stateBuilder = LivesStateBuilder();
   final List<AppStateKey> keyListeners = [AppStateKey.LIVES];
