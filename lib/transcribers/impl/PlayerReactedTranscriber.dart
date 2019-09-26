@@ -3,15 +3,15 @@ import 'package:impulse/oracles/impl/judge/OracleJudge.dart';
 import 'package:impulse/transcribers/ITranscriber.dart';
 import 'package:impulse/transcribers/Transcriber.dart';
 import 'package:impulse/transcribers/impl/HurtPlayerTranscriber.dart';
-import 'package:impulse/transcribers/impl/TranscriberRewardPlayer.dart';
+import 'package:impulse/transcribers/impl/RewardPlayerTranscriber.dart';
 
-import 'TranscriberPlayerTapped.dart';
+import 'PlayerTrappedTranscriber.dart';
 
-class TranscriberPlayerReacted extends Transcriber {
+class PlayerReactedTranscriber extends Transcriber {
   final IOracle shouldRewardPlayer = OracleJudge();
-  final ITranscriber writePlayerTapped = TranscriberPlayerTapped();
+  final ITranscriber writePlayerTapped = PlayerTrappedTranscriber();
   final ITranscriber writeHurtPlayer = HurtPlayerTranscriber();
-  final ITranscriber writeRewardPlayer = TranscriberRewardPlayer();
+  final ITranscriber writeRewardPlayer = RewardPlayerTranscriber();
 
   @override
   writeToState() {

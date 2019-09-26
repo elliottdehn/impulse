@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
-import 'package:impulse/transcribers/impl/TranscriberPlayerReacted.dart';
+import 'package:impulse/transcribers/impl/PlayerReactedTranscriber.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IEventListener.dart';
 import 'package:impulse/widgets/IStateUpdateHandler.dart';
@@ -23,7 +23,7 @@ class SymbolWidgetPresenter
   final List<AppStateKey> keyListeners = [AppStateKey.SYMBOL];
   //transcribers
   final ITranscriber newSymbol = NewSymbolTranscriber();
-  final ITranscriber playerReacted = TranscriberPlayerReacted();
+  final ITranscriber playerReacted = PlayerReactedTranscriber();
   //state builder
   final IStateBuilder stateBuilder = SymbolStateBuilder();
 
