@@ -20,12 +20,6 @@ class LivesWidgetState extends State<LivesWidget>
   }
 
   @override
-  initState() {
-    super.initState();
-    _setState(presenter.initState() as LivesState);
-  }
-
-  @override
   onStateUpdate(IState newState) {
     _setState(newState as LivesState);
     _updateState();

@@ -18,12 +18,6 @@ class ScoreWidgetState extends State<ScoreWidget>
   }
 
   @override
-  void initState() {
-    super.initState();
-    _setState(presenter.initState() as ScoreState);
-  }
-
-  @override
   onStateUpdate(IState newState) {
     _setState(newState as ScoreState);
     _updateView();

@@ -21,11 +21,6 @@ class LivesWidgetPresenter
   }
 
   @override
-  IState initState() {
-    return stateBuilder.initState();
-  }
-
-  @override
   void onModelChanged(AppStateKey key, value) {
     if (AppStateKey.LIVES == key) {
       IState newState = stateBuilder.buildState();
@@ -37,4 +32,5 @@ class LivesWidgetPresenter
   bool shouldNotifyForKeyStateChange(AppStateKey key) {
     return keyListeners.contains(key);
   }
+
 }

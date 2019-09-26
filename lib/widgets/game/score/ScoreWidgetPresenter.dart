@@ -5,7 +5,6 @@ import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
 import 'package:impulse/widgets/IStateUpdateHandler.dart';
 import 'package:impulse/widgets/IPresenter.dart';
-import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/score/ScoreStateBuilder.dart';
 
@@ -25,11 +24,6 @@ class ScoreWidgetPresenter
 
   ScoreWidgetPresenter(this.stateListener) {
     listen(this);
-  }
-
-  @override
-  IState initState() {
-    return stateBuilder.initState();
   }
 
   @override
