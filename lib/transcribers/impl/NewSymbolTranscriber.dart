@@ -11,7 +11,6 @@ class NewSymbolTranscriber extends Transcriber {
   writeToState() {
     manager.updateState(AppStateKey.SYMBOL, nextSymbol.getAnswer());
     manager.updateState(AppStateKey.SYMBOL_TAPPED_COUNT, 0);
-    manager.updateState(AppStateKey.SYMBOL_SHOWN_TIME, DateTime.now().toUtc());
   }
 
 }

@@ -11,11 +11,19 @@ class OracleJudge extends Oracle {
 
   @override
   getAnswer() {
-    //true = hurt the player
-    //false = reward the player
-    var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
-    return (_failSymbols.contains(currentSymbol) && (manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int > 0))
-        || (!_failSymbols.contains(currentSymbol) && !(manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int == 1));
+    //true = reward the player
+    //false = hurt the player
+    return !_isTappedOnKillerSymbol() && !_isTappedOtherThanOnceOnSuccessSymbol();
   }
+
+  _isTappedOnKillerSymbol(){
+    var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
+    return _failSymbols.contains(currentSymbol) && (manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int > 0);
+  }
+  _isTappedOtherThanOnceOnSuccessSymbol(){
+    var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
+    return (!_failSymbols.contains(currentSymbol) && !(manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int == 1));
+  }
+
 
 }

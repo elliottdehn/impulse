@@ -9,7 +9,7 @@ import 'TranscriberPlayerTapped.dart';
 
 class TranscriberPlayerReacted extends Transcriber {
 
-  final IOracle shouldHurtPlayer = OracleJudge();
+  final IOracle shouldRewardPlayer = OracleJudge();
   final ITranscriber writePlayerTapped = TranscriberPlayerTapped();
   final ITranscriber writeHurtPlayer = TranscriberHurtPlayer();
   final ITranscriber writeRewardPlayer = TranscriberRewardPlayer();
@@ -17,10 +17,10 @@ class TranscriberPlayerReacted extends Transcriber {
   @override
   writeToState() {
     writePlayerTapped.writeToState();
-    if(shouldHurtPlayer.getAnswer()){
-      writeHurtPlayer.writeToState();
-    } else {
+    if(shouldRewardPlayer.getAnswer()){
       writeRewardPlayer.writeToState();
+    } else {
+      writeHurtPlayer.writeToState();
     }
   }
 

@@ -66,32 +66,22 @@ class _AppState {
 
   static Map<AppStateKey, Object> _keyValueMap = {
     AppStateKey.SYMBOL:null,
-    AppStateKey.PLAYER_IS_ALIVE:true, //not needed
-    AppStateKey.SYMBOL_SHOWN_TIME:null, //DateTime
-    AppStateKey.SYMBOL_TAPPED:false, //not needed
-    AppStateKey.SYMBOL_TAPPED_COUNT:0,
-    AppStateKey.LIVES:3,
-    AppStateKey.REACTION_TIMES:[],
-    AppStateKey.NORMAL_SYMBOL_STREAK:0,
-    AppStateKey.KILLER_SYMBOL_STREAK:0,
-    AppStateKey.NORMAL_SYMBOL_TOTAL:0,
-    AppStateKey.KILLER_SYMBOL_TOTAL:0,
+    AppStateKey.SYMBOL_TAPPED_COUNT:null,
+    AppStateKey.LIVES:null,
+    AppStateKey.NORMAL_SYMBOL_STREAK:null,
+    AppStateKey.KILLER_SYMBOL_STREAK:null,
+    AppStateKey.NORMAL_SYMBOL_TOTAL:null,
+    AppStateKey.KILLER_SYMBOL_TOTAL:null,
   };
 
 }
 
 enum AppStateKey {
   SYMBOL,
-  SYMBOL_VISIBLE,
-  SYMBOL_TAPPED,
   SYMBOL_TAPPED_COUNT,
-  PLAYER_IS_ALIVE,
   LIVES,
-  REACTION_TIMES,
   NORMAL_SYMBOL_STREAK,
   KILLER_SYMBOL_STREAK,
   NORMAL_SYMBOL_TOTAL,
   KILLER_SYMBOL_TOTAL,
-  REACTION_WINDOW,
-  SYMBOL_SHOWN_TIME
 }

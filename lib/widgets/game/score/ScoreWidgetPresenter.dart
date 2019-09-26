@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/score/ScoreOracle.dart';
 import 'package:impulse/state/AppStateStore.dart';
-import 'package:impulse/state/IAppStateUpdateHandler.dart';
+import 'package:impulse/state/AppStateUpdateListener.dart';
+import 'package:impulse/widgets/IStateUpdateHandler.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
@@ -9,7 +11,8 @@ import 'package:impulse/widgets/game/score/ScoreStateBuilder.dart';
 
 import 'ScoreState.dart';
 
-class ScoreWidgetPresenter implements IPresenter, IAppStateUpdateHandler{
+@immutable
+class ScoreWidgetPresenter with AppStateUpdateListener implements IPresenter, IStateUpdateHandler{
 
   final ScoreStateBuilder stateBuilder = ScoreStateBuilder();
   final IOracle currentScore = ScoreOracle();
@@ -17,7 +20,9 @@ class ScoreWidgetPresenter implements IPresenter, IAppStateUpdateHandler{
   final List<AppStateKey> stateKeyListeners =
   [AppStateKey.NORMAL_SYMBOL_TOTAL, AppStateKey.KILLER_SYMBOL_TOTAL];
 
-  ScoreWidgetPresenter(this.stateListener);
+  ScoreWidgetPresenter(this.stateListener){
+    listen(this);
+  }
 
   @override
   IState initState() {

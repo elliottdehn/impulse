@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
-import 'package:impulse/state/IAppStateUpdateHandler.dart';
+import 'package:impulse/widgets/IStateUpdateHandler.dart';
 import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/transcribers/ITranscriber.dart';
 import 'package:impulse/transcribers/impl/NewSymbolTranscriber.dart';
@@ -10,11 +11,11 @@ import 'package:impulse/widgets/game/symbol/SymbolStateBuilder.dart';
 
 import '../../IPresenter.dart';
 
-
-class SymbolWidgetPresenter with AppStateUpdateListener implements IPresenter, IAppStateUpdateHandler {
+@immutable
+class SymbolWidgetPresenter with AppStateUpdateListener implements IPresenter, IStateUpdateHandler {
 
   //view(ish)
-  IStateUpdateListener symbolWidgetState;
+  final IStateUpdateListener symbolWidgetState;
   //config
   final List<AppStateKey> keyListeners = [AppStateKey.SYMBOL];
   //transcribers
