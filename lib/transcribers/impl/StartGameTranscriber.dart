@@ -2,7 +2,7 @@ import 'package:impulse/state/AppStateStore.dart';
 
 import '../Transcriber.dart';
 
-class TranscriberStartGame extends Transcriber {
+class StartGameTranscriber extends Transcriber {
   @override
   writeToState() {
     //TODO make these initial values config values

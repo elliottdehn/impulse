@@ -2,7 +2,7 @@ import 'package:impulse/state/AppStateStore.dart';
 
 import '../Transcriber.dart';
 
-class TranscriberPlayerTapped extends Transcriber {
+class PlayerTrappedTranscriber extends Transcriber {
   @override
   writeToState() {
     int tapCount = manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT);

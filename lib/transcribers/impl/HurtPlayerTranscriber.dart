@@ -1,7 +1,7 @@
 import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/transcribers/Transcriber.dart';
 
-class TranscriberHurtPlayer extends Transcriber {
+class HurtPlayerTranscriber extends Transcriber {
   @override
   writeToState() {
     bool symbol = manager.getStateValue(AppStateKey.SYMBOL);
