@@ -12,8 +12,9 @@ import 'package:impulse/widgets/game/symbol/SymbolStateBuilder.dart';
 import '../../IPresenter.dart';
 
 @immutable
-class SymbolWidgetPresenter with AppStateUpdateListener implements IPresenter, IStateUpdateHandler {
-
+class SymbolWidgetPresenter
+    with AppStateUpdateListener
+    implements IPresenter, IStateUpdateHandler {
   //view(ish)
   final IStateUpdateListener symbolWidgetState;
   //config
@@ -23,7 +24,7 @@ class SymbolWidgetPresenter with AppStateUpdateListener implements IPresenter, I
   //state builder
   final IStateBuilder stateBuilder = SymbolStateBuilder();
 
-  SymbolWidgetPresenter(this.symbolWidgetState){
+  SymbolWidgetPresenter(this.symbolWidgetState) {
     listen(this);
   }
 
@@ -32,7 +33,7 @@ class SymbolWidgetPresenter with AppStateUpdateListener implements IPresenter, I
 
   @override
   void onModelChanged(AppStateKey key, value) {
-    if(key == AppStateKey.SYMBOL){
+    if (key == AppStateKey.SYMBOL) {
       symbolWidgetState.onStateUpdate(stateBuilder.buildState());
     }
   }

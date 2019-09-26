@@ -10,17 +10,17 @@ import 'LivesState.dart';
 import 'LivesWidget.dart';
 import 'LivesWidgetPresenter.dart';
 
-class LivesWidgetState extends State<LivesWidget> implements IStateUpdateListener {
-
+class LivesWidgetState extends State<LivesWidget>
+    implements IStateUpdateListener {
   int _lives;
   IPresenter presenter;
 
-  LivesWidgetState(){
+  LivesWidgetState() {
     presenter = LivesWidgetPresenter(this);
   }
 
   @override
-  initState(){
+  initState() {
     super.initState();
     _setState(presenter.initState() as LivesState);
   }
@@ -31,30 +31,28 @@ class LivesWidgetState extends State<LivesWidget> implements IStateUpdateListene
     _updateState();
   }
 
-  _updateState(){
-    setState(() {
-    });
+  _updateState() {
+    setState(() {});
   }
 
-  _setState(LivesState s){
+  _setState(LivesState s) {
     _lives = s.lives;
   }
 
   @override
   Widget build(BuildContext context) {
-
-    if(_lives == 0) {
+    if (_lives == 0) {
       ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
     }
 
     String livesString = "";
-    for(var i = 0; i < _lives; i++){
+    for (var i = 0; i < _lives; i++) {
       livesString += "♥";
     }
-    return Text(
-        livesString,
-        style: Theme.of(context).textTheme.display1
-            .apply(color: Color.fromRGBO(0, 0, 0, 1.0))
-    );
+    return Text(livesString,
+        style: Theme.of(context)
+            .textTheme
+            .display1
+            .apply(color: Color.fromRGBO(0, 0, 0, 1.0)));
   }
 }

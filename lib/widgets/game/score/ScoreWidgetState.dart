@@ -8,12 +8,12 @@ import 'package:impulse/widgets/game/score/ScoreState.dart';
 import 'ScoreWidget.dart';
 import 'ScoreWidgetPresenter.dart';
 
-class ScoreWidgetState extends State<ScoreWidget> implements IStateUpdateListener{
-
+class ScoreWidgetState extends State<ScoreWidget>
+    implements IStateUpdateListener {
   int _score;
   IPresenter presenter;
 
-  ScoreWidgetState(){
+  ScoreWidgetState() {
     presenter = ScoreWidgetPresenter(this);
   }
 
@@ -29,22 +29,20 @@ class ScoreWidgetState extends State<ScoreWidget> implements IStateUpdateListene
     _updateView();
   }
 
-  _updateView(){
-    setState(() {
-    });
+  _updateView() {
+    setState(() {});
   }
 
-  _setState(ScoreState s){
+  _setState(ScoreState s) {
     _score = s.score;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-        "Score: $_score",
-        style: Theme.of(context).textTheme.display1
-            .apply(color: Color.fromRGBO(0, 0, 0, 1.0))
-    );
+    return Text("Score: $_score",
+        style: Theme.of(context)
+            .textTheme
+            .display1
+            .apply(color: Color.fromRGBO(0, 0, 0, 1.0)));
   }
-
 }

@@ -3,11 +3,11 @@ import 'package:impulse/state/IAppStateManager.dart';
 import 'package:impulse/state/AppStateStore.dart';
 
 class AppStateManager implements IAppStateManager {
-
-  static final AppStateManager _singleton = new AppStateManager._privateConstructor();
+  static final AppStateManager _singleton =
+      new AppStateManager._privateConstructor();
   static final _state = new AppStateStore();
 
-  factory AppStateManager(){
+  factory AppStateManager() {
     return _singleton;
   }
 
@@ -33,9 +33,9 @@ class AppStateManager implements IAppStateManager {
   }
 
   @override
-  notifyListeners(AppStateKey key, value){
-    for(IStateUpdateHandler presenter in presenters){
-      if(presenter.shouldNotifyForKeyStateChange(key)){
+  notifyListeners(AppStateKey key, value) {
+    for (IStateUpdateHandler presenter in presenters) {
+      if (presenter.shouldNotifyForKeyStateChange(key)) {
         presenter.onModelChanged(key, value);
       }
     }
@@ -43,9 +43,8 @@ class AppStateManager implements IAppStateManager {
 
   @override
   addStateListener(IStateUpdateHandler presenter) {
-    if(!presenters.contains(presenter)) {
+    if (!presenters.contains(presenter)) {
       presenters.add(presenter);
     }
   }
-
 }

@@ -5,7 +5,7 @@ import '../../Oracle.dart';
 class OracleJudge extends Oracle {
   List<String> _failSymbols;
 
-  OracleJudge(){
+  OracleJudge() {
     _failSymbols = manager.getConfigValue(AppConfigKey.FAILURE_LETTERS);
   }
 
@@ -13,17 +13,19 @@ class OracleJudge extends Oracle {
   getAnswer() {
     //true = reward the player
     //false = hurt the player
-    return !_isTappedOnKillerSymbol() && !_isTappedOtherThanOnceOnSuccessSymbol();
+    return !_isTappedOnKillerSymbol() &&
+        !_isTappedOtherThanOnceOnSuccessSymbol();
   }
 
-  _isTappedOnKillerSymbol(){
+  _isTappedOnKillerSymbol() {
     var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
-    return _failSymbols.contains(currentSymbol) && (manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int > 0);
+    return _failSymbols.contains(currentSymbol) &&
+        (manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int > 0);
   }
-  _isTappedOtherThanOnceOnSuccessSymbol(){
+
+  _isTappedOtherThanOnceOnSuccessSymbol() {
     var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
-    return (!_failSymbols.contains(currentSymbol) && !(manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int == 1));
+    return (!_failSymbols.contains(currentSymbol) &&
+        !(manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int == 1));
   }
-
-
 }

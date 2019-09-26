@@ -8,7 +8,6 @@ import 'package:impulse/transcribers/impl/TranscriberRewardPlayer.dart';
 import 'TranscriberPlayerTapped.dart';
 
 class TranscriberPlayerReacted extends Transcriber {
-
   final IOracle shouldRewardPlayer = OracleJudge();
   final ITranscriber writePlayerTapped = TranscriberPlayerTapped();
   final ITranscriber writeHurtPlayer = TranscriberHurtPlayer();
@@ -17,11 +16,10 @@ class TranscriberPlayerReacted extends Transcriber {
   @override
   writeToState() {
     writePlayerTapped.writeToState();
-    if(shouldRewardPlayer.getAnswer()){
+    if (shouldRewardPlayer.getAnswer()) {
       writeRewardPlayer.writeToState();
     } else {
       writeHurtPlayer.writeToState();
     }
   }
-
 }

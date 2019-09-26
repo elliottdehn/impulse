@@ -9,8 +9,8 @@ import 'package:impulse/widgets/game/symbol/SymbolWidgetPresenter.dart';
 import '../../IStateUpdateListener.dart';
 import 'SymbolState.dart';
 
-class SymbolWidgetState extends State<SymbolWidget> implements IStateUpdateListener {
-
+class SymbolWidgetState extends State<SymbolWidget>
+    implements IStateUpdateListener {
   SymbolWidgetPresenter _presenter;
 
   String _symbol;
@@ -20,13 +20,12 @@ class SymbolWidgetState extends State<SymbolWidget> implements IStateUpdateListe
   Timer _symbolVisibilityTimer;
   Timer _symbolIntervalTimer;
 
-
-  SymbolWidgetState(){
+  SymbolWidgetState() {
     _presenter = new SymbolWidgetPresenter(this);
   }
 
   @override
-  initState(){
+  initState() {
     super.initState();
     _opacity = 0.0;
   }
@@ -38,47 +37,43 @@ class SymbolWidgetState extends State<SymbolWidget> implements IStateUpdateListe
     _symbol = newStateSymbol.symbol;
 
     _symbolVisibilityTimer = Timer(
-      Duration(milliseconds: newStateSymbol.visibilityDuration),
-      _onSymbolHide()
-    );
+        Duration(milliseconds: newStateSymbol.visibilityDuration),
+        _onSymbolHide());
 
     _symbolIntervalTimer = Timer(
-      Duration(milliseconds: newStateSymbol.nextSymbolInterval),
-      _onNewSymbol
-    );
+        Duration(milliseconds: newStateSymbol.nextSymbolInterval),
+        _onNewSymbol);
 
-    setState((){});
+    setState(() {});
   }
 
-  _onReact(){
-  }
+  _onReact() {}
 
-  _onNewSymbol(){
-  }
+  _onNewSymbol() {}
 
-  _onSymbolHide(){
+  _onSymbolHide() {
     _opacity = 0.0;
-    setState((){});
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (TapDownDetails t) { _onReact(); },
-      child:
-        Scaffold(
+      onTapDown: (TapDownDetails t) {
+        _onReact();
+      },
+      child: Scaffold(
         body: Opacity(
           opacity: _opacity,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                    '$_symbol',
-                    style: Theme.of(context).textTheme.display1
-                        .apply(fontSizeFactor: 8.0, color: Color.fromRGBO(0, 0, 0, 1.0))
-                  ),
-                ],
+                Text('$_symbol',
+                    style: Theme.of(context).textTheme.display1.apply(
+                        fontSizeFactor: 8.0,
+                        color: Color.fromRGBO(0, 0, 0, 1.0))),
+              ],
             ),
           ),
         ),
@@ -92,5 +87,4 @@ class SymbolWidgetState extends State<SymbolWidget> implements IStateUpdateListe
     _symbolIntervalTimer.cancel();
     _symbolVisibilityTimer.cancel();
   }
-
 }

@@ -9,7 +9,6 @@ import 'package:impulse/widgets/IStateBuilder.dart';
 import 'SymbolState.dart';
 
 class SymbolStateBuilder implements IStateBuilder {
-
   final IOracle visibilityDuration = OracleSymbolVisibilityConstant();
   final IOracle nextSymbolInterval = OracleIntervalRotating();
   final IOracle reactionWindow = OracleReactionWindowConstant();
@@ -32,5 +31,4 @@ class SymbolStateBuilder implements IStateBuilder {
     state.nextSymbolInterval = nextSymbolInterval.getAnswer();
     return state;
   }
-
 }

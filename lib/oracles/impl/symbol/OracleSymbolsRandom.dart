@@ -6,11 +6,10 @@ import 'package:impulse/state/AppStateStore.dart';
 import '../../Oracle.dart';
 
 class OracleSymbolsRandom extends Oracle {
-
   List<String> _successLetters;
   List<String> _failureLetters;
 
-  OracleSymbolsRandom(){
+  OracleSymbolsRandom() {
     _successLetters = manager.getConfigValue(AppConfigKey.SUCCESS_LETTERS);
     _failureLetters = manager.getConfigValue(AppConfigKey.FAILURE_LETTERS);
   }
@@ -19,7 +18,7 @@ class OracleSymbolsRandom extends Oracle {
   getAnswer() {
     var random = Random.secure();
     Oracle killerOracle = OracleKillerSymbolOdds();
-    if(killerOracle.getAnswer()){
+    if (killerOracle.getAnswer()) {
       return _failureLetters[random.nextInt(_failureLetters.length)];
     } else {
       return _successLetters[random.nextInt(_successLetters.length)];

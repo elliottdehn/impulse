@@ -2,13 +2,11 @@ import 'package:impulse/state/AppStateStore.dart';
 
 import '../../Oracle.dart';
 
-
 class OracleIntervalRotating extends Oracle {
-
   int index = 0;
   List<int> intervals = [];
 
-  OracleIntervalRotating(){
+  OracleIntervalRotating() {
     intervals.add(manager.getConfigValue(AppConfigKey.INTERVAL_SYMBOL_FAST));
     intervals.add(manager.getConfigValue(AppConfigKey.INTERVAL_SYMBOL_MEDIUM));
     intervals.add(manager.getConfigValue(AppConfigKey.INTERVAL_SYMBOL_SLOw));
@@ -20,5 +18,4 @@ class OracleIntervalRotating extends Oracle {
     index++;
     return interval;
   }
-
 }

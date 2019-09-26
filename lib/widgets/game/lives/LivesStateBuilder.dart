@@ -5,7 +5,6 @@ import '../../StateBuilder.dart';
 import 'LivesState.dart';
 
 class LivesStateBuilder extends StateBuilder {
-
   @override
   IState buildState() {
     LivesState ls = LivesState();
@@ -19,5 +18,4 @@ class LivesStateBuilder extends StateBuilder {
     ls.lives = manager.getConfigValue(AppConfigKey.LIVES_START);
     return ls;
   }
-
 }

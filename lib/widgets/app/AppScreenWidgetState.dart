@@ -8,11 +8,10 @@ import '../ScreenID.dart';
 import 'AppScreenWidget.dart';
 
 class AppScreenWidgetState extends State<AppScreenWidget> {
-
   ScreenID _screen;
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
       body: NotificationListener<ScreenChangeNotification>(
         child: _getScreen(),
         onNotification: (notification) {
@@ -25,8 +24,8 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
     );
   }
 
-  Widget _getScreen(){
-    switch(_screen){
+  Widget _getScreen() {
+    switch (_screen) {
       case ScreenID.DEATH:
         return DeathScreen();
         break;

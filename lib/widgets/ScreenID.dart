@@ -1,5 +1,1 @@
-enum ScreenID {
-  DEATH,
-  GAME,
-  START
-}
+enum ScreenID { DEATH, GAME, START }

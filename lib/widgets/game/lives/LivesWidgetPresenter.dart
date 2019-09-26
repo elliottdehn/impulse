@@ -9,13 +9,14 @@ import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/lives/LivesStateBuilder.dart';
 
 @immutable
-class LivesWidgetPresenter with AppStateUpdateListener implements IPresenter, IStateUpdateHandler {
-
+class LivesWidgetPresenter
+    with AppStateUpdateListener
+    implements IPresenter, IStateUpdateHandler {
   final IStateBuilder stateBuilder = LivesStateBuilder();
   final List<AppStateKey> keyListeners = [AppStateKey.LIVES];
   final IStateUpdateListener stateUpdateListener;
 
-  LivesWidgetPresenter(this.stateUpdateListener){
+  LivesWidgetPresenter(this.stateUpdateListener) {
     listen(this);
   }
 
@@ -26,7 +27,7 @@ class LivesWidgetPresenter with AppStateUpdateListener implements IPresenter, IS
 
   @override
   void onModelChanged(AppStateKey key, value) {
-    if(AppStateKey.LIVES == key){
+    if (AppStateKey.LIVES == key) {
       IState newState = stateBuilder.buildState();
       stateUpdateListener.onStateUpdate(newState);
     }
@@ -36,5 +37,4 @@ class LivesWidgetPresenter with AppStateUpdateListener implements IPresenter, IS
   bool shouldNotifyForKeyStateChange(AppStateKey key) {
     return keyListeners.contains(key);
   }
-
 }

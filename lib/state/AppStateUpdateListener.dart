@@ -4,7 +4,7 @@ import 'package:impulse/widgets/IStateUpdateHandler.dart';
 
 class AppStateUpdateListener {
   static final IAppStateManager _manager = AppStateManager();
-  listen(IStateUpdateHandler handler){
+  listen(IStateUpdateHandler handler) {
     _manager.addStateListener(handler);
   }
 }

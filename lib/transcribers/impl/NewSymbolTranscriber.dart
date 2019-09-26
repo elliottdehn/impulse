@@ -4,7 +4,6 @@ import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/transcribers/Transcriber.dart';
 
 class NewSymbolTranscriber extends Transcriber {
-
   final IOracle nextSymbol = OracleSymbolsRandom();
 
   @override
@@ -12,5 +11,4 @@ class NewSymbolTranscriber extends Transcriber {
     manager.updateState(AppStateKey.SYMBOL, nextSymbol.getAnswer());
     manager.updateState(AppStateKey.SYMBOL_TAPPED_COUNT, 0);
   }
-
 }
