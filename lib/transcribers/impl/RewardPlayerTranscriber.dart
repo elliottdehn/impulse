@@ -13,17 +13,11 @@ class RewardPlayerTranscriber extends Transcriber {
           manager.getStateValue(AppStateKey.KILLER_SYMBOL_STREAK);
       manager.updateState(
           AppStateKey.KILLER_SYMBOL_STREAK, killerSymbolStreak + 1);
-      int killerSymbolTotal =
-          manager.getStateValue(AppStateKey.KILLER_SYMBOL_TOTAL);
-      manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, killerSymbolTotal);
     } else {
       int normalSymbolStreak =
           manager.getStateValue(AppStateKey.NORMAL_SYMBOL_STREAK);
       manager.updateState(
-          AppStateKey.KILLER_SYMBOL_STREAK, normalSymbolStreak + 1);
-      int normalSymbolTotal =
-          manager.getStateValue(AppStateKey.NORMAL_SYMBOL_TOTAL);
-      manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, normalSymbolTotal);
+          AppStateKey.NORMAL_SYMBOL_STREAK, normalSymbolStreak + 1);
     }
   }
 }

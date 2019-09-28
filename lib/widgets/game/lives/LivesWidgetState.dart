@@ -26,6 +26,8 @@ class LivesWidgetState extends State<LivesWidget>
     _setState(livesState);
     if(created && _lives != null && _lives != 0) {
       _updateState();
+    } else if (created && _lives != null && _lives == 0) {
+      ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
     }
   }
 
@@ -40,9 +42,6 @@ class LivesWidgetState extends State<LivesWidget>
   @override
   Widget build(BuildContext context) {
     created = true;
-    if (_lives == 0) {
-      ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
-    }
 
     String livesString = "";
     for (var i = 0; i < _lives; i++) {

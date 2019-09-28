@@ -17,16 +17,26 @@ class EnforceWindowTranscriber extends Transcriber {
   @override
   writeToState() {
     if(_isNormalSymbolAndNotTapped()){
-      manager.updateState(AppStateKey.PLAYER_MISSED_WINDOW, true);
       hurtPlayer.writeToState();
+    } else if (_isKillerSymbolAndNotTapped()){
+      int killerSymbolTotal = manager.getStateValue(AppStateKey.KILLER_SYMBOL_TOTAL);
+      manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, killerSymbolTotal + 1);
     }
   }
-
-
-  _isNormalSymbolAndNotTapped(){
-    bool tapped = (manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int) > 0;
+  
+  _isNormalSymbolAndNotTapped() {
+    bool tapped = (manager.getStateValue(
+        AppStateKey.SYMBOL_TAPPED_COUNT) as int) > 0;
     String symbol = manager.getStateValue(AppStateKey.SYMBOL);
     bool normalSymbol = _normalSymbols.contains(symbol);
     return !tapped && normalSymbol;
-}
+  }
+
+  _isKillerSymbolAndNotTapped(){
+    bool tapped = (manager.getStateValue(
+        AppStateKey.SYMBOL_TAPPED_COUNT) as int) > 0;
+    String symbol = manager.getStateValue(AppStateKey.SYMBOL);
+    bool normalSymbol = !_normalSymbols.contains(symbol);
+    return !tapped && !normalSymbol;
+  }
 }

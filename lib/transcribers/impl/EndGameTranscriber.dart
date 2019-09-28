@@ -12,7 +12,6 @@ class EndGameTranscriber extends Transcriber {
     manager.updateState(AppStateKey.KILLER_SYMBOL_STREAK, null);
     manager.updateState(AppStateKey.NORMAL_SYMBOL_TOTAL, null);
     manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, null);
-    manager.updateState(AppStateKey.PLAYER_MISSED_WINDOW, null);
   }
 
 }

@@ -36,13 +36,13 @@ class SymbolWidgetState extends State<SymbolWidget>
     _opacity = 1.0;
     _symbol = newStateSymbol.symbol;
 
-    _symbolVisibilityTimer = Timer(
+    _symbolVisibilityTimer = new Timer(
         Duration(milliseconds: newStateSymbol.visibilityDuration),
-        _onSymbolHide());
+        () => _onSymbolHide());
 
-    _symbolIntervalTimer = Timer(
+    _symbolIntervalTimer = new Timer(
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
-        _onNewSymbol);
+        () => _onNewSymbol);
 
     if(created) {
       setState(() {});

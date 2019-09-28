@@ -5,11 +5,11 @@ import 'package:impulse/transcribers/Transcriber.dart';
 import 'package:impulse/transcribers/impl/HurtPlayerTranscriber.dart';
 import 'package:impulse/transcribers/impl/RewardPlayerTranscriber.dart';
 
-import 'PlayerTrappedTranscriber.dart';
+import 'PlayerTappedTranscriber.dart';
 
 class PlayerReactedTranscriber extends Transcriber {
   final IOracle shouldRewardPlayer = OracleJudge();
-  final ITranscriber writePlayerTapped = PlayerTrappedTranscriber();
+  final ITranscriber writePlayerTapped = PlayerTappedTranscriber();
   final ITranscriber writeHurtPlayer = HurtPlayerTranscriber();
   final ITranscriber writeRewardPlayer = RewardPlayerTranscriber();
 

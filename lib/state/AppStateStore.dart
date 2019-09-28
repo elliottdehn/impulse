@@ -21,11 +21,11 @@ class _AppConfig {
   static final int intervalSymbolFast = 1000; //milliseconds
   static final int intervalSymbolMedium = 2000; //milliseconds
   static final int intervalSymbolSlow = 3000; //milliseconds
-  static final int symbolVisibilityDuration = 125; //milliseconds
+  static final int symbolVisibilityDuration = 600; //milliseconds
   static final int baseReactionWindow = 700; //milliseconds
   static final int livesStart = 3;
 
-  static final List<String> failureLetters = ["X", "", null];
+  static final List<String> failureLetters = ["X"];
   static final List<String> successLetters = [
     "A",
     "B",
@@ -88,7 +88,6 @@ class _AppState {
     AppStateKey.KILLER_SYMBOL_STREAK: null,
     AppStateKey.NORMAL_SYMBOL_TOTAL: null,
     AppStateKey.KILLER_SYMBOL_TOTAL: null,
-    AppStateKey.PLAYER_MISSED_WINDOW:null
   };
 }
 
@@ -99,6 +98,5 @@ enum AppStateKey {
   NORMAL_SYMBOL_STREAK,
   KILLER_SYMBOL_STREAK,
   NORMAL_SYMBOL_TOTAL,
-  KILLER_SYMBOL_TOTAL,
-  PLAYER_MISSED_WINDOW
+  KILLER_SYMBOL_TOTAL
 }

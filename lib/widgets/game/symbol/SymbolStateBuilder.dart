@@ -26,7 +26,7 @@ class SymbolStateBuilder implements IStateBuilder {
   @override
   IState initState() {
     SymbolState state = SymbolState();
-    state.symbol = "";
+    state.symbol = "X";
     state.visibilityDuration = visibilityDuration.getAnswer();
     state.nextSymbolInterval = nextSymbolInterval.getAnswer();
     return state;
