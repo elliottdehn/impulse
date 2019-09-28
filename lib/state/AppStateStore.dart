@@ -21,7 +21,7 @@ class _AppConfig {
   static final int intervalSymbolFast = 1000; //milliseconds
   static final int intervalSymbolMedium = 2000; //milliseconds
   static final int intervalSymbolSlow = 3000; //milliseconds
-  static final int symbolVisibilityDuration = 600; //milliseconds
+  static final int symbolVisibilityDuration = 125; //milliseconds
   static final int baseReactionWindow = 700; //milliseconds
   static final int livesStart = 3;
 

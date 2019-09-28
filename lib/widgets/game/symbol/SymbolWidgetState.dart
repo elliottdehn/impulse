@@ -42,7 +42,7 @@ class SymbolWidgetState extends State<SymbolWidget>
 
     _symbolIntervalTimer = new Timer(
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
-        () => _onNewSymbol);
+        () => _onNewSymbol());
 
     if(created) {
       setState(() {});

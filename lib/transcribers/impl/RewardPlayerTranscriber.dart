@@ -4,7 +4,7 @@ import 'package:impulse/transcribers/Transcriber.dart';
 class RewardPlayerTranscriber extends Transcriber {
   @override
   writeToState() {
-    bool symbol = manager.getStateValue(AppStateKey.SYMBOL);
+    String symbol = manager.getStateValue(AppStateKey.SYMBOL);
     List<String> killerSymbols =
         manager.getConfigValue(AppConfigKey.FAILURE_LETTERS);
     bool isKillerSymbol = killerSymbols.contains(symbol);

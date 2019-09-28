@@ -23,7 +23,7 @@ class EnforceWindowTranscriber extends Transcriber {
       manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, killerSymbolTotal + 1);
     }
   }
-  
+
   _isNormalSymbolAndNotTapped() {
     bool tapped = (manager.getStateValue(
         AppStateKey.SYMBOL_TAPPED_COUNT) as int) > 0;

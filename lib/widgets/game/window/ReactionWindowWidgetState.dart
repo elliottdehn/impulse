@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
-import 'package:impulse/widgets/IPresenter.dart';
+import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowPresenter.dart';
@@ -14,10 +16,11 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   AnimationController _controller;
   int _baseReactionWindow;
   int _currReactionWindow;
+  Timer windowEnforcement;
 
   final double _baseHeight = 60;
 
-  IPresenter stateUpdater;
+  ReactionWindowPresenter stateUpdater;
   bool created = false;
 
   ReactionWindowWidgetState(){
@@ -44,7 +47,8 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
     ReactionWindowState state = newState as ReactionWindowState;
     _baseReactionWindow = state.baseReactionWindow;
     _currReactionWindow = state.currReactionWindow;
-
+    windowEnforcement = new Timer(
+        Duration(milliseconds: _currReactionWindow), () => _onEnforceWindow());
     if(created){
       _controller.stop(canceled: state.isStopped);
       if(state.isReset) {
@@ -52,6 +56,10 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
       }
     }
 
+  }
+
+  _onEnforceWindow(){
+    stateUpdater.onEvent(EventID.ENFORCE_TAP);
   }
 
   @override

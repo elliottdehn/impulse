@@ -43,9 +43,6 @@ class SymbolWidgetPresenter
     }
   }
 
-  //TODO: Finish out the animation view
-  //TODO: Add presenters and handle events for Game screen and Death screen
-
   @override
   void onModelChanged(AppStateKey key, value) {
     if (key == AppStateKey.SYMBOL) {
