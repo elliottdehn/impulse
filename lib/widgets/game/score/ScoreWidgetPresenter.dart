@@ -16,14 +16,15 @@ class ScoreWidgetPresenter
     implements IPresenter, IStateUpdateHandler {
   final ScoreStateBuilder stateBuilder = ScoreStateBuilder();
   final IOracle currentScore = ScoreOracle();
-  final IStateUpdateListener stateListener;
+  final IStateUpdateListener stateUpdateListener;
   final List<AppStateKey> stateKeyListeners = [
     AppStateKey.NORMAL_SYMBOL_TOTAL,
     AppStateKey.KILLER_SYMBOL_TOTAL
   ];
 
-  ScoreWidgetPresenter(this.stateListener) {
+  ScoreWidgetPresenter(this.stateUpdateListener) {
     listen(this);
+    stateUpdateListener.onStateUpdate(stateBuilder.initState());
   }
 
   @override
@@ -32,6 +33,7 @@ class ScoreWidgetPresenter
     if (AppStateKey.NORMAL_SYMBOL_TOTAL == key ||
         AppStateKey.KILLER_SYMBOL_TOTAL == key) {
       state.score = currentScore.getAnswer();
+      stateUpdateListener.onStateUpdate(state);
     }
   }
 

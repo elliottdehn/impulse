@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidgetPresenter.dart';
@@ -12,12 +13,11 @@ import 'SymbolState.dart';
 class SymbolWidgetState extends State<SymbolWidget>
     implements IStateUpdateListener {
   SymbolWidgetPresenter _presenter;
+  bool created = false;
 
   String _symbol;
   double _opacity;
-
-  //auto event triggers
-  Timer _symbolVisibilityTimer;
+  Timer _symbolVisibilityTimer; //auto-events
   Timer _symbolIntervalTimer;
 
   SymbolWidgetState() {
@@ -44,20 +44,29 @@ class SymbolWidgetState extends State<SymbolWidget>
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
         _onNewSymbol);
 
-    setState(() {});
+    if(created) {
+      setState(() {});
+    }
   }
 
-  _onReact() {}
+  _onReact() {
+    _presenter.onEvent(EventID.PLAYER_REACTED);
+  }
 
-  _onNewSymbol() {}
+  _onNewSymbol() {
+    _presenter.onEvent(EventID.NEW_SYMBOL);
+  }
 
   _onSymbolHide() {
     _opacity = 0.0;
-    setState(() {});
+    if(created) {
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    created = true;
     return GestureDetector(
       onTapDown: (TapDownDetails t) {
         _onReact();
@@ -83,8 +92,8 @@ class SymbolWidgetState extends State<SymbolWidget>
 
   @override
   void dispose() {
-    super.dispose();
     _symbolIntervalTimer.cancel();
     _symbolVisibilityTimer.cancel();
+    super.dispose();
   }
 }

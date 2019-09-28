@@ -16,14 +16,15 @@ class ReactionWindowPresenter
     implements IPresenter, IStateUpdateHandler {
   final ReactionWindowStateBuilder stateBuilder = ReactionWindowStateBuilder();
   final IOracle currentScore = ScoreOracle();
-  final IStateUpdateListener stateListener;
+  final IStateUpdateListener stateUpdateListener;
   final List<AppStateKey> stateKeyListeners = [
     AppStateKey.SYMBOL_TAPPED_COUNT,
     AppStateKey.SYMBOL
   ];
 
-  ReactionWindowPresenter(this.stateListener) {
+  ReactionWindowPresenter(this.stateUpdateListener) {
     listen(this);
+    stateUpdateListener.onStateUpdate(stateBuilder.initState());
   }
 
   @override
@@ -31,7 +32,7 @@ class ReactionWindowPresenter
     ReactionWindowState state = ReactionWindowState();
     if (shouldNotifyForKeyStateChange(key)) {
       state = stateBuilder.buildState();
-      stateListener.onStateUpdate(state);
+      stateUpdateListener.onStateUpdate(state);
     }
   }
 

@@ -29,6 +29,7 @@ class SymbolWidgetPresenter
 
   SymbolWidgetPresenter(this.symbolWidgetState) {
     listen(this);
+    symbolWidgetState.onStateUpdate(stateBuilder.initState());
   }
 
   @override

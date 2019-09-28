@@ -18,6 +18,7 @@ class LivesWidgetPresenter
 
   LivesWidgetPresenter(this.stateUpdateListener) {
     listen(this);
+    stateUpdateListener.onStateUpdate(stateBuilder.initState());
   }
 
   @override

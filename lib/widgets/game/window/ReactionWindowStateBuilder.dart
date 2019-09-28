@@ -10,7 +10,7 @@ class ReactionWindowStateBuilder extends StateBuilder {
 
   final IOracle reactionWindowDuration = OracleReactionWindowConstant();
   List<String> _normalSymbols;
-  String _previousSymbol = null;
+  String _previousSymbol;
 
   ReactionWindowStateBuilder(){
     _normalSymbols = manager.getConfigValue(AppConfigKey.SUCCESS_LETTERS);
@@ -33,6 +33,18 @@ class ReactionWindowStateBuilder extends StateBuilder {
     if(currentSymbol != _previousSymbol){
       state.isReset = true;
     }
+
+    return state;
+  }
+
+  @override
+  IState initState() {
+    ReactionWindowState state = ReactionWindowState();
+    state.baseReactionWindow = manager.getConfigValue(AppConfigKey.BASE_REACTION_WINDOW);
+    state.currReactionWindow = manager.getConfigValue(AppConfigKey.BASE_REACTION_WINDOW);
+    state.isStopped = false;
+    state.isReset = false;
+    return state;
   }
 
 }

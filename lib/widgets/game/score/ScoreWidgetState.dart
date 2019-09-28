@@ -12,6 +12,7 @@ class ScoreWidgetState extends State<ScoreWidget>
     implements IStateUpdateListener {
   int _score;
   IPresenter presenter;
+  bool created = false;
 
   ScoreWidgetState() {
     presenter = ScoreWidgetPresenter(this);
@@ -20,7 +21,9 @@ class ScoreWidgetState extends State<ScoreWidget>
   @override
   onStateUpdate(IState newState) {
     _setState(newState as ScoreState);
-    _updateView();
+    if(created) { //widget not yet created
+      _updateView();
+    }
   }
 
   _updateView() {
@@ -33,6 +36,7 @@ class ScoreWidgetState extends State<ScoreWidget>
 
   @override
   Widget build(BuildContext context) {
+    created = true;
     return Text("Score: $_score",
         style: Theme.of(context)
             .textTheme

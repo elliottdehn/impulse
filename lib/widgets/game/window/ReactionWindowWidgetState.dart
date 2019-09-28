@@ -18,6 +18,7 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   final double _baseHeight = 60;
 
   IPresenter stateUpdater;
+  bool created = false;
 
   ReactionWindowWidgetState(){
     stateUpdater = new ReactionWindowPresenter(this);
@@ -44,14 +45,18 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
     _baseReactionWindow = state.baseReactionWindow;
     _currReactionWindow = state.currReactionWindow;
 
-    _controller.stop(canceled: state.isStopped);
-    if(state.isReset) {
-      _controller.reset();
+    if(created){
+      _controller.stop(canceled: state.isStopped);
+      if(state.isReset) {
+        _controller.reset();
+      }
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
+    created = true;
     return Container(
         height: _baseHeight,
         width: MediaQuery.of(context).size.width,

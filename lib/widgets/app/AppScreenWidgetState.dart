@@ -9,6 +9,12 @@ import 'AppScreenWidget.dart';
 
 class AppScreenWidgetState extends State<AppScreenWidget> {
   ScreenID _screen;
+
+  @override
+  void initState() {
+    _screen = ScreenID.GAME;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

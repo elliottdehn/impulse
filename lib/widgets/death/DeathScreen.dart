@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:impulse/transcribers/ITranscriber.dart';
+import 'package:impulse/transcribers/impl/EndGameTranscriber.dart';
 import 'package:impulse/widgets/ScreenID.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 
 class DeathScreen extends StatelessWidget {
-  DeathScreen();
+  DeathScreen(){
+    ITranscriber endGame = EndGameTranscriber();
+    endGame.writeToState();
+  }
 
   @override
   Widget build(BuildContext context) {

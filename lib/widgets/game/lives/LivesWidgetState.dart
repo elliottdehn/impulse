@@ -14,6 +14,7 @@ class LivesWidgetState extends State<LivesWidget>
     implements IStateUpdateListener {
   int _lives;
   IPresenter presenter;
+  bool created = false;
 
   LivesWidgetState() {
     presenter = LivesWidgetPresenter(this);
@@ -21,8 +22,11 @@ class LivesWidgetState extends State<LivesWidget>
 
   @override
   onStateUpdate(IState newState) {
-    _setState(newState as LivesState);
-    _updateState();
+    LivesState livesState = newState as LivesState;
+    _setState(livesState);
+    if(created && _lives != null && _lives != 0) {
+      _updateState();
+    }
   }
 
   _updateState() {
@@ -35,6 +39,7 @@ class LivesWidgetState extends State<LivesWidget>
 
   @override
   Widget build(BuildContext context) {
+    created = true;
     if (_lives == 0) {
       ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
     }

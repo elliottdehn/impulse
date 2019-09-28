@@ -1,11 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/transcribers/ITranscriber.dart';
+import 'package:impulse/transcribers/impl/StartGameTranscriber.dart';
 import 'package:impulse/widgets/game/lives/LivesWidget.dart';
 import 'package:impulse/widgets/game/score/ScoreWidget.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowWidget.dart';
 
 class GameScreen extends NotificationListener {
+
+  GameScreen(){
+    ITranscriber start = StartGameTranscriber();
+    start.writeToState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
