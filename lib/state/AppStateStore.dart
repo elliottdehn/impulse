@@ -88,6 +88,7 @@ class _AppState {
     AppStateKey.KILLER_SYMBOL_STREAK: null,
     AppStateKey.NORMAL_SYMBOL_TOTAL: null,
     AppStateKey.KILLER_SYMBOL_TOTAL: null,
+    AppStateKey.PLAYER_MISSED_WINDOW:null
   };
 }
 
@@ -99,4 +100,5 @@ enum AppStateKey {
   KILLER_SYMBOL_STREAK,
   NORMAL_SYMBOL_TOTAL,
   KILLER_SYMBOL_TOTAL,
+  PLAYER_MISSED_WINDOW
 }

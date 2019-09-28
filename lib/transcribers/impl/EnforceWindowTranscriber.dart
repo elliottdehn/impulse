@@ -17,6 +17,7 @@ class EnforceWindowTranscriber extends Transcriber {
   @override
   writeToState() {
     if(_isNormalSymbolAndNotTapped()){
+      manager.updateState(AppStateKey.PLAYER_MISSED_WINDOW, true);
       hurtPlayer.writeToState();
     }
   }

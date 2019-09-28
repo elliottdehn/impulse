@@ -13,5 +13,6 @@ class StartGameTranscriber extends Transcriber {
     manager.updateState(AppStateKey.KILLER_SYMBOL_STREAK, 0);
     manager.updateState(AppStateKey.NORMAL_SYMBOL_TOTAL, 0);
     manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, 0);
+    manager.updateState(AppStateKey.PLAYER_MISSED_WINDOW, false);
   }
 }
