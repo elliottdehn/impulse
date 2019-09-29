@@ -7,4 +7,7 @@ class AppStateUpdateListener {
   listen(IStateUpdateHandler handler) {
     _manager.addStateListener(handler);
   }
+  unsubscribe(IStateUpdateHandler handler){
+    _manager.removeStateListener(handler);
+  }
 }

@@ -38,8 +38,10 @@ class SymbolWidgetPresenter
       playerReacted.writeToState();
     } else if(EventID.NEW_SYMBOL == id){
       newSymbol.writeToState();
+    } else if(EventID.DISPOSE == id){
+      unsubscribe(this);
     } else {
-      throw Exception("Invalid event ID for Symbol Presenter: $id");
+      throw Exception("Invalid event");
     }
   }
 

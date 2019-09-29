@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
+import 'package:impulse/widgets/EventID.dart';
+import 'package:impulse/widgets/IEventListener.dart';
 import 'package:impulse/widgets/IStateUpdateHandler.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
@@ -11,7 +13,7 @@ import 'package:impulse/widgets/game/lives/LivesStateBuilder.dart';
 @immutable
 class LivesWidgetPresenter
     with AppStateUpdateListener
-    implements IPresenter, IStateUpdateHandler {
+    implements IPresenter, IStateUpdateHandler, IEventListener {
   final IStateBuilder stateBuilder = LivesStateBuilder();
   final List<AppStateKey> keyListeners = [AppStateKey.LIVES];
   final IStateUpdateListener stateUpdateListener;
@@ -32,6 +34,13 @@ class LivesWidgetPresenter
   @override
   bool shouldNotifyForKeyStateChange(AppStateKey key) {
     return keyListeners.contains(key);
+  }
+
+  @override
+  onEvent(EventID id) {
+    if(EventID.DISPOSE == id){
+      unsubscribe(this);
+    }
   }
 
 }

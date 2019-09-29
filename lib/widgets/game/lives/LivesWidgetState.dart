@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
@@ -13,7 +14,7 @@ import 'LivesWidgetPresenter.dart';
 class LivesWidgetState extends State<LivesWidget>
     implements IStateUpdateListener {
   int _lives;
-  IPresenter presenter;
+  LivesWidgetPresenter presenter;
   bool created = false;
 
   LivesWidgetState() {
@@ -52,5 +53,11 @@ class LivesWidgetState extends State<LivesWidget>
             .textTheme
             .display1
             .apply(color: Color.fromRGBO(0, 0, 0, 1.0)));
+  }
+
+  @override
+  void dispose() {
+    presenter.onEvent(EventID.DISPOSE);
+    super.dispose();
   }
 }

@@ -3,17 +3,19 @@ import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/score/ScoreOracle.dart';
 import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
+import 'package:impulse/widgets/IEventListener.dart';
 import 'package:impulse/widgets/IStateUpdateHandler.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/score/ScoreStateBuilder.dart';
 
+import '../../EventID.dart';
 import 'ScoreState.dart';
 
 @immutable
 class ScoreWidgetPresenter
     with AppStateUpdateListener
-    implements IPresenter, IStateUpdateHandler {
+    implements IPresenter, IStateUpdateHandler, IEventListener {
   final ScoreStateBuilder stateBuilder = ScoreStateBuilder();
   final IOracle currentScore = ScoreOracle();
   final IStateUpdateListener stateUpdateListener;
@@ -40,5 +42,12 @@ class ScoreWidgetPresenter
   @override
   bool shouldNotifyForKeyStateChange(AppStateKey key) {
     return stateKeyListeners.contains(key);
+  }
+
+  @override
+  onEvent(EventID id) {
+    if(EventID.DISPOSE == id){
+      unsubscribe(this);
+    }
   }
 }

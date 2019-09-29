@@ -13,7 +13,6 @@ import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowStateBuilder.dart';
 
 import '../../IEventListener.dart';
-import '../../IState.dart';
 import 'ReactionWindowState.dart';
 
 @immutable
@@ -53,8 +52,8 @@ class ReactionWindowPresenter
   onEvent(EventID id) {
     if(EventID.ENFORCE_TAP == id){
       enforceWindow.writeToState();
-      IState state = windowStateBuilder.buildState();
-      stateUpdateListener.onStateUpdate(state);
+    } else if (EventID.DISPOSE == id){
+      unsubscribe(this);
     }
   }
 }

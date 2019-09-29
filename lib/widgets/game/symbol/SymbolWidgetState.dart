@@ -29,6 +29,10 @@ class SymbolWidgetState extends State<SymbolWidget>
     super.initState();
     _opacity = 0.0;
   }
+  //when to damage you
+  //displaying the lives
+  //how to damage you?
+  //timer issues
 
   @override
   onStateUpdate(IState newState) {
@@ -38,11 +42,11 @@ class SymbolWidgetState extends State<SymbolWidget>
 
     _symbolVisibilityTimer = new Timer(
         Duration(milliseconds: newStateSymbol.visibilityDuration),
-        () => _onSymbolHide());
+            () => _onSymbolHide());
 
     _symbolIntervalTimer = new Timer(
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
-        () => _onNewSymbol());
+            () => _onNewSymbol());
 
     if(created) {
       setState(() {});
@@ -94,6 +98,7 @@ class SymbolWidgetState extends State<SymbolWidget>
   void dispose() {
     _symbolIntervalTimer.cancel();
     _symbolVisibilityTimer.cancel();
+    _presenter.onEvent(EventID.DISPOSE);
     super.dispose();
   }
 }

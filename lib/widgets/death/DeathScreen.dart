@@ -8,7 +8,7 @@ import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 class DeathScreen extends StatelessWidget {
   DeathScreen(){
     ITranscriber endGame = EndGameTranscriber();
-    endGame.writeToState();
+    //endGame.writeToState();
   }
 
   @override

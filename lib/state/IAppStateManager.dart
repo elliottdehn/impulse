@@ -12,5 +12,6 @@ class IAppStateManager {
   }
 
   addStateListener(IStateUpdateHandler presenter) {}
+  removeStateListener(IStateUpdateHandler presenter) {}
   notifyListeners(AppStateKey key, value) {}
 }

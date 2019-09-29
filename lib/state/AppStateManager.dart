@@ -47,4 +47,9 @@ class AppStateManager implements IAppStateManager {
       presenters.add(presenter);
     }
   }
+
+  @override
+  removeStateListener(IStateUpdateHandler presenter) {
+    presenters.remove(presenter);
+  }
 }
