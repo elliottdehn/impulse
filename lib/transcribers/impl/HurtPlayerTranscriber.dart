@@ -4,6 +4,7 @@ import 'package:impulse/transcribers/Transcriber.dart';
 class HurtPlayerTranscriber extends Transcriber {
   @override
   writeToState() {
+    /*
     String symbol = manager.getStateValue(AppStateKey.SYMBOL);
     List<String> killerSymbols =
         manager.getConfigValue(AppConfigKey.FAILURE_LETTERS);
@@ -15,5 +16,6 @@ class HurtPlayerTranscriber extends Transcriber {
     } else {
       manager.updateState(AppStateKey.NORMAL_SYMBOL_STREAK, 0);
     }
+    */
   }
 }

@@ -3,12 +3,13 @@ import 'package:impulse/oracles/impl/interval/OracleIntervalRotating.dart';
 import 'package:impulse/oracles/impl/window/OracleReactionWindowConstant.dart';
 import 'package:impulse/oracles/impl/symbol/OracleSymbolsRandom.dart';
 import 'package:impulse/oracles/impl/visibility/OracleSymbolVisibilityConstant.dart';
+import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/widgets/IState.dart';
-import 'package:impulse/widgets/IStateBuilder.dart';
 
+import '../../StateBuilder.dart';
 import 'SymbolState.dart';
 
-class SymbolStateBuilder implements IStateBuilder {
+class SymbolStateBuilder extends StateBuilder {
   final IOracle visibilityDuration = OracleSymbolVisibilityConstant();
   final IOracle nextSymbolInterval = OracleIntervalRotating();
   final IOracle reactionWindow = OracleReactionWindowConstant();
@@ -17,7 +18,7 @@ class SymbolStateBuilder implements IStateBuilder {
   @override
   IState buildState() {
     SymbolState state = SymbolState();
-    state.symbol = nextSymbol.getAnswer();
+    state.symbol = manager.getStateValue(AppStateKey.SYMBOL);
     state.visibilityDuration = visibilityDuration.getAnswer();
     state.nextSymbolInterval = nextSymbolInterval.getAnswer();
     return state;

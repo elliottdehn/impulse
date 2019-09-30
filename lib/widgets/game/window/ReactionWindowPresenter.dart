@@ -36,9 +36,16 @@ class ReactionWindowPresenter
 
   @override
   void onModelChanged(AppStateKey key, value) {
-    ReactionWindowState state = ReactionWindowState();
-    if (shouldNotifyForKeyStateChange(key)) {
-      state = stateBuilder.buildState();
+    ReactionWindowState state = stateBuilder.buildState();
+    if (AppStateKey.SYMBOL_TAPPED_COUNT == key) {
+      if(value as int > 0) {
+        state.isStopped = true;
+        state.isReset = false;
+        stateUpdateListener.onStateUpdate(state);
+      }
+    } else if (AppStateKey.SYMBOL == key) {
+      state.isStopped = false;
+      state.isReset = true;
       stateUpdateListener.onStateUpdate(state);
     }
   }

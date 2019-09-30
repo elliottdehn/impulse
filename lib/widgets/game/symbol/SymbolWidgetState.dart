@@ -44,6 +44,7 @@ class SymbolWidgetState extends State<SymbolWidget>
         Duration(milliseconds: newStateSymbol.visibilityDuration),
             () => _onSymbolHide());
 
+    print(newStateSymbol.nextSymbolInterval.toString() + "\n");
     _symbolIntervalTimer = new Timer(
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
             () => _onNewSymbol());
@@ -58,6 +59,8 @@ class SymbolWidgetState extends State<SymbolWidget>
   }
 
   _onNewSymbol() {
+    String time = new DateTime.now().toIso8601String();
+    print(time + "\n");
     _presenter.onEvent(EventID.NEW_SYMBOL);
   }
 

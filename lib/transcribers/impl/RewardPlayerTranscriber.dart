@@ -9,6 +9,8 @@ class RewardPlayerTranscriber extends Transcriber {
         manager.getConfigValue(AppConfigKey.FAILURE_LETTERS);
     bool isKillerSymbol = killerSymbols.contains(symbol);
     if (isKillerSymbol) {
+      int killerSymbolTotal = manager.getStateValue(AppStateKey.KILLER_SYMBOL_TOTAL);
+      manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, killerSymbolTotal + 1);
       int killerSymbolStreak =
           manager.getStateValue(AppStateKey.KILLER_SYMBOL_STREAK);
       manager.updateState(

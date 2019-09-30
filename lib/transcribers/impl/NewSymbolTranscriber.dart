@@ -6,7 +6,7 @@ import 'package:impulse/transcribers/Transcriber.dart';
 import 'package:impulse/transcribers/impl/RewardPlayerTranscriber.dart';
 
 class NewSymbolTranscriber extends Transcriber {
-  final IOracle nextSymbol = OracleSymbolsRandom();
+  final IOracle nextSymbolGenerator = OracleSymbolsRandom();
   final ITranscriber rewardPlayer = RewardPlayerTranscriber();
 
   @override
@@ -17,7 +17,9 @@ class NewSymbolTranscriber extends Transcriber {
     if(!successSymbols.contains(symbol) && tapCount == 0){
       rewardPlayer.writeToState();
     }
-    manager.updateState(AppStateKey.SYMBOL, nextSymbol.getAnswer());
+
+    String nextSymbol = nextSymbolGenerator.getAnswer();
+    manager.updateState(AppStateKey.SYMBOL, nextSymbol);
     manager.updateState(AppStateKey.SYMBOL_TAPPED_COUNT, 0);
   }
 }

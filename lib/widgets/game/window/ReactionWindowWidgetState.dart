@@ -44,19 +44,28 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   @override
   onStateUpdate(IState newState) {
     ReactionWindowState state = newState as ReactionWindowState;
-    _baseReactionWindow = state.baseReactionWindow;
-    _currReactionWindow = state.currReactionWindow;
-    if(created){
-      windowEnforcement = new Timer(
-          Duration(milliseconds: _currReactionWindow), () => _onEnforceWindow());
 
-      if(state.isStopped) {
-        _controller.stop();
-      } else if(state.isReset){
-        _controller.reset();
-      } else if(!state.isStopped){
-        _controller.forward();
-      }
+    if(!created) {
+      _baseReactionWindow = state.baseReactionWindow;
+      _currReactionWindow = state.currReactionWindow;
+      return;
+    }
+
+    if(windowEnforcement == null && !state.isStopped) {
+      _controller.forward(); //run the controller
+      windowEnforcement = new Timer(
+          Duration(milliseconds: _currReactionWindow), () =>
+          _onEnforceWindow());
+    } else if (windowEnforcement != null && !windowEnforcement.isActive) {
+      _controller.reset();
+      _controller.forward(); //run the controller
+      windowEnforcement = new Timer(
+          Duration(milliseconds: _currReactionWindow), () =>
+          _onEnforceWindow());
+    }
+
+    if(state.isStopped != null && state.isStopped) {
+      _controller.stop();
     }
   }
 
