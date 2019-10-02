@@ -1,6 +1,5 @@
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/interval/OracleIntervalRotating.dart';
-import 'package:impulse/oracles/impl/window/OracleReactionWindowConstant.dart';
 import 'package:impulse/oracles/impl/symbol/OracleSymbolsRandom.dart';
 import 'package:impulse/oracles/impl/visibility/OracleSymbolVisibilityConstant.dart';
 import 'package:impulse/state/AppStateStore.dart';
@@ -12,7 +11,6 @@ import 'SymbolState.dart';
 class SymbolStateBuilder extends StateBuilder {
   final IOracle visibilityDuration = OracleSymbolVisibilityConstant();
   final IOracle nextSymbolInterval = OracleIntervalRotating();
-  final IOracle reactionWindow = OracleReactionWindowConstant();
   final IOracle nextSymbol = OracleSymbolsRandom();
 
   @override

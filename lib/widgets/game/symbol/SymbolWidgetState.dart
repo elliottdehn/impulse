@@ -17,6 +17,7 @@ class SymbolWidgetState extends State<SymbolWidget>
 
   String _symbol;
   bool _visible;
+  int _visibleDuration;
   Timer _symbolVisibilityTimer; //auto-events
   Timer _symbolIntervalTimer;
 
@@ -29,6 +30,17 @@ class SymbolWidgetState extends State<SymbolWidget>
     super.initState();
     _visible = false;
   }
+
+  _createHideSymbolTimer(BuildContext context){
+    if(_visible){
+      if(_symbolVisibilityTimer != null) {
+        _symbolVisibilityTimer.cancel();
+      }
+      _symbolVisibilityTimer = new Timer(
+          Duration(milliseconds: _visibleDuration),
+              () => _onSymbolHide());
+    }
+  }
   //when to damage you
   //displaying the lives
   //how to damage you?
@@ -38,14 +50,8 @@ class SymbolWidgetState extends State<SymbolWidget>
   onStateUpdate(IState newState) {
     SymbolState newStateSymbol = newState as SymbolState;
     _visible = true;
+    _visibleDuration = newStateSymbol.visibilityDuration;
     _symbol = newStateSymbol.symbol;
-
-    if(_symbolVisibilityTimer != null) {
-      _symbolVisibilityTimer.cancel();
-    }
-    _symbolVisibilityTimer = new Timer(
-        Duration(milliseconds: newStateSymbol.visibilityDuration),
-            () => _onSymbolHide());
 
     print(newStateSymbol.nextSymbolInterval.toString() + "\n");
 
@@ -79,6 +85,13 @@ class SymbolWidgetState extends State<SymbolWidget>
   @override
   Widget build(BuildContext context) {
     created = true;
+    //this is a call back to create the timer, which hides the symbol, strictly
+    //after the widget is done rendering. This way, we don't screw the player
+    //due to slow or inconsistent rendering speeds.
+    if(_visible) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _createHideSymbolTimer(context));
+    }
     return GestureDetector(
       onTapDown: (TapDownDetails t) {
         _onReact();
