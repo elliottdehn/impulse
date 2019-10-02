@@ -56,7 +56,7 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
       windowEnforcement = new Timer(
           Duration(milliseconds: _currReactionWindow), () =>
           _onEnforceWindow());
-    } else if (windowEnforcement != null && !windowEnforcement.isActive) {
+    } else if (windowEnforcement != null && !windowEnforcement.isActive && state.isReset) {
       _controller.reset();
       _controller.forward(); //run the controller
       windowEnforcement = new Timer(

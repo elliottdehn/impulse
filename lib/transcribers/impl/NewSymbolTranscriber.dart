@@ -21,5 +21,6 @@ class NewSymbolTranscriber extends Transcriber {
     String nextSymbol = nextSymbolGenerator.getAnswer();
     manager.updateState(AppStateKey.SYMBOL, nextSymbol);
     manager.updateState(AppStateKey.SYMBOL_TAPPED_COUNT, 0);
+    manager.updateState(AppStateKey.REACTION_WINDOW_CLOSED, false);
   }
 }

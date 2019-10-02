@@ -14,7 +14,7 @@ class OracleJudge extends Oracle {
     //true = reward the player
     //false = hurt the player
     return !_isTappedOnKillerSymbol() &&
-        !_isTappedOtherThanOnceOnSuccessSymbol();
+        !_isNormalSymbolAndNotTapped();
   }
 
   _isTappedOnKillerSymbol() {
@@ -23,9 +23,13 @@ class OracleJudge extends Oracle {
         (manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int > 0);
   }
 
-  _isTappedOtherThanOnceOnSuccessSymbol() {
-    var currentSymbol = manager.getStateValue(AppStateKey.SYMBOL);
-    return (!_failSymbols.contains(currentSymbol) &&
-        !(manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT) as int == 1));
+  _isNormalSymbolAndNotTapped() {
+    List<String> _normalSymbols = manager.getConfigValue(AppConfigKey.SUCCESS_LETTERS);
+    bool tapped = (manager.getStateValue(
+        AppStateKey.SYMBOL_TAPPED_COUNT) as int) > 0;
+    String symbol = manager.getStateValue(AppStateKey.SYMBOL);
+    bool normalSymbol = _normalSymbols.contains(symbol);
+    return !tapped && normalSymbol;
   }
+
 }

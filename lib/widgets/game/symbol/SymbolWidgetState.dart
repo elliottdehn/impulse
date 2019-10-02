@@ -16,7 +16,7 @@ class SymbolWidgetState extends State<SymbolWidget>
   bool created = false;
 
   String _symbol;
-  double _opacity;
+  bool _visible;
   Timer _symbolVisibilityTimer; //auto-events
   Timer _symbolIntervalTimer;
 
@@ -27,7 +27,7 @@ class SymbolWidgetState extends State<SymbolWidget>
   @override
   initState() {
     super.initState();
-    _opacity = 0.0;
+    _visible = false;
   }
   //when to damage you
   //displaying the lives
@@ -37,14 +37,22 @@ class SymbolWidgetState extends State<SymbolWidget>
   @override
   onStateUpdate(IState newState) {
     SymbolState newStateSymbol = newState as SymbolState;
-    _opacity = 1.0;
+    _visible = true;
     _symbol = newStateSymbol.symbol;
 
+    if(_symbolVisibilityTimer != null) {
+      _symbolVisibilityTimer.cancel();
+    }
     _symbolVisibilityTimer = new Timer(
         Duration(milliseconds: newStateSymbol.visibilityDuration),
             () => _onSymbolHide());
 
     print(newStateSymbol.nextSymbolInterval.toString() + "\n");
+
+    if(_symbolIntervalTimer != null) {
+      _symbolIntervalTimer.cancel();
+    }
+
     _symbolIntervalTimer = new Timer(
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
             () => _onNewSymbol());
@@ -59,15 +67,12 @@ class SymbolWidgetState extends State<SymbolWidget>
   }
 
   _onNewSymbol() {
-    String time = new DateTime.now().toIso8601String();
-    print(time + "\n");
     _presenter.onEvent(EventID.NEW_SYMBOL);
   }
 
   _onSymbolHide() {
-    _opacity = 0.0;
     if(created) {
-      setState(() {});
+      setState(() { _visible = false; });
     }
   }
 
@@ -79,8 +84,9 @@ class SymbolWidgetState extends State<SymbolWidget>
         _onReact();
       },
       child: Scaffold(
-        body: Opacity(
-          opacity: _opacity,
+        body: AnimatedOpacity(
+          opacity: _visible ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 25),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

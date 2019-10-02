@@ -8,6 +8,7 @@ class RewardPlayerTranscriber extends Transcriber {
     List<String> killerSymbols =
         manager.getConfigValue(AppConfigKey.FAILURE_LETTERS);
     bool isKillerSymbol = killerSymbols.contains(symbol);
+    bool isMissedWindow = manager.getStateValue(AppStateKey.REACTION_WINDOW_CLOSED);
     if (isKillerSymbol) {
       int killerSymbolTotal = manager.getStateValue(AppStateKey.KILLER_SYMBOL_TOTAL);
       manager.updateState(AppStateKey.KILLER_SYMBOL_TOTAL, killerSymbolTotal + 1);
@@ -15,7 +16,9 @@ class RewardPlayerTranscriber extends Transcriber {
           manager.getStateValue(AppStateKey.KILLER_SYMBOL_STREAK);
       manager.updateState(
           AppStateKey.KILLER_SYMBOL_STREAK, killerSymbolStreak + 1);
-    } else {
+    } else if(!isMissedWindow){
+      int successSymbolTotal = manager.getStateValue(AppStateKey.NORMAL_SYMBOL_TOTAL);
+      manager.updateState(AppStateKey.NORMAL_SYMBOL_TOTAL, successSymbolTotal + 1);
       int normalSymbolStreak =
           manager.getStateValue(AppStateKey.NORMAL_SYMBOL_STREAK);
       manager.updateState(
