@@ -16,7 +16,6 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   AnimationController _controller;
   int _baseReactionWindow;
   int _currReactionWindow;
-  Timer windowEnforcement;
 
   final double _baseHeight = 60;
 
@@ -39,6 +38,13 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
         //animation changed
       });
     });
+
+    _animation.addStatusListener((status)
+    {
+      if(status == AnimationStatus.completed){
+        _onEnforceWindow();
+      }
+    });
   }
 
   @override
@@ -51,21 +57,11 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
       return;
     }
 
-    if(windowEnforcement == null && !state.isStopped) {
-      _controller.forward(); //run the controller
-      windowEnforcement = new Timer(
-          Duration(milliseconds: _currReactionWindow), () =>
-          _onEnforceWindow());
-    } else if (windowEnforcement != null && !windowEnforcement.isActive && state.isReset) {
+    if(!state.isStopped || state.isReset) {
       _controller.reset();
       _controller.forward(); //run the controller
-      windowEnforcement = new Timer(
-          Duration(milliseconds: _currReactionWindow), () =>
-          _onEnforceWindow());
-    }
-
-    if(state.isStopped != null && state.isStopped) {
-      _controller.stop();
+    } else if(state.isStopped) {
+      _controller.stop(canceled: false);
     }
   }
 
@@ -95,7 +91,6 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   @override
   void dispose() {
     _controller.dispose();
-    windowEnforcement.cancel();
     stateUpdater.onEvent(EventID.DISPOSE);
     super.dispose();
   }

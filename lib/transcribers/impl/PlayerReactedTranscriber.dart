@@ -1,5 +1,6 @@
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/judge/OracleJudge.dart';
+import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/transcribers/ITranscriber.dart';
 import 'package:impulse/transcribers/Transcriber.dart';
 import 'package:impulse/transcribers/impl/HurtPlayerTranscriber.dart';
@@ -16,10 +17,13 @@ class PlayerReactedTranscriber extends Transcriber {
   @override
   writeToState() {
     writePlayerTapped.writeToState();
-    if (shouldRewardPlayer.getAnswer()) {
-      writeRewardPlayer.writeToState();
-    } else {
-      writeHurtPlayer.writeToState();
+    int taps = manager.getStateValue(AppStateKey.SYMBOL_TAPPED_COUNT);
+    if(taps == 1) {
+      if (shouldRewardPlayer.getAnswer()) {
+        writeRewardPlayer.writeToState();
+      } else {
+        writeHurtPlayer.writeToState();
+      }
     }
   }
 }
