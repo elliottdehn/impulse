@@ -96,23 +96,19 @@ class SymbolWidgetState extends State<SymbolWidget>
       onTapDown: (TapDownDetails t) {
         _onReact();
       },
-      child: Scaffold(
-        body: AnimatedOpacity(
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedOpacity(
           opacity: _visible ? 1.0 : 0.0,
           duration: Duration(milliseconds: 25),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              child:
                 Text('$_symbol',
                     style: Theme.of(context).textTheme.display1.apply(
                         fontSizeFactor: 8.0,
-                        color: Color.fromRGBO(0, 0, 0, 1.0))),
-              ],
+                        color: Color.fromRGBO(0, 0, 0, 1.0)),
             ),
           ),
         ),
-      ),
     );
   }
 

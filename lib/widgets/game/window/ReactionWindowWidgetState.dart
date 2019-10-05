@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
@@ -12,6 +10,7 @@ import 'ReactionWindowWidget.dart';
 class ReactionWindowWidgetState extends State<ReactionWindowWidget>
     with SingleTickerProviderStateMixin implements IStateUpdateListener {
 
+  Widget animatedObject = Container(color: Color.fromRGBO(0, 0, 0, 1.0));
   Animation<double> _animation;
   AnimationController _controller;
   int _baseReactionWindow;
@@ -80,8 +79,8 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
           alignment: Alignment.center,
           heightFactor: 1,
           widthFactor: _getWidthScalar(),
-          child: Container(color: Color.fromRGBO(0, 0, 0, 1.0)),
-        ));
+          child: animatedObject),
+        );
   }
 
   double _getWidthScalar() {

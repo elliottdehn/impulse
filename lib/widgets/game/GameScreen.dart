@@ -20,10 +20,6 @@ class GameScreen extends NotificationListener {
     return Stack(
       children: <Widget>[
         Container(
-          alignment: Alignment.center,
-          child: SymbolWidget(),
-        ),
-        Container(
             alignment: Alignment.bottomCenter, child: ReactionWindowWidget()),
         Container(
             alignment: Alignment.topLeft,
@@ -35,6 +31,10 @@ class GameScreen extends NotificationListener {
           child: new Padding(
               padding: EdgeInsets.fromLTRB(0, statusBarHeight, 20, 0),
               child: LivesWidget()),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: SymbolWidget(),
         )
       ],
     );
