@@ -3,9 +3,11 @@ import 'package:impulse/state/IAppStateManager.dart';
 import 'package:impulse/state/AppStateStore.dart';
 
 class AppStateManager implements IAppStateManager {
+  static final _state = new AppStateStore();
+
+
   static final AppStateManager _singleton =
       new AppStateManager._privateConstructor();
-  static final _state = new AppStateStore();
 
   factory AppStateManager() {
     return _singleton;
