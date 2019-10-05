@@ -38,7 +38,7 @@ class ScoreWidgetState extends State<ScoreWidget>
   @override
   Widget build(BuildContext context) {
     created = true;
-    return Text("Score: $_score",
+    return Text("🔥$_score",
         style: Theme.of(context)
             .textTheme
             .display1

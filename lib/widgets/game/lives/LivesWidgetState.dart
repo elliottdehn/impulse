@@ -46,7 +46,7 @@ class LivesWidgetState extends State<LivesWidget>
 
     String livesString = "";
     for (var i = 0; i < _lives; i++) {
-      livesString += "♥";
+      livesString += "❤";
     }
     return Text(livesString,
         style: Theme.of(context)

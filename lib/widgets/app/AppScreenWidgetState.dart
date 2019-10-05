@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 import 'package:impulse/widgets/death/DeathScreen.dart';
 import 'package:impulse/widgets/game/GameScreen.dart';
+import 'package:impulse/widgets/start/StartGameScreen.dart';
 
 import '../ScreenID.dart';
 import 'AppScreenWidget.dart';
@@ -12,7 +13,7 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
 
   @override
   void initState() {
-    _screen = ScreenID.GAME;
+    _screen = ScreenID.START;
     super.initState();
   }
   @override
@@ -40,7 +41,7 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         break;
       case ScreenID.START:
         // TODO: Handle this case.
-        return GameScreen();
+        return StartGameScreen();
         break;
     }
     throw Exception("Invalid screen: $_screen");
