@@ -8,7 +8,7 @@ class OracleKillerSymbolOdds extends Oracle {
   @override
   getAnswer() {
     var random = Random.secure();
-    return random.nextDouble() <=
+    return
         manager.getConfigValue(AppConfigKey.FAILURE_SYMBOL_ODDS);
   }
 }

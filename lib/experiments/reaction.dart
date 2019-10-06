@@ -25,7 +25,7 @@ class ReactionModel implements IModelBuilder<Reaction> {
 
   //Reaction windows
   ReactionWindow getReactionWindowConstant() {
-    return ReactionWindow() << _gameModel.baseReactionWindow;
+    return ReactionWindow(_gameModel.baseReactionWindow);
   }
 
   ReactionWindow getReactionWindowSpeedsUp() {
@@ -33,12 +33,12 @@ class ReactionModel implements IModelBuilder<Reaction> {
     double scaledWindow = baseWindow * _gameModel.reactionWindowScalar;
     int finalWindow =
         scaledWindow.round() + _gameModel.reactionWindowAdjustment;
-    return ReactionWindow() << finalWindow;
+    return ReactionWindow(finalWindow);
   }
 
   //Base reaction windows
   BaseReactionWindow getBaseReactionWindow() {
-    return BaseReactionWindow() << _gameModel.baseReactionWindow;
+    return BaseReactionWindow(_gameModel.baseReactionWindow);
   }
 }
 
@@ -49,10 +49,18 @@ class Reaction {
   const Reaction({this.reactionWindow, this.baseReactionWindow});
 }
 
-class ReactionWindow extends Value<int> {}
+class ReactionWindow extends Value<int> {
+  ReactionWindow(int value) : super(value);
+}
 
-class BaseReactionWindow extends Value<int> {}
+class BaseReactionWindow extends Value<int> {
+  BaseReactionWindow(int value) : super(value);
+}
 
-class IsStopped extends Value<bool> {}
+class IsStopped extends Value<bool> {
+  IsStopped(bool value) : super(value);
+}
 
-class IsReset extends Value<bool> {}
+class IsReset extends Value<bool> {
+  IsReset(bool value) : super(value);
+}

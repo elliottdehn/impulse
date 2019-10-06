@@ -28,9 +28,9 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Score getScoreBasic() {
-    return Score() <<
-        (50 * _gameModel.normalSymbolTotal) +
-            (500 * _gameModel.killerSymbolTotal);
+    int totalScoreFromNormals = (50 * ~_gameModel.normalSymbolTotal);
+    int totalScoreFromKillers = (500 * _gameModel.killerSymbolTotal);
+    return Score(totalScoreFromNormals + totalScoreFromKillers);
   }
 
   /*
@@ -45,9 +45,9 @@ class StatsModel implements IModelBuilder<Stats> {
         total += reaction;
       }
       int avg = (count / total).round();
-      return AvgReaction() << avg;
+      return AvgReaction(avg) << avg;
     }
-    return AvgReaction() << 0;
+    return AvgReaction(0) << 0;
   }
 
   /*
@@ -55,8 +55,7 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Streak getTotalStreakBasic() {
-    return Streak() <<
-        _gameModel.killerSymbolTotal + _gameModel.normalSymbolTotal;
+    return Streak(_gameModel.symbolStreak);
   }
 
   /*
@@ -64,7 +63,7 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Lives getLivesBasic() {
-    return Lives() << _gameModel.lives;
+    return Lives(_gameModel.lives);
   }
 }
 
@@ -77,10 +76,18 @@ class Stats {
   const Stats({this.score, this.avgReaction, this.streak, this.lives});
 }
 
-class Score with Value<int> {}
+class Score extends Value<int> {
+  Score(int value) : super(value);
+}
 
-class AvgReaction with Value<int> {}
+class AvgReaction extends Value<int> {
+  AvgReaction(int value) : super(value);
+}
 
-class Streak with Value<int> {}
+class Streak extends Value<int> {
+  Streak(int value) : super(value);
+}
 
-class Lives with Value<int> {}
+class Lives extends Value<int> {
+  Lives(int value) : super(value);
+}

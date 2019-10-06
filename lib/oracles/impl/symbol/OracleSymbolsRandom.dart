@@ -16,12 +16,6 @@ class OracleSymbolsRandom extends Oracle {
 
   @override
   getAnswer() {
-    var random = Random.secure();
-    Oracle killerOracle = OracleKillerSymbolOdds();
-    if (killerOracle.getAnswer()) {
-      return _failureLetters[random.nextInt(_failureLetters.length)];
-    } else {
-      return _successLetters[random.nextInt(_successLetters.length)];
-    }
+
   }
 }

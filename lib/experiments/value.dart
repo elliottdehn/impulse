@@ -1,7 +1,9 @@
 import 'package:impulse/widgets/EventID.dart';
 
 class Value<T> {
-  var value;
+  T value;
+
+  Value(this.value);
 
   //"get value""
   T operator ~() {
@@ -32,5 +34,12 @@ class Value<T> {
 }
 
 abstract class Updatable<T> extends Value {
-  update(EventID e);
+  Updatable(value) : super(value);
+
+  bool updatesOn(EventID e);
+
+  //update
+  updateForEventUsingFunction(EventID e, T Function(EventID) f){
+    this.value = Function.apply(f, [e]);
+  }
 }

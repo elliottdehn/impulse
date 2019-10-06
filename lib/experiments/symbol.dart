@@ -43,7 +43,7 @@ class SymbolModel implements IModelBuilder<Symbol> {
 
   //Get symbol
   Shown getShown() {
-    return Shown() << ~_gameModel.shown;
+    return Shown(~_gameModel.shown);
   }
 
   void setShown(EventID e) {}
@@ -51,19 +51,19 @@ class SymbolModel implements IModelBuilder<Symbol> {
   //Get interval
   IntervalTime getIntervalConstant() {
     int slowestIdx = 0;
-    return IntervalTime() << _gameModel.intervals[slowestIdx];
+    return IntervalTime(_gameModel.intervals[slowestIdx]);
   }
 
   IntervalTime getIntervalSpeedsUp() {
     double interval = _gameModel.intervals[_gameModel.intervalIdx] *
         _gameModel.intervalScalar;
     interval += _gameModel.intervalAdjustment;
-    return IntervalTime() << max(interval.round(), _gameModel.minimumInterval);
+    return IntervalTime(max(interval.round(), _gameModel.minimumInterval));
   }
 
   //Get visibility time
   VisibilityTime getVisibilityTimeConstant() {
-    return VisibilityTime() << _gameModel.visibilityTime;
+    return VisibilityTime(_gameModel.visibilityTime);
   }
 }
 
@@ -75,8 +75,14 @@ class Symbol {
   const Symbol({this.visibilityTime, this.intervalTime, this.shownSymbol});
 }
 
-class VisibilityTime extends Value<int> {}
+class VisibilityTime extends Value<int> {
+  VisibilityTime(int value) : super(value);
+}
 
-class IntervalTime extends Value<int> {}
+class IntervalTime extends Value<int> {
+  IntervalTime(int value) : super(value);
+}
 
-class Shown extends Value<String> {}
+class Shown extends Value<String> {
+  Shown(String value) : super(value);
+}
