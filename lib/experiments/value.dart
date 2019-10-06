@@ -1,10 +1,14 @@
+import 'package:impulse/widgets/EventID.dart';
+
 class Value<T> {
   var value;
 
+  //"get value""
   T operator ~() {
     return this.value;
   }
 
+  //"set value"
   operator <<(T source) {
     this.value = source;
   }
@@ -25,4 +29,8 @@ class Value<T> {
       return 0;
     }
   }
+}
+
+abstract class Updatable<T> extends Value {
+  update(EventID e);
 }

@@ -16,9 +16,7 @@ class ReactionModel implements IModelBuilder<Reaction> {
   Reaction build() {
     return new Reaction(
         reactionWindow: Function.apply(reactionWindowF, []),
-        baseReactionWindow: Function.apply(baseReactionWindowF, []),
-        isStopped: Function.apply(isStoppedF, []),
-        isReset: Function.apply(isResetF, []));
+        baseReactionWindow: Function.apply(baseReactionWindowF, []));
   }
 
   /*
@@ -27,36 +25,28 @@ class ReactionModel implements IModelBuilder<Reaction> {
 
   //Reaction windows
   ReactionWindow getReactionWindowConstant() {
-    return ReactionWindow() << 700;
+    return ReactionWindow() << _gameModel.baseReactionWindow;
+  }
+
+  ReactionWindow getReactionWindowSpeedsUp() {
+    int baseWindow = _gameModel.baseReactionWindow;
+    double scaledWindow = baseWindow * _gameModel.reactionWindowScalar;
+    int finalWindow =
+        scaledWindow.round() + _gameModel.reactionWindowAdjustment;
+    return ReactionWindow() << finalWindow;
   }
 
   //Base reaction windows
   BaseReactionWindow getBaseReactionWindow() {
     return BaseReactionWindow() << _gameModel.baseReactionWindow;
   }
-
-  //Is stopped
-  IsStopped getIsStopped() {
-    return IsStopped() << true;
-  }
-
-  //Is reset
-  IsReset getIsReset() {
-    return IsReset() << true;
-  }
 }
 
 class Reaction {
   final ReactionWindow reactionWindow;
   final BaseReactionWindow baseReactionWindow;
-  final IsStopped isStopped;
-  final IsReset isReset;
 
-  const Reaction(
-      {this.reactionWindow,
-      this.baseReactionWindow,
-      this.isStopped,
-      this.isReset});
+  const Reaction({this.reactionWindow, this.baseReactionWindow});
 }
 
 class ReactionWindow extends Value<int> {}
