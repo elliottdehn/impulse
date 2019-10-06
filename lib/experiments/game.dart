@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:impulse/experiments/event_listener.dart';
 import 'package:impulse/experiments/model_builder.dart';
+import 'package:impulse/experiments/symbol.dart' as prefix1;
 import 'package:impulse/widgets/EventID.dart';
 
 import 'reaction.dart';
@@ -21,20 +22,27 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
 
   /*
   Updaters
+
+  For the sake of sanity, fields requiring no further logic are directly updated
    */
 
   @override
   onUpdate(EventID e) {
     switch (e) {
       case EventID.NEW_SYMBOL:
+        //TODO: update intervals, visibility time, window time, streak
+        killerSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
+        shown.updateForEventUsingFunction(e, this.newSymbolF);
         reactionWindowClosed = false;
         shownTapCount = 0;
-        shown.updateForEventUsingFunction(e, this.newSymbolF);
         break;
       case EventID.ENFORCE_TAP:
         reactionWindowClosed = true;
         break;
       case EventID.PLAYER_REACTED:
+        //TODO: update streak
+        shownTapCount += 1;
+        normalSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
         // TODO: Handle this case.
         break;
       case EventID.GAME_STARTED:
@@ -159,8 +167,8 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
 
   ShownState shown = new ShownState(null);
   int shownTapCount = 0;
-  NormalSymbolTotalState normalSymbolTotal = new NormalSymbolTotalState(0);
-  int killerSymbolTotal = 0;
+  SymbolTotalState normalSymbolTotal = new SymbolTotalState(0);
+  SymbolTotalState killerSymbolTotal = new SymbolTotalState(0);
   List<int> reactionTimes = List();
   int symbolStreak = 0;
   int lives = 3;
@@ -172,8 +180,11 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
         normalOdds, normalSymbols, killerSymbols);
   }
 
-  int newNormalTotalF(EventID e){
-    return 0;
+  int symbolTotalF(EventID e) {
+    bool isNormal = normalSymbols.contains(~shown);
+    bool isAlreadyTapped = shownTapCount > 0;
+    return killerSymbolTotal.updateSymbolTotal(
+        e, killerSymbolTotal, isNormal, isAlreadyTapped);
   }
 }
 
@@ -197,20 +208,24 @@ class ShownState extends Updatable<String> {
   }
 }
 
-class NormalSymbolTotalState extends Updatable<int>{
-  List<EventID> updates = [EventID.PLAYER_REACTED];
+class SymbolTotalState extends Updatable<int> {
+  List<EventID> updates = [EventID.PLAYER_REACTED, EventID.NEW_SYMBOL];
 
-  NormalSymbolTotalState(value) : super(value);
+  SymbolTotalState(value) : super(value);
+
   @override
   bool updatesOn(EventID e) {
     return updates.contains(e);
   }
 
-  int updateNormalSymbolTotal(int currentNormalTotal, bool isNormalSymbol, bool alreadyTapped){
-    if(alreadyTapped){
-      return currentNormalTotal += 1;
+  int updateSymbolTotal(EventID e, SymbolTotalState currentTotal,
+      bool isNormalSymbol, bool alreadyTapped) {
+    if (EventID.PLAYER_REACTED == e && !alreadyTapped && isNormalSymbol) {
+      return currentTotal.value += 1;
+    } else if (EventID.NEW_SYMBOL == e && !alreadyTapped && !isNormalSymbol) {
+      return currentTotal.value += 1;
     } else {
-      return currentNormalTotal;
+      return ~currentTotal;
     }
   }
 }

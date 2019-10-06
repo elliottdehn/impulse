@@ -29,7 +29,7 @@ class StatsModel implements IModelBuilder<Stats> {
 
   Score getScoreBasic() {
     int totalScoreFromNormals = (50 * ~_gameModel.normalSymbolTotal);
-    int totalScoreFromKillers = (500 * _gameModel.killerSymbolTotal);
+    int totalScoreFromKillers = (500 * ~_gameModel.killerSymbolTotal);
     return Score(totalScoreFromNormals + totalScoreFromKillers);
   }
 
@@ -45,9 +45,9 @@ class StatsModel implements IModelBuilder<Stats> {
         total += reaction;
       }
       int avg = (count / total).round();
-      return AvgReaction(avg) << avg;
+      return AvgReaction(avg);
     }
-    return AvgReaction(0) << 0;
+    return AvgReaction(0);
   }
 
   /*

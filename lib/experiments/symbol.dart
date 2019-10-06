@@ -21,7 +21,6 @@ class SymbolModel implements IModelBuilder<Symbol> {
 
   @override
   Symbol build() {
-    //this allows for dynamically calling different algorithms
     Symbol symbol = new Symbol(
         visibilityTime: Function.apply(getVisibilityTimeF, []),
         intervalTime: Function.apply(getIntervalTimeF, []),
@@ -29,16 +28,8 @@ class SymbolModel implements IModelBuilder<Symbol> {
     return symbol;
   }
 
-  @override
-  onUpdate(EventID e) {}
-
-  @override
-  bool updatesOn(EventID e) {
-    return EventID.NEW_SYMBOL == e;
-  }
-
   /*
-  Strategies
+  GET Strategies
    */
 
   //Get symbol

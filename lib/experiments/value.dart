@@ -10,11 +10,6 @@ class Value<T> {
     return this.value;
   }
 
-  //"set value"
-  operator <<(T source) {
-    this.value = source;
-  }
-
   bool operator ==(Object that) {
     if (that is Value) {
       Value thatValue = that;
@@ -39,7 +34,7 @@ abstract class Updatable<T> extends Value {
   bool updatesOn(EventID e);
 
   //update
-  updateForEventUsingFunction(EventID e, T Function(EventID) f){
+  updateForEventUsingFunction(EventID e, T Function(EventID) f) {
     this.value = Function.apply(f, [e]);
   }
 }
