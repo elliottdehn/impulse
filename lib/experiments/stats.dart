@@ -7,12 +7,18 @@ class StatsModel implements IModelBuilder<Stats> {
   final GameModel _gameModel;
   StatsModel(this._gameModel);
 
+  Score Function() scoreF;
+  AvgReaction Function() avgReactionF;
+  Streak Function() streakF;
+  Lives Function() livesF;
+
   @override
   Stats build() {
     Stats stats = new Stats(
-        score: getScoreBasic(),
-        avgReaction: getAvgReactionTimeBasic(),
-        streak: getTotalStreakBasic());
+        score: Function.apply(scoreF, []),
+        avgReaction: Function.apply(avgReactionF, []),
+        streak: Function.apply(streakF, []),
+        lives: Function.apply(livesF, []));
 
     return stats;
   }
@@ -52,14 +58,23 @@ class StatsModel implements IModelBuilder<Stats> {
     return Streak() <<
         _gameModel.killerSymbolTotal + _gameModel.normalSymbolTotal;
   }
+
+  /*
+  Lives
+   */
+
+  Lives getLivesBasic() {
+    return Lives() << _gameModel.lives;
+  }
 }
 
 class Stats {
   final Score score;
   final AvgReaction avgReaction;
   final Streak streak;
+  final Lives lives;
 
-  Stats({this.score, this.avgReaction, this.streak});
+  const Stats({this.score, this.avgReaction, this.streak, this.lives});
 }
 
 class Score with Value<int> {}
@@ -67,3 +82,5 @@ class Score with Value<int> {}
 class AvgReaction with Value<int> {}
 
 class Streak with Value<int> {}
+
+class Lives with Value<int> {}

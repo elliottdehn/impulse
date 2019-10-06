@@ -4,22 +4,26 @@ import 'package:impulse/experiments/model_builder.dart';
 import 'value.dart';
 
 class ReactionModel implements IModelBuilder<Reaction> {
-//this is maybe a little more confusing than it needs to be
-//consider refactoring the (class XModel) pattern to (extends Model<X>)
+  ReactionWindow Function() reactionWindowF;
+  BaseReactionWindow Function() baseReactionWindowF;
+  IsStopped Function() isStoppedF;
+  IsReset Function() isResetF;
 
   final GameModel _gameModel;
   ReactionModel(this._gameModel);
 
-  //Game model will dynamically pick the right algorithms
-
   @override
   Reaction build() {
     return new Reaction(
-        reactionWindow: getReactionWindowConstant(),
-        baseReactionWindow: getBaseReactionWindow(),
-        isStopped: getIsStopped(),
-        isReset: getIsReset());
+        reactionWindow: Function.apply(reactionWindowF, []),
+        baseReactionWindow: Function.apply(baseReactionWindowF, []),
+        isStopped: Function.apply(isStoppedF, []),
+        isReset: Function.apply(isResetF, []));
   }
+
+  /*
+  Strategies
+   */
 
   //Reaction windows
   ReactionWindow getReactionWindowConstant() {
@@ -48,7 +52,7 @@ class Reaction {
   final IsStopped isStopped;
   final IsReset isReset;
 
-  Reaction(
+  const Reaction(
       {this.reactionWindow,
       this.baseReactionWindow,
       this.isStopped,
