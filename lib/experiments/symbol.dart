@@ -1,16 +1,19 @@
+import 'package:impulse/experiments/model_builder.dart';
+
 import 'game.dart';
 import 'value.dart';
 
-class SymbolModel {
+class SymbolModel implements IModelBuilder<Symbol> {
   final GameModel _gameModel;
   SymbolModel(this._gameModel);
 
-  //Game model will dynamically pick the right algorithms
-  Symbol getSymbol() {
+  @override
+  Symbol build() {
+    //this allows for dynamically calling different algorithms
     Symbol symbol = new Symbol(
-        visibilityTime: _gameModel.visibilityTime,
-        intervalTime: _gameModel.intervalTime,
-        shownSymbol: _gameModel.shownSymbol);
+        visibilityTime: getVisibilityTimeConstant(),
+        intervalTime: getIntervalConstant(),
+        shownSymbol: getShownBasic());
     return symbol;
   }
 
@@ -20,7 +23,7 @@ class SymbolModel {
   }
 
   //Get interval
-  IntervalTime getIntervalRotating() {
+  IntervalTime getIntervalConstant() {
     return IntervalTime() << 3000;
   }
 

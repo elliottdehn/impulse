@@ -1,16 +1,18 @@
+import 'package:impulse/experiments/model_builder.dart';
+
 import 'game.dart';
 import 'value.dart';
 
-class StatsModel {
+class StatsModel implements IModelBuilder<Stats> {
   final GameModel _gameModel;
   StatsModel(this._gameModel);
 
-  //the game model decides which strategies to use for us dynamically
-  Stats getStats() {
+  @override
+  Stats build() {
     Stats stats = new Stats(
-        score: _gameModel.score,
-        avgReaction: _gameModel.avgReaction,
-        streak: _gameModel.streak);
+        score: getScoreBasic(),
+        avgReaction: getAvgReactionTimeBasic(),
+        streak: getTotalStreakBasic());
 
     return stats;
   }
