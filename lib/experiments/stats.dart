@@ -63,7 +63,7 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Lives getLivesBasic() {
-    return Lives(_gameModel.lives);
+    return Lives(~_gameModel.lives);
   }
 }
 

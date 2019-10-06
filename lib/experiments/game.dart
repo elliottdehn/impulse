@@ -1,23 +1,36 @@
 import 'dart:core';
-import 'dart:core' as prefix0;
-import 'dart:math';
 
 import 'package:impulse/experiments/event_listener.dart';
 import 'package:impulse/experiments/model_builder.dart';
-import 'package:impulse/experiments/symbol.dart' as prefix1;
 import 'package:impulse/widgets/EventID.dart';
 
 import 'reaction.dart';
 import 'stats.dart';
 import 'symbol.dart';
-import 'value.dart';
+import 'updaters.dart';
 
 class GameModel implements IModelBuilder<Game>, IEventListener {
-  static final GameModel _singleton = GameModel._privateConstructor();
+  static GameModel _singleton;
   GameModel._privateConstructor();
 
   factory GameModel() {
-    return _singleton;
+    if(_singleton == null){
+      _singleton = GameModel._privateConstructor();
+      return _singleton;
+    } else {
+      return _singleton;
+    }
+  }
+
+  _reset(){
+    if(_singleton != null){
+      _kill();
+    }
+    _singleton = GameModel._privateConstructor();
+  }
+
+  _kill(){
+    _singleton = null;
   }
 
   /*
@@ -31,6 +44,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     switch (e) {
       case EventID.NEW_SYMBOL:
         //TODO: update intervals, visibility time, window time, streak
+        isGameStarted = true;
         killerSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
         shown.updateForEventUsingFunction(e, this.newSymbolF);
         reactionWindowClosed = false;
@@ -38,18 +52,19 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
         break;
       case EventID.ENFORCE_TAP:
         reactionWindowClosed = true;
+        lives.updateForEventUsingFunction(e, livesF);
         break;
       case EventID.PLAYER_REACTED:
         //TODO: update streak
         shownTapCount += 1;
         normalSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
-        // TODO: Handle this case.
+        lives.updateForEventUsingFunction(e, livesF);
         break;
       case EventID.GAME_STARTED:
-        // TODO: Handle this case.
+        _reset();
         break;
       case EventID.DISPOSE:
-        // TODO: Handle this case.
+        // For now: do nothing (info is used on death screen)
         break;
     }
   }
@@ -141,11 +156,14 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     "Z"
   ];
 
+  bool isGameStarted = false;
+
   final int baseReactionWindow = _startReactionWindowConst;
   final int minimumReactionWindow = 400; //milliseconds
   double reactionWindowScalar = 1.0; //multiplied to base reaction window
   int reactionWindowAdjustment = 0; //added to scaled window
   bool reactionWindowClosed = true;
+  Stopwatch reactionStopwatch;
 
   final double baseNormalOdds = 0.8;
   double normalOdds = 0.8;
@@ -171,7 +189,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   SymbolTotalState killerSymbolTotal = new SymbolTotalState(0);
   List<int> reactionTimes = List();
   int symbolStreak = 0;
-  int lives = 3;
+  LivesState lives = LivesState(3);
   int intervalIdx = 1;
   int visibilityTime = 125;
 
@@ -184,51 +202,15 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     bool isNormal = normalSymbols.contains(~shown);
     bool isAlreadyTapped = shownTapCount > 0;
     return killerSymbolTotal.updateSymbolTotal(
-        e, killerSymbolTotal, isNormal, isAlreadyTapped);
+        e, isNormal, isAlreadyTapped);
+  }
+
+  int livesF(EventID e){
+    bool isNormal = normalSymbols.contains(~shown);
+    return lives.updateLivesMultiAllowedForNormal(e, isNormal);
   }
 }
 
-class ShownState extends Updatable<String> {
-  ShownState(value) : super(value);
-
-  @override
-  updatesOn(EventID e) {
-    return EventID.NEW_SYMBOL == e;
-  }
-
-  String updateSymbolConstantOdds(
-      double normalOdds, List<String> normals, List<String> killers) {
-    var random = Random.secure();
-    bool isNormalSymbol = random.nextDouble() <= normalOdds;
-    if (isNormalSymbol) {
-      return normals[random.nextInt(normals.length)];
-    } else {
-      return killers[random.nextInt(killers.length)];
-    }
-  }
-}
-
-class SymbolTotalState extends Updatable<int> {
-  List<EventID> updates = [EventID.PLAYER_REACTED, EventID.NEW_SYMBOL];
-
-  SymbolTotalState(value) : super(value);
-
-  @override
-  bool updatesOn(EventID e) {
-    return updates.contains(e);
-  }
-
-  int updateSymbolTotal(EventID e, SymbolTotalState currentTotal,
-      bool isNormalSymbol, bool alreadyTapped) {
-    if (EventID.PLAYER_REACTED == e && !alreadyTapped && isNormalSymbol) {
-      return currentTotal.value += 1;
-    } else if (EventID.NEW_SYMBOL == e && !alreadyTapped && !isNormalSymbol) {
-      return currentTotal.value += 1;
-    } else {
-      return ~currentTotal;
-    }
-  }
-}
 
 class Game {
   final Stats stats;
