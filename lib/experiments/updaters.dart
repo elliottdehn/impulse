@@ -55,10 +55,10 @@ class LivesState extends Updatable<int> {
     return updates.contains(e);
   }
 
-  int updateLivesMultiAllowedForNormal(EventID e, bool isNormal){
+  int updateLivesMultiAllowedForNormal(EventID e, bool isNormal, bool isTapped){
     if(EventID.PLAYER_REACTED == e && !isNormal) {
       this.value -= 1;
-    } else if (EventID.ENFORCE_TAP == e && isNormal){
+    } else if (EventID.ENFORCE_TAP == e && isNormal && !isTapped){
       this.value -= 1;
     }
     return this.value;

@@ -10,6 +10,7 @@ import 'symbol.dart';
 import 'updaters.dart';
 
 class GameModel implements IModelBuilder<Game>, IEventListener {
+  //Singleton that can have its data cleared and reset
   static GameModel _singleton;
   GameModel._privateConstructor();
 
@@ -26,6 +27,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     if(_singleton != null){
       _kill();
     }
+
     _singleton = GameModel._privateConstructor();
   }
 
@@ -34,13 +36,11 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   }
 
   /*
-  Updaters
-
-  For the sake of sanity, fields requiring no further logic are directly updated
+  Update
    */
 
   @override
-  onUpdate(EventID e) {
+  Game onUpdate(EventID e) {
     switch (e) {
       case EventID.NEW_SYMBOL:
         //TODO: update intervals, visibility time, window time, streak
@@ -67,10 +67,11 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
         // For now: do nothing (info is used on death screen)
         break;
     }
+    return build();
   }
 
   /*
-  Creators
+  Create
    */
 
   @override
@@ -179,6 +180,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     _intervalMedium,
     _intervalFast
   ];
+  int intervalIdx = 1;
   int minimumInterval = _startReactionWindowConst + 200; //milliseconds
   double intervalScalar = 1.0; //0.0 <-> 1.0 <-> infinity
   int intervalAdjustment = 0; //added to the final interval
@@ -190,7 +192,6 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   List<int> reactionTimes = List();
   int symbolStreak = 0;
   LivesState lives = LivesState(3);
-  int intervalIdx = 1;
   int visibilityTime = 125;
 
   String newSymbolF(EventID e) {
@@ -206,8 +207,11 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   }
 
   int livesF(EventID e){
-    bool isNormal = normalSymbols.contains(~shown);
-    return lives.updateLivesMultiAllowedForNormal(e, isNormal);
+    bool normalContains = normalSymbols.contains(~shown);
+    bool killerContains = killerSymbols.contains(~shown);
+    bool isNormal = !killerContains && normalContains;
+    bool isTapped = shownTapCount > 0;
+    return lives.updateLivesMultiAllowedForNormal(e, isNormal, isTapped);
   }
 }
 

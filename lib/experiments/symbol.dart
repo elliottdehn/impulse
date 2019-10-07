@@ -24,7 +24,7 @@ class SymbolModel implements IModelBuilder<Symbol> {
     Symbol symbol = new Symbol(
         visibilityTime: Function.apply(getVisibilityTimeF, []),
         intervalTime: Function.apply(getIntervalTimeF, []),
-        shownSymbol: Function.apply(getVisibilityTimeF, []));
+        shownSymbol: Function.apply(getShownF, []));
     return symbol;
   }
 
