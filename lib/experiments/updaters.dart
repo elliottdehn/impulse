@@ -34,10 +34,10 @@ class SymbolTotalState extends Updatable<int> {
   }
 
   int updateSymbolTotal(EventID e,
-      bool isNormalSymbol, bool isKillerSymbol, bool alreadyTapped) {
-    if (EventID.PLAYER_REACTED == e && !alreadyTapped && isNormalSymbol) {
+      bool isNormalSymbol, bool isKillerSymbol, bool tappedOnce, bool tappedZero) {
+    if (EventID.PLAYER_REACTED == e && tappedOnce && isNormalSymbol) {
       return this.value += 1;
-    } else if (EventID.NEW_SYMBOL == e && !alreadyTapped && isKillerSymbol) {
+    } else if (EventID.NEW_SYMBOL == e && tappedZero && isKillerSymbol) {
       return this.value += 1;
     } else {
       return ~this;

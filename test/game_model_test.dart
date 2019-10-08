@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:impulse/experiments/game.dart';
 import 'package:impulse/experiments/updaters.dart';
 import 'package:impulse/widgets/EventID.dart';
@@ -10,7 +9,7 @@ Things to make into fixture methods:
 - tap(x)
  */
 
-//!!!!!!! <-- Indicates that the test uncovered a bug I fixed
+//! <-- Indicates that the test uncovered a bug I fixed
 void main(){
 
   /*
@@ -63,7 +62,7 @@ void main(){
     assert(gm1 == gm2);
   });
 
-  //!!!!!!!
+  //!
   test('Game state resets on start game', () {
     GameModel gm = GameModel();
     int tapCountInit = gm.state.i;
@@ -106,6 +105,7 @@ void main(){
     expect(endLives, startLives);
   });
 
+  //!
   test('Increase normal symbol count for successful tap', (){
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: true);
@@ -115,6 +115,7 @@ void main(){
     expect(endTotal, startTotal + 1);
   });
 
+  //!
   test('Increase normal symbol count one for multiple successful tap', (){
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: true);
@@ -124,7 +125,7 @@ void main(){
     expect(endTotal, startTotal + 1);
   });
 
-  //!!!!!!!!!!!!!!
+  //!
   test('Increase killer symbol count one for not tapping before symbol.', (){
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: false);
@@ -135,7 +136,7 @@ void main(){
     expect(endTotal, startTotal + 1);
   });
 
-  //!!!!!!!!!!!!!!!
+  //!
   test('Do nothing on tap before new symbol', (){
     GameModel gm = GameModel();
     gm.onUpdate(EventID.GAME_STARTED);
@@ -149,6 +150,14 @@ void main(){
     expect(endLives, startLives);
     expect(endNormalTotal, startNormalTotal);
     expect(endKillerTotal, startKillerTotal);
+  });
+
+  test('Totals and taps zero at start', (){
+    GameModel gm = GameModel();
+    gm.onUpdate(EventID.GAME_STARTED);
+    expect(~gm.state.killerSymbolTotal, 0);
+    expect(~gm.state.normalSymbolTotal, 0);
+    expect(gm.state.shownTapCount, 0);
   });
 
   /*
@@ -183,6 +192,7 @@ void main(){
     expect(endLives, startLives);
   });
 
+  //!
   test('Increase normal symbol count one for multiple before & after', (){
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: true);

@@ -123,9 +123,10 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   int symbolTotalF(EventID e) {
     bool normalContains = gs.normalSymbols.contains(~gs.shown);
     bool killerContains = gs.killerSymbols.contains(~gs.shown);
-    bool isAlreadyTapped = gs.shownTapCount > 0;
+    bool tappedOnce = gs.shownTapCount == 1;
+    bool tappedZero = gs.shownTapCount == 0;
     return gs.killerSymbolTotal.updateSymbolTotal(
-        e, normalContains, killerContains, isAlreadyTapped);
+        e, normalContains, killerContains, tappedOnce, tappedZero);
   }
 
   int livesF(EventID e){
