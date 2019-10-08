@@ -67,35 +67,39 @@ void main() {
     }
   }
 
-  //return lives lost
-  int _doRound(GameModel gm, bool normal, {int preWindowTaps, int postWindowTaps}){
+  //return expected lives lost
+  int _doRound(GameModel gm, bool normal, {int preWindowTaps, int postWindowTaps, int times}){
     preWindowTaps = nullToZero(preWindowTaps);
     postWindowTaps = nullToZero(postWindowTaps);
-    gm.onUpdate(EventID.NEW_SYMBOL);
-    String symbol = normal ? getNormalSymbol(gm) : getKillerSymbol(gm);
-    gm.state.shown = new ShownState(symbol);
+    times = times == null ? 1 : times;
 
-    _tapX(gm, preWindowTaps);
-    gm.onUpdate(EventID.ENFORCE_TAP);
-    _tapX(gm, postWindowTaps);
+    for(int idx in listN(times)) {
+      gm.onUpdate(EventID.NEW_SYMBOL);
+      String symbol = normal ? getNormalSymbol(gm) : getKillerSymbol(gm);
+      gm.state.shown = new ShownState(symbol);
 
-    if(!normal){
+      _tapX(gm, preWindowTaps);
+      gm.onUpdate(EventID.ENFORCE_TAP);
+      _tapX(gm, postWindowTaps);
+    }
+
+    if (!normal) {
       return preWindowTaps + postWindowTaps;
     } else {
       return preWindowTaps == 0 ? 1 : 0;
     }
   }
 
-  int _doRoundNoTap(GameModel gm, {bool isNormal}){
-    return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 0);
+  int _doRoundNoTap(GameModel gm, {bool isNormal, int times}){
+    return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 0, times: times);
   }
 
-  int _doRoundPreTap(GameModel gm, {bool isNormal}){
-    return _doRound(gm, isNormal, preWindowTaps: 1, postWindowTaps: 0);
+  int _doRoundPreTap(GameModel gm, {bool isNormal, int times}){
+    return _doRound(gm, isNormal, preWindowTaps: 1, postWindowTaps: 0, times: times);
   }
 
-  int _doRoundPostTap(GameModel gm, {bool isNormal}){
-    return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 1);
+  int _doRoundPostTap(GameModel gm, {bool isNormal, int times}){
+    return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 1, times: times);
   }
 
 
@@ -286,64 +290,28 @@ void main() {
     gm.onUpdate(EventID.GAME_STARTED);
     int startLives = ~gm.state.lives;
     int expectedLostLives = 0;
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
-    expectedLostLives += _doRoundNoTap(gm, isNormal: false);
-    expectedLostLives += _doRoundPreTap(gm, isNormal: true);
+
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 50);
+    expectedLostLives += _doRoundNoTap(gm, isNormal: false, times: 50);
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 1);
+    expectedLostLives += _doRoundNoTap(gm, isNormal: false, times: 1);
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 1);
+    expectedLostLives += _doRoundNoTap(gm, isNormal: false, times: 1);
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 1);
+    expectedLostLives += _doRoundNoTap(gm, isNormal: false, times: 1);
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 50);
+    expectedLostLives += _doRoundNoTap(gm, isNormal: false, times: 1);
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 1);
+    expectedLostLives += _doRoundNoTap(gm, isNormal: false, times: 50);
+    expectedLostLives += _doRoundPreTap(gm, isNormal: true, times: 1);
     int resultNormalTotal = ~gm.state.normalSymbolTotal; //28 normal
     int resultKillerTotal = ~gm.state.killerSymbolTotal; //22 killer
     int endLives = ~gm.state.lives;
     int resultLostLives = startLives - endLives;
     expect(expectedLostLives, 0); //sanity check to test my own testing logic
     expect(resultLostLives, expectedLostLives);
-    expect(resultNormalTotal, 28);
-    expect(resultKillerTotal, 22);
+    expect(resultNormalTotal, 105);
+    expect(resultKillerTotal, 104);
   });
 
 }
