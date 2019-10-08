@@ -15,9 +15,9 @@ class SymbolModel implements IModelBuilder<Symbol> {
   void Function() setIntervalTimeF;
   void Function() setVisibilityTimeF;
 
-  final GameModel _gameModel;
+  final GameState _gameState;
 
-  SymbolModel(this._gameModel);
+  SymbolModel(this._gameState);
 
   @override
   Symbol build() {
@@ -34,7 +34,7 @@ class SymbolModel implements IModelBuilder<Symbol> {
 
   //Get symbol
   Shown getShown() {
-    return Shown(~_gameModel.shown);
+    return Shown(~_gameState.shown);
   }
 
   void setShown(EventID e) {}
@@ -42,19 +42,19 @@ class SymbolModel implements IModelBuilder<Symbol> {
   //Get interval
   IntervalTime getIntervalConstant() {
     int slowestIdx = 0;
-    return IntervalTime(_gameModel.intervals[slowestIdx]);
+    return IntervalTime(_gameState.intervals[slowestIdx]);
   }
 
   IntervalTime getIntervalSpeedsUp() {
-    double interval = _gameModel.intervals[_gameModel.intervalIdx] *
-        _gameModel.intervalScalar;
-    interval += _gameModel.intervalAdjustment;
-    return IntervalTime(max(interval.round(), _gameModel.minimumInterval));
+    double interval = _gameState.intervals[_gameState.intervalIdx] *
+        _gameState.intervalScalar;
+    interval += _gameState.intervalAdjustment;
+    return IntervalTime(max(interval.round(), _gameState.minimumInterval));
   }
 
   //Get visibility time
   VisibilityTime getVisibilityTimeConstant() {
-    return VisibilityTime(_gameModel.visibilityTime);
+    return VisibilityTime(_gameState.visibilityTime);
   }
 }
 

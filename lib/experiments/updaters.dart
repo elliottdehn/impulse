@@ -34,10 +34,10 @@ class SymbolTotalState extends Updatable<int> {
   }
 
   int updateSymbolTotal(EventID e,
-      bool isNormalSymbol, bool alreadyTapped) {
+      bool isNormalSymbol, bool isKillerSymbol, bool alreadyTapped) {
     if (EventID.PLAYER_REACTED == e && !alreadyTapped && isNormalSymbol) {
       return this.value += 1;
-    } else if (EventID.NEW_SYMBOL == e && !alreadyTapped && !isNormalSymbol) {
+    } else if (EventID.NEW_SYMBOL == e && !alreadyTapped && isKillerSymbol) {
       return this.value += 1;
     } else {
       return ~this;
@@ -55,8 +55,8 @@ class LivesState extends Updatable<int> {
     return updates.contains(e);
   }
 
-  int updateLivesMultiAllowedForNormal(EventID e, bool isNormal, bool isTapped){
-    if(EventID.PLAYER_REACTED == e && !isNormal) {
+  int updateLivesMultiAllowedForNormal(EventID e, bool isNormal, bool isKiller, bool isTapped){
+    if(EventID.PLAYER_REACTED == e && isKiller) {
       this.value -= 1;
     } else if (EventID.ENFORCE_TAP == e && isNormal && !isTapped){
       this.value -= 1;

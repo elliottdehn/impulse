@@ -4,8 +4,8 @@ import 'game.dart';
 import 'value.dart';
 
 class StatsModel implements IModelBuilder<Stats> {
-  final GameModel _gameModel;
-  StatsModel(this._gameModel);
+  final GameState _gameState;
+  StatsModel(this._gameState);
 
   Score Function() scoreF;
   AvgReaction Function() avgReactionF;
@@ -28,8 +28,8 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Score getScoreBasic() {
-    int totalScoreFromNormals = (50 * ~_gameModel.normalSymbolTotal);
-    int totalScoreFromKillers = (500 * ~_gameModel.killerSymbolTotal);
+    int totalScoreFromNormals = (50 * ~_gameState.normalSymbolTotal);
+    int totalScoreFromKillers = (500 * ~_gameState.killerSymbolTotal);
     return Score(totalScoreFromNormals + totalScoreFromKillers);
   }
 
@@ -38,10 +38,10 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   AvgReaction getAvgReactionTimeBasic() {
-    int count = _gameModel.reactionTimes.length;
+    int count = _gameState.reactionTimes.length;
     if (count > 0) {
       int total = 0;
-      for (int reaction in _gameModel.reactionTimes) {
+      for (int reaction in _gameState.reactionTimes) {
         total += reaction;
       }
       int avg = (count / total).round();
@@ -55,7 +55,7 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Streak getTotalStreakBasic() {
-    return Streak(_gameModel.symbolStreak);
+    return Streak(_gameState.symbolStreak);
   }
 
   /*
@@ -63,7 +63,7 @@ class StatsModel implements IModelBuilder<Stats> {
    */
 
   Lives getLivesBasic() {
-    return Lives(~_gameModel.lives);
+    return Lives(~_gameState.lives);
   }
 }
 

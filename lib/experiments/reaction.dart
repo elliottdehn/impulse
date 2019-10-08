@@ -9,8 +9,8 @@ class ReactionModel implements IModelBuilder<Reaction> {
   IsStopped Function() isStoppedF;
   IsReset Function() isResetF;
 
-  final GameModel _gameModel;
-  ReactionModel(this._gameModel);
+  final GameState _gameState;
+  ReactionModel(this._gameState);
 
   @override
   Reaction build() {
@@ -25,20 +25,20 @@ class ReactionModel implements IModelBuilder<Reaction> {
 
   //Reaction windows
   ReactionWindow getReactionWindowConstant() {
-    return ReactionWindow(_gameModel.baseReactionWindow);
+    return ReactionWindow(_gameState.baseReactionWindow);
   }
 
   ReactionWindow getReactionWindowSpeedsUp() {
-    int baseWindow = _gameModel.baseReactionWindow;
-    double scaledWindow = baseWindow * _gameModel.reactionWindowScalar;
+    int baseWindow = _gameState.baseReactionWindow;
+    double scaledWindow = baseWindow * _gameState.reactionWindowScalar;
     int finalWindow =
-        scaledWindow.round() + _gameModel.reactionWindowAdjustment;
+        scaledWindow.round() + _gameState.reactionWindowAdjustment;
     return ReactionWindow(finalWindow);
   }
 
   //Base reaction windows
   BaseReactionWindow getBaseReactionWindow() {
-    return BaseReactionWindow(_gameModel.baseReactionWindow);
+    return BaseReactionWindow(_gameState.baseReactionWindow);
   }
 }
 

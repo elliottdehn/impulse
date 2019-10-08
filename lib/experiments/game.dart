@@ -11,28 +11,24 @@ import 'updaters.dart';
 
 class GameModel implements IModelBuilder<Game>, IEventListener {
   //Singleton that can have its data cleared and reset
-  static GameModel _singleton;
-  GameModel._privateConstructor();
+  static GameModel _singleton = GameModel._privateConstructor();
+  static GameState gs = new GameState();
 
   factory GameModel() {
-    if(_singleton == null){
-      _singleton = GameModel._privateConstructor();
-      return _singleton;
-    } else {
-      return _singleton;
+    if(gs == null){
+      gs = new GameState();
     }
+      return _singleton;
+  }
+
+  GameModel._privateConstructor();
+
+  get state {
+    return gs;
   }
 
   _reset(){
-    if(_singleton != null){
-      _kill();
-    }
-
-    _singleton = GameModel._privateConstructor();
-  }
-
-  _kill(){
-    _singleton = null;
+    gs = new GameState();
   }
 
   /*
@@ -44,21 +40,21 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     switch (e) {
       case EventID.NEW_SYMBOL:
         //TODO: update intervals, visibility time, window time, streak
-        isGameStarted = true;
-        killerSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
-        shown.updateForEventUsingFunction(e, this.newSymbolF);
-        reactionWindowClosed = false;
-        shownTapCount = 0;
+        gs.isGameStarted = true;
+        gs.killerSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
+        gs.shown.updateForEventUsingFunction(e, this.newSymbolF);
+        gs.reactionWindowClosed = false;
+        gs.shownTapCount = 0;
         break;
       case EventID.ENFORCE_TAP:
-        reactionWindowClosed = true;
-        lives.updateForEventUsingFunction(e, livesF);
+        gs.reactionWindowClosed = true;
+        gs.lives.updateForEventUsingFunction(e, livesF);
         break;
       case EventID.PLAYER_REACTED:
         //TODO: update streak
-        shownTapCount += 1;
-        normalSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
-        lives.updateForEventUsingFunction(e, livesF);
+        gs.shownTapCount += 1;
+        gs.normalSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
+        gs.lives.updateForEventUsingFunction(e, livesF);
         break;
       case EventID.GAME_STARTED:
         _reset();
@@ -87,7 +83,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   }
 
   IModelBuilder _createSymbolBuilder() {
-    SymbolModel symbolBuilder = new SymbolModel(_singleton);
+    SymbolModel symbolBuilder = new SymbolModel(gs);
 
     symbolBuilder
       ..getIntervalTimeF = symbolBuilder.getIntervalConstant
@@ -98,7 +94,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   }
 
   IModelBuilder _createReactionBuilder() {
-    ReactionModel reactionBuilder = new ReactionModel(_singleton);
+    ReactionModel reactionBuilder = new ReactionModel(gs);
 
     reactionBuilder
       ..reactionWindowF = reactionBuilder.getReactionWindowConstant
@@ -108,7 +104,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   }
 
   IModelBuilder _createStatsBuilder() {
-    StatsModel statsBuilder = new StatsModel(_singleton);
+    StatsModel statsBuilder = new StatsModel(gs);
 
     statsBuilder
       ..scoreF = statsBuilder.getScoreBasic
@@ -119,6 +115,30 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     return statsBuilder;
   }
 
+  String newSymbolF(EventID e) {
+    return gs.shown.updateSymbolConstantOdds(
+        gs.normalOdds, gs.normalSymbols, gs.killerSymbols);
+  }
+
+  int symbolTotalF(EventID e) {
+    bool normalContains = gs.normalSymbols.contains(~gs.shown);
+    bool killerContains = gs.killerSymbols.contains(~gs.shown);
+    bool isAlreadyTapped = gs.shownTapCount > 0;
+    return gs.killerSymbolTotal.updateSymbolTotal(
+        e, normalContains, killerContains, isAlreadyTapped);
+  }
+
+  int livesF(EventID e){
+    bool normalContains = gs.normalSymbols.contains(~gs.shown);
+    bool killerContains = gs.killerSymbols.contains(~gs.shown);
+    bool isTapped = gs.shownTapCount > 0;
+    return gs.lives.updateLivesMultiAllowedForNormal(e, normalContains, killerContains, isTapped);
+  }
+}
+
+class GameState {
+  int i = 1; //for a test
+
   /*
   State
    */
@@ -128,8 +148,8 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   static const int _intervalFast = 1000; //milliseconds
   static const int _intervalMedium = 2000; //milliseconds
   static const int _intervalSlow = 3000; //milliseconds
-  static const List<String> killerSymbols = ["X"];
-  static const List<String> normalSymbols = [
+  final List<String> killerSymbols = ["X"];
+  final List<String> normalSymbols = [
     "A",
     "B",
     "C",
@@ -193,26 +213,6 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   int symbolStreak = 0;
   LivesState lives = LivesState(3);
   int visibilityTime = 125;
-
-  String newSymbolF(EventID e) {
-    return shown.updateSymbolConstantOdds(
-        normalOdds, normalSymbols, killerSymbols);
-  }
-
-  int symbolTotalF(EventID e) {
-    bool isNormal = normalSymbols.contains(~shown);
-    bool isAlreadyTapped = shownTapCount > 0;
-    return killerSymbolTotal.updateSymbolTotal(
-        e, isNormal, isAlreadyTapped);
-  }
-
-  int livesF(EventID e){
-    bool normalContains = normalSymbols.contains(~shown);
-    bool killerContains = killerSymbols.contains(~shown);
-    bool isNormal = !killerContains && normalContains;
-    bool isTapped = shownTapCount > 0;
-    return lives.updateLivesMultiAllowedForNormal(e, isNormal, isTapped);
-  }
 }
 
 
