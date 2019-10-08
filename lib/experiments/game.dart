@@ -125,8 +125,15 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     bool killerContains = gs.killerSymbols.contains(~gs.shown);
     bool tappedOnce = gs.shownTapCount == 1;
     bool tappedZero = gs.shownTapCount == 0;
-    return gs.killerSymbolTotal.updateSymbolTotal(
-        e, normalContains, killerContains, tappedOnce, tappedZero);
+    //TODO: Fix this stupid shit, fuckhead. It sucks.
+    //I know, I'm sorry :( I am writing tests so I can refactor. Just wait.
+    if(EventID.PLAYER_REACTED == e){
+      return gs.normalSymbolTotal.updateSymbolTotal(e, normalContains, killerContains, tappedOnce, tappedZero);
+    } else if (EventID.NEW_SYMBOL == e){
+      return gs.killerSymbolTotal.updateSymbolTotal(e, normalContains, killerContains, tappedOnce, tappedZero);
+    } else {
+      return 0;
+    }
   }
 
   int livesF(EventID e){
