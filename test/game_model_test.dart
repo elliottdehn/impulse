@@ -10,18 +10,17 @@ Things to make into fixture methods:
  */
 
 //! <-- Indicates that the test uncovered a bug I fixed
-void main(){
-
+void main() {
   /*
   Helpers
    */
 
   //return start lives
-  int _startGameWithSymbolType(GameModel gm, {bool isNormal}){
+  int _startGameWithSymbolType(GameModel gm, {bool isNormal}) {
     gm.onUpdate(EventID.GAME_STARTED);
     int startLives = ~gm.state.lives;
     gm.onUpdate(EventID.NEW_SYMBOL);
-    if(isNormal != null && !isNormal) {
+    if (isNormal != null && !isNormal) {
       gm.state.shown = new ShownState(gm.state.killerSymbols[0]);
     } else {
       gm.state.shown = new ShownState(gm.state.normalSymbols[0]);
@@ -29,16 +28,22 @@ void main(){
     return startLives;
   }
 
-  List listN(int i){
+  List listN(int i) {
     return Iterable<int>.generate(i).toList();
   }
 
   //return end lives
-  int _tapX(GameModel gm, int i){
-    for(int temp in listN(i)){
+  int _tapX(GameModel gm, int i) {
+    for (int temp in listN(i)) {
       gm.onUpdate(EventID.PLAYER_REACTED);
     }
     return ~gm.state.lives;
+  }
+
+  void apply(GameModel gm, List<EventID> events) {
+    for (EventID e in events) {
+      gm.onUpdate(e);
+    }
   }
 
   /*
@@ -67,7 +72,7 @@ void main(){
     GameModel gm = GameModel();
     int tapCountInit = gm.state.i;
     gm.state.i += 1;
-    gm.onUpdate(EventID.GAME_STARTED);
+    apply(gm, [EventID.GAME_STARTED]);
     int tapCountPostReset = gm.state.i;
     expect(tapCountPostReset, tapCountInit);
   });
@@ -93,12 +98,12 @@ void main(){
   test('Hurt player once on failing to tap normal in time', () {
     GameModel gm = GameModel();
     int startLives = _startGameWithSymbolType(gm, isNormal: true);
-    gm.onUpdate(EventID.ENFORCE_TAP);
+    apply(gm, [EventID.ENFORCE_TAP]);
     int endLives = ~gm.state.lives;
     expect(endLives, startLives - 1);
   });
 
-  test('Do not hurt player for multiple taps on normal', (){
+  test('Do not hurt player for multiple taps on normal', () {
     GameModel gm = GameModel();
     int startLives = _startGameWithSymbolType(gm, isNormal: true);
     int endLives = _tapX(gm, 3);
@@ -106,7 +111,7 @@ void main(){
   });
 
   //!
-  test('Increase normal symbol count for successful tap', (){
+  test('Increase normal symbol count for successful tap', () {
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: true);
     int startTotal = ~gm.state.normalSymbolTotal;
@@ -116,7 +121,7 @@ void main(){
   });
 
   //!
-  test('Increase normal symbol count one for multiple successful tap', (){
+  test('Increase normal symbol count one for multiple successful tap', () {
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: true);
     int startTotal = ~gm.state.normalSymbolTotal;
@@ -126,20 +131,19 @@ void main(){
   });
 
   //!
-  test('Increase killer symbol count one for not tapping before symbol.', (){
+  test('Increase killer symbol count one for not tapping before symbol.', () {
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: false);
     int startTotal = ~gm.state.killerSymbolTotal;
-    gm.onUpdate(EventID.ENFORCE_TAP);
-    gm.onUpdate(EventID.NEW_SYMBOL);
+    apply(gm, [EventID.ENFORCE_TAP, EventID.NEW_SYMBOL]);
     int endTotal = ~gm.state.killerSymbolTotal;
     expect(endTotal, startTotal + 1);
   });
 
   //!
-  test('Do nothing on tap before new symbol', (){
+  test('Do nothing on tap before new symbol', () {
     GameModel gm = GameModel();
-    gm.onUpdate(EventID.GAME_STARTED);
+    apply(gm, [EventID.GAME_STARTED]);
     int startLives = ~gm.state.lives;
     int startNormalTotal = ~gm.state.normalSymbolTotal;
     int startKillerTotal = ~gm.state.killerSymbolTotal;
@@ -152,9 +156,9 @@ void main(){
     expect(endKillerTotal, startKillerTotal);
   });
 
-  test('Totals and taps zero at start', (){
+  test('Totals and taps zero at start', () {
     GameModel gm = GameModel();
-    gm.onUpdate(EventID.GAME_STARTED);
+    apply(gm, [EventID.GAME_STARTED]);
     expect(~gm.state.killerSymbolTotal, 0);
     expect(~gm.state.normalSymbolTotal, 0);
     expect(gm.state.shownTapCount, 0);
@@ -167,9 +171,8 @@ void main(){
   test('Do not hurt player tapping after window but tapped before', () {
     GameModel gm = GameModel();
     int startLives = _startGameWithSymbolType(gm, isNormal: true);
-    gm.onUpdate(EventID.PLAYER_REACTED);
-    gm.onUpdate(EventID.ENFORCE_TAP);
-    gm.onUpdate(EventID.PLAYER_REACTED);
+    apply(gm,
+        [EventID.PLAYER_REACTED, EventID.ENFORCE_TAP, EventID.PLAYER_REACTED]);
     int endLives = ~gm.state.lives;
     expect(endLives, startLives);
   });
@@ -177,31 +180,29 @@ void main(){
   test('Do not hurt player tapping after window but did not tap before', () {
     GameModel gm = GameModel();
     int startLives = _startGameWithSymbolType(gm, isNormal: true);
-    gm.onUpdate(EventID.ENFORCE_TAP);
-    gm.onUpdate(EventID.PLAYER_REACTED);
+    apply(gm, [EventID.ENFORCE_TAP, EventID.PLAYER_REACTED]);
     int endLives = ~gm.state.lives;
     expect(endLives, startLives - 1);
   });
 
-  test('Do not hurt player for multiple taps before & after', (){
+  test('Do not hurt player for multiple taps before & after', () {
     GameModel gm = GameModel();
     int startLives = _startGameWithSymbolType(gm, isNormal: true);
     _tapX(gm, 3);
-    gm.onUpdate(EventID.ENFORCE_TAP);
+    apply(gm, [EventID.ENFORCE_TAP]);
     int endLives = _tapX(gm, 3);
     expect(endLives, startLives);
   });
 
   //!
-  test('Increase normal symbol count one for multiple before & after', (){
+  test('Increase normal symbol count one for multiple before & after', () {
     GameModel gm = GameModel();
     _startGameWithSymbolType(gm, isNormal: true);
     int startTotal = ~gm.state.normalSymbolTotal;
     _tapX(gm, 4);
-    gm.onUpdate(EventID.ENFORCE_TAP);
+    apply(gm, [EventID.ENFORCE_TAP]);
     _tapX(gm, 4);
     int endTotal = ~gm.state.killerSymbolTotal;
     expect(endTotal, startTotal + 1);
   });
-
 }
