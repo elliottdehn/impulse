@@ -18,3 +18,4 @@ I would like to be able to:
 1. Be ignorant of the order in which state fields must be updated.
 2. Be able to update the state fields asynchronously
 3. Notify presenters of the state update asynchronously so they can update their view asynchronously, increasing performance significantly.
+4. Interpret the state inside of presenters for communication to Views using a ViewModel
