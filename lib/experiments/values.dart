@@ -17,3 +17,11 @@ class NormalSymbolTotal extends Value<int> {
 class KillerSymbolTotal extends Value<int> {
   KillerSymbolTotal(int value) : super(value);
 }
+
+class LivesTotal extends Value<int>{
+  LivesTotal(int value) : super(value);
+}
+
+class ShownSymbol extends Value<String> {
+  ShownSymbol(String value) : super(value);
+}
