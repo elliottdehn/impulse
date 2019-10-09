@@ -8,6 +8,7 @@ import 'reaction.dart';
 import 'stats.dart';
 import 'symbol.dart';
 import 'updaters.dart';
+import 'values.dart';
 
 class GameModel implements IModelBuilder<Game>, IEventListener {
   //Singleton that can have its data cleared and reset

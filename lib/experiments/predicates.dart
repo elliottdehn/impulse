@@ -29,6 +29,9 @@ class TestResult extends Tuple<PredicateID, bool> {
 abstract class TestResults extends Value<Map<PredicateID, bool>> {
   TestResults(Map<PredicateID, bool> value) : super(value);
   TestResult get(PredicateID id);
+  add(TestResult t);
+  and(List<PredicateID> predicates);
+  or(List<PredicateID> predicates);
 }
 
 abstract class Predicate<State> {
@@ -42,4 +45,5 @@ abstract class Predicates {
   final State _s;
   Predicates(this._s);
   TestResults test(Event e);
+  add(Predicate p);
 }

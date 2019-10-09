@@ -1,7 +1,7 @@
 import 'package:impulse/experiments/game.dart';
 import 'package:impulse/experiments/model_builder.dart';
 
-import 'value.dart';
+import 'values.dart';
 
 class ReactionModel implements IModelBuilder<Reaction> {
   ReactionWindow Function() reactionWindowF;
@@ -40,27 +40,4 @@ class ReactionModel implements IModelBuilder<Reaction> {
   BaseReactionWindow getBaseReactionWindow() {
     return BaseReactionWindow(_gameState.baseReactionWindow);
   }
-}
-
-class Reaction {
-  final ReactionWindow reactionWindow;
-  final BaseReactionWindow baseReactionWindow;
-
-  const Reaction({this.reactionWindow, this.baseReactionWindow});
-}
-
-class ReactionWindow extends Value<int> {
-  ReactionWindow(int value) : super(value);
-}
-
-class BaseReactionWindow extends Value<int> {
-  BaseReactionWindow(int value) : super(value);
-}
-
-class IsStopped extends Value<bool> {
-  IsStopped(bool value) : super(value);
-}
-
-class IsReset extends Value<bool> {
-  IsReset(bool value) : super(value);
 }

@@ -2,6 +2,34 @@ import 'package:impulse/widgets/EventID.dart';
 
 import 'value.dart';
 
+class Value<T> {
+  T value;
+
+  Value(this.value);
+
+  //"get value""
+  T operator ~() {
+    return this.value;
+  }
+
+  bool operator ==(Object that) {
+    if (that is Value) {
+      Value thatValue = that;
+      return ~this == ~thatValue;
+    } else {
+      return false;
+    }
+  }
+
+  int get hashCode {
+    if (value != null) {
+      return value.hashCode;
+    } else {
+      return 0;
+    }
+  }
+}
+
 class TapCount extends Value<int> {
   TapCount(int value) : super(value);
 }
@@ -24,4 +52,49 @@ class LivesTotal extends Value<int>{
 
 class ShownSymbol extends Value<String> {
   ShownSymbol(String value) : super(value);
+}
+
+class ReactionWindowStatus extends Value<bool>{
+  ReactionWindowStatus(bool value) : super(value);
+}
+
+//old
+
+class Score extends Value<int> {
+  Score(int value) : super(value);
+}
+
+class AvgReaction extends Value<int> {
+  AvgReaction(int value) : super(value);
+}
+
+class Streak extends Value<int> {
+  Streak(int value) : super(value);
+}
+
+class Lives extends Value<int> {
+  Lives(int value) : super(value);
+}
+
+class Reaction {
+  final ReactionWindow reactionWindow;
+  final BaseReactionWindow baseReactionWindow;
+
+  const Reaction({this.reactionWindow, this.baseReactionWindow});
+}
+
+class ReactionWindow extends Value<int> {
+  ReactionWindow(int value) : super(value);
+}
+
+class BaseReactionWindow extends Value<int> {
+  BaseReactionWindow(int value) : super(value);
+}
+
+class IsStopped extends Value<bool> {
+  IsStopped(bool value) : super(value);
+}
+
+class IsReset extends Value<bool> {
+  IsReset(bool value) : super(value);
 }

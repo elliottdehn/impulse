@@ -1,7 +1,7 @@
 import 'package:impulse/experiments/model_builder.dart';
 
 import 'game.dart';
-import 'value.dart';
+import 'values.dart';
 
 class StatsModel implements IModelBuilder<Stats> {
   final GameState _gameState;
@@ -74,20 +74,4 @@ class Stats {
   final Lives lives;
 
   const Stats({this.score, this.avgReaction, this.streak, this.lives});
-}
-
-class Score extends Value<int> {
-  Score(int value) : super(value);
-}
-
-class AvgReaction extends Value<int> {
-  AvgReaction(int value) : super(value);
-}
-
-class Streak extends Value<int> {
-  Streak(int value) : super(value);
-}
-
-class Lives extends Value<int> {
-  Lives(int value) : super(value);
 }

@@ -5,6 +5,7 @@ import 'package:impulse/widgets/EventID.dart';
 
 import 'game.dart';
 import 'value.dart';
+import 'values.dart';
 
 class SymbolModel implements IModelBuilder<Symbol> {
   Shown Function() getShownF;
