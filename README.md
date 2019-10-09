@@ -7,7 +7,7 @@ Users are flashed a symbol, and are expected to respond within a certain time fr
 The game tests the user's impulse control, patience, working memory, focus, reaction time, and comprehension rate. It also gets harder as the game progresses.
 
 # Point of Interest
-1. Orderless, asynchronous state and view updates. Events are strictly ordered (State updates themselves are blocking), but updates to state fields are totally self-contained and synchronous. Essentially: each field inside the state is its own self-contained state.
+1. Orderless, asynchronous state and view updates. Essentially: each field inside the state is its own self-contained state, enabling each field to update asynchronously instead of serially. This increases separation of concerns and reusability. State machines are notoriously fragile (for good reason) so this was necessary to increase the complexity of my application.
 
 # Model-View-Presenter Design Considerations
 I would like to be able to:
