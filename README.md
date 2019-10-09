@@ -1,6 +1,9 @@
 # IMPULSE!
 Just a simple 2D mobile game made purely in Flutter using MVP design (inspired by a medical exam)
 
+Here is a brief video explanation:
+You may also download the application from the Google Play Store. Search: "IMPULSE!"
+
 # Gameplay
 Users are flashed a symbol, and are expected to respond within a certain time frame by tapping the screen. If the user does not tap in time, they lose a life. If the user taps a special symbol (the letter X, for now), they lose a life.
 
