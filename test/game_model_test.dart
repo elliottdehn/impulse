@@ -33,6 +33,7 @@ void main() {
     return _setToSymbol(gm, isNormal: isNormal);
   }
 
+  //I know this is pants-on-head but I don't like the other iterator options
   List listN(int i) {
     return Iterable<int>.generate(i).toList();
   }
@@ -59,20 +60,8 @@ void main() {
     return gm.state.killerSymbols[0];
   }
 
-  int nullToZero(int i){
-    if(i == null){
-      return 0;
-    } else {
-      return i;
-    }
-  }
-
   //return expected lives lost
-  int _doRound(GameModel gm, bool normal, {int preWindowTaps, int postWindowTaps, int times}){
-    preWindowTaps = nullToZero(preWindowTaps);
-    postWindowTaps = nullToZero(postWindowTaps);
-    times = times == null ? 1 : times;
-
+  int _doRound(GameModel gm, bool normal, {int preWindowTaps = 0, int postWindowTaps = 0, int times = 1}){
     for(int idx in listN(times)) {
       gm.onUpdate(EventID.NEW_SYMBOL);
       String symbol = normal ? getNormalSymbol(gm) : getKillerSymbol(gm);

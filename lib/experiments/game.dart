@@ -15,10 +15,10 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   static GameState gs = new GameState();
 
   factory GameModel() {
-    if(gs == null){
+    if (gs == null) {
       gs = new GameState();
     }
-      return _singleton;
+    return _singleton;
   }
 
   GameModel._privateConstructor();
@@ -27,7 +27,7 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     return gs;
   }
 
-  _reset(){
+  _reset() {
     gs = new GameState();
   }
 
@@ -127,20 +127,23 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
     bool tappedZero = gs.shownTapCount == 0;
     //TODO: Fix this stupid shit, fuckhead. It sucks.
     //I know, I'm sorry :( I am writing tests so I can refactor. Just wait.
-    if(EventID.PLAYER_REACTED == e){
-      return gs.normalSymbolTotal.updateSymbolTotal(e, normalContains, killerContains, tappedOnce, tappedZero);
-    } else if (EventID.NEW_SYMBOL == e){
-      return gs.killerSymbolTotal.updateSymbolTotal(e, normalContains, killerContains, tappedOnce, tappedZero);
+    if (EventID.PLAYER_REACTED == e) {
+      return gs.normalSymbolTotal.updateSymbolTotal(
+          e, normalContains, killerContains, tappedOnce, tappedZero);
+    } else if (EventID.NEW_SYMBOL == e) {
+      return gs.killerSymbolTotal.updateSymbolTotal(
+          e, normalContains, killerContains, tappedOnce, tappedZero);
     } else {
       return 0;
     }
   }
 
-  int livesF(EventID e){
+  int livesF(EventID e) {
     bool normalContains = gs.normalSymbols.contains(~gs.shown);
     bool killerContains = gs.killerSymbols.contains(~gs.shown);
     bool isTapped = gs.shownTapCount > 0;
-    return gs.lives.updateLivesMultiAllowedForNormal(e, normalContains, killerContains, isTapped);
+    return gs.lives.updateLivesMultiAllowedForNormal(
+        e, normalContains, killerContains, isTapped);
   }
 }
 
@@ -222,7 +225,6 @@ class GameState {
   LivesState lives = LivesState(3);
   int visibilityTime = 125;
 }
-
 
 class Game {
   final Stats stats;
