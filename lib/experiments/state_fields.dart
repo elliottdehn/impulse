@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:math' as prefix0;
 
 import 'constants.dart';
 import 'predicates.dart';
@@ -18,7 +19,7 @@ enum PredicateID {
   IS_EASY,
   IS_MEDIUM,
   IS_HARD,
-  IS_HERO
+  IS_HERO,
 }
 
 class DidPlayerReact extends TestResult {
@@ -212,11 +213,11 @@ class ReactionWindowStatusField implements StateField<ReactionWindowStatus> {
   }
 }
 
-class IntervalField implements StateField<IntervalField> {
-  final IntervalLengthField interval;
+class ReactionWindowField implements StateField<ReactionWindowField> {
+  final WindowLength windowLength;
 
-  final Min min; //0
-  final Max max; //1
+  final Minimum minimum; //0
+  final Maximum maximum; //1
 
   final NormalSymbolTotalField normalTotal;
   final KillerSymbolTotalField killerTotal;
@@ -225,62 +226,71 @@ class IntervalField implements StateField<IntervalField> {
   final Multiplier multiplier; //3
   final Adjust adj;
 
-  IntervalField(this.interval, this.min, this.max, this.normalTotal, this.killerTotal, this.scalar, this.multiplier, this.adj);
+  ReactionWindowField(
+      this.windowLength,
+      this.minimum,
+      this.maximum,
+      this.normalTotal,
+      this.killerTotal,
+      this.scalar,
+      this.multiplier,
+      this.adj);
 
   @override
-  StateField<IntervalField> transform(TestResults t,
-      {StateField<IntervalField> Function(TestResults, List) fn}) {
+  StateField<ReactionWindowField> transform(TestResults t,
+      {StateField<ReactionWindowField> Function(TestResults, List) fn}) {
+
     NormalSymbolTotalField newNormTotal = normalTotal.transform(t);
     KillerSymbolTotalField newKillerTotal = killerTotal.transform(t);
+
     int total = ~newNormTotal.total + ~newKillerTotal.total;
-    Adjust newAdj = Adjust(-3*(~adj * total));
-    IntervalLengthField newInterval = interval.transform(t);
-    int newIntervalLength = ~newInterval.length;
-    int postHardeningLength = (~scalar * newIntervalLength + ~newAdj);
-    IntervalField newIntervalField = IntervalField(newInterval, min, max, normalTotal, killerTotal, scalar, multiplier, newAdj);
+
+    Adjust newAdj = Adjust(-3 * total);
+
+    int newWindowLength = (~scalar * ~maximum) + ~newAdj;
+    newWindowLength = max(~minimum, newWindowLength);
+    newWindowLength = min(~maximum, newWindowLength);
+
+    WindowLength postHardeningLength = WindowLength(newWindowLength);
+
+    ReactionWindowField newIntervalField = ReactionWindowField(
+        postHardeningLength,
+        minimum,
+        maximum,
+        newNormTotal,
+        newKillerTotal,
+        scalar,
+        multiplier,
+        newAdj);
+
     return newIntervalField;
   } //5
 
-  Min getMin(TestResults t) {
+  Minimum getMin(TestResults t) {
     if (~t.get(PredicateID.IS_EASY)) {
-      return Min(Constants.minReactionWindowEasy);
+      return Minimum(Constants.minReactionWindowEasy);
     } else if (~t.get(PredicateID.IS_MEDIUM)) {
-      return Min(Constants.minReactionWindowMedium);
-    } else if (~t.get(PredicateID.IS_HARD)){
-      return Min(Constants.minReactionWindowHard);
-    } else if (~t.get(PredicateID.IS_HERO)){
-      return Min(Constants.minReactionWindowHero);
+      return Minimum(Constants.minReactionWindowMedium);
+    } else if (~t.get(PredicateID.IS_HARD)) {
+      return Minimum(Constants.minReactionWindowHard);
+    } else if (~t.get(PredicateID.IS_HERO)) {
+      return Minimum(Constants.minReactionWindowHero);
     } else {
       throw Exception("How did you manage to do that?");
     }
   }
 
-  Max getMax(TestResults t) {
+  Maximum getMax(TestResults t) {
     if (~t.get(PredicateID.IS_EASY)) {
-      return Max(Constants.maxReactionWindowEasy);
+      return Maximum(Constants.maxReactionWindowEasy);
     } else if (~t.get(PredicateID.IS_MEDIUM)) {
-      return Max(Constants.maxReactionWindowMedium);
-    } else if (~t.get(PredicateID.IS_HARD)){
-      return Max(Constants.maxReactionWindowHard);
-    } else if (~t.get(PredicateID.IS_HERO)){
-      return Max(Constants.maxReactionWindowHero);
+      return Maximum(Constants.maxReactionWindowMedium);
+    } else if (~t.get(PredicateID.IS_HARD)) {
+      return Maximum(Constants.maxReactionWindowHard);
+    } else if (~t.get(PredicateID.IS_HERO)) {
+      return Maximum(Constants.maxReactionWindowHero);
     } else {
       throw Exception("How did you manage to do that?");
     }
   }
 }
-
-class IntervalLengthField implements StateField<IntervalLengthField> {
-  final IntervalLength length;
-
-  IntervalLengthField(this.length);
-
-  @override
-  StateField<IntervalLengthField> transform(TestResults t,
-      {StateField<IntervalLengthField> Function(TestResults, List) fn}) {
-    // TODO: implement transform
-    return null;
-  }
-}
-
-//res = min(max(scalar*(multiplier * x + adjust),min), max)

@@ -56,16 +56,16 @@ class ReactionWindowStatus extends Value<bool>{
   ReactionWindowStatus(bool value) : super(value);
 }
 
-class IntervalLength extends Value<int>{
-  IntervalLength(int value) : super(value);
+class WindowLength extends Value<int>{
+  WindowLength(int value) : super(value);
 }
 
-class Min extends Value<num> {
-  Min(num value) : super(value);
+class Minimum extends Value<num> {
+  Minimum(num value) : super(value);
 }
 
-class Max extends Value<num> {
-  Max(num value) : super(value);
+class Maximum extends Value<num> {
+  Maximum(num value) : super(value);
 }
 
 class Scalar extends Value<num>{
