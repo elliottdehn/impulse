@@ -44,7 +44,7 @@ class KillerSymbolTotal extends Value<int> {
   KillerSymbolTotal(int value) : super(value);
 }
 
-class LivesTotal extends Value<int>{
+class LivesTotal extends Value<int> {
   LivesTotal(int value) : super(value);
 }
 
@@ -52,11 +52,11 @@ class ShownSymbol extends Value<String> {
   ShownSymbol(String value) : super(value);
 }
 
-class ReactionWindowStatus extends Value<bool>{
+class ReactionWindowStatus extends Value<bool> {
   ReactionWindowStatus(bool value) : super(value);
 }
 
-class WindowLength extends Value<int>{
+class WindowLength extends Value<int> {
   WindowLength(int value) : super(value);
 }
 
@@ -68,7 +68,7 @@ class Maximum extends Value<num> {
   Maximum(num value) : super(value);
 }
 
-class Scalar extends Value<num>{
+class Scalar extends Value<num> {
   Scalar(num value) : super(value);
 }
 
@@ -76,13 +76,12 @@ class Multiplier extends Value<num> {
   Multiplier(num value) : super(value);
 }
 
-class Adjust extends Value<num>{
+class Adjust extends Value<num> {
   Adjust(num value) : super(value);
 }
 
-class Variant extends Value<num>{
+class Variant extends Value<num> {
   Variant(num value) : super(value);
-
 }
 
 //old

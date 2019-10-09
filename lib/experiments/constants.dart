@@ -46,10 +46,14 @@ class Constants {
   static const int maxReactionWindowHard = 700; //milliseconds
   static const int maxReactionWindowHero = 600; //milliseconds
 
-  static const int minReactionWindowEasy = maxReactionWindowEasy - _maxReactionWindowLost;
-  static const int minReactionWindowMedium = maxReactionWindowMedium - _maxReactionWindowLost;
-  static const int minReactionWindowHard = maxReactionWindowHard - _maxReactionWindowLost;
-  static const int minReactionWindowHero = maxReactionWindowHero - _maxReactionWindowLost;
+  static const int minReactionWindowEasy =
+      maxReactionWindowEasy - _maxReactionWindowLost;
+  static const int minReactionWindowMedium =
+      maxReactionWindowMedium - _maxReactionWindowLost;
+  static const int minReactionWindowHard =
+      maxReactionWindowHard - _maxReactionWindowLost;
+  static const int minReactionWindowHero =
+      maxReactionWindowHero - _maxReactionWindowLost;
 
   static const int reactionWindowAdjEasy = -2;
   static const int reactionWindowAdjMedium = -3;
