@@ -79,15 +79,15 @@ void main() {
     }
   }
 
-  int _doRoundNoTap(GameModel gm, {bool isNormal, int times}){
+  int _doRoundNoTap(GameModel gm, {bool isNormal, int times = 1}){
     return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 0, times: times);
   }
 
-  int _doRoundPreTap(GameModel gm, {bool isNormal, int times}){
+  int _doRoundPreTap(GameModel gm, {bool isNormal, int times = 1}){
     return _doRound(gm, isNormal, preWindowTaps: 1, postWindowTaps: 0, times: times);
   }
 
-  int _doRoundPostTap(GameModel gm, {bool isNormal, int times}){
+  int _doRoundPostTap(GameModel gm, {bool isNormal, int times = 1}){
     return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 1, times: times);
   }
 
@@ -163,7 +163,7 @@ void main() {
     _startGameWithSymbolType(gm, isNormal: true);
     int startTotal = ~gm.state.normalSymbolTotal;
     _tapX(gm, 1);
-    int endTotal = ~gm.state.killerSymbolTotal;
+    int endTotal = ~gm.state.normalSymbolTotal;
     expect(endTotal, startTotal + 1);
   });
 
@@ -173,7 +173,7 @@ void main() {
     _startGameWithSymbolType(gm, isNormal: true);
     int startTotal = ~gm.state.normalSymbolTotal;
     _tapX(gm, 4);
-    int endTotal = ~gm.state.killerSymbolTotal;
+    int endTotal = ~gm.state.normalSymbolTotal;
     expect(endTotal, startTotal + 1);
   });
 
