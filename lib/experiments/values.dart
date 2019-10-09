@@ -1,7 +1,5 @@
 import 'package:impulse/widgets/EventID.dart';
 
-import 'value.dart';
-
 class Value<T> {
   T value;
 
@@ -56,6 +54,35 @@ class ShownSymbol extends Value<String> {
 
 class ReactionWindowStatus extends Value<bool>{
   ReactionWindowStatus(bool value) : super(value);
+}
+
+class IntervalLength extends Value<int>{
+  IntervalLength(int value) : super(value);
+}
+
+class Min extends Value<num> {
+  Min(num value) : super(value);
+}
+
+class Max extends Value<num> {
+  Max(num value) : super(value);
+}
+
+class Scalar extends Value<num>{
+  Scalar(num value) : super(value);
+}
+
+class Multiplier extends Value<num> {
+  Multiplier(num value) : super(value);
+}
+
+class Adjust extends Value<num>{
+  Adjust(num value) : super(value);
+}
+
+class Variant extends Value<num>{
+  Variant(num value) : super(value);
+
 }
 
 //old

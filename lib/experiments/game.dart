@@ -223,7 +223,7 @@ class GameState {
   SymbolTotalState killerSymbolTotal = new SymbolTotalState(0);
   List<int> reactionTimes = List();
   int symbolStreak = 0;
-  LivesState lives = LivesState(3);
+  LivesState lives = LivesState(5);
   int visibilityTime = 125;
 }
 
