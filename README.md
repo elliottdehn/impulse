@@ -12,6 +12,7 @@ The game tests the user's impulse control, patience, working memory, focus, reac
 # Points of Interest
 1. Orderless, asynchronous state and view updates. Essentially: each field inside the state is its own self-contained state, enabling each field to update asynchronously instead of serially. This increases separation of concerns and reusability. State machines are notoriously fragile (for good reason) so this was necessary to increase the complexity of my application.
 2. The application is available on the Google Play Store for you to try. Search: "IMPULSE!"
+3. High level of effective test coverage
 
 # Model-View-ViewModel-Presenter Design Considerations
 I would like to be able to:
