@@ -6,17 +6,8 @@ Users are flashed a symbol, and are expected to respond within a certain time fr
 
 The game tests the user's impulse control, patience, working memory, focus, reaction time, and comprehension rate. It also gets harder as the game progresses.
 
-# Project Goals
-1. Become more fluent in Dart
-2. Become more fluent in Flutter
-3. Become more fluent in the mobile platform
-4. Practice MVP architecture in order to create better code
-5. Deploy the application on iOS and Android using a single code base
-6. Practice dependency injection and other SOLID principles
-7. Test my code effectively
-8. Deliver usable functionality iteratively and frequently
-9. Springboard off of what I learn to create a more complicated project (Memebox)
-10. Exercise some creative muscles by making the application visually appealing through a mixture of animations and visual design.
+# Point of Interest
+1. Orderless, asynchronous state and view updates. Events are strictly ordered (State updates themselves are blocking), but updates to state fields are totally self-contained and synchronous. Essentially: each field inside the state is its own self-contained state.
 
 # Model-View-Presenter Design Considerations
 I would like to be able to:
