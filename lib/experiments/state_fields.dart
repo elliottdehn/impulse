@@ -193,7 +193,6 @@ class LivesTotalField implements StateValueField<LivesTotal> {
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
   final String _sShownSymbol;
-  ShownSymbol _shownSymbol;
 
   ShownSymbolField(this._sShownSymbol);
 
@@ -203,15 +202,18 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
     if (~isNewSymbol) {
       var random = Random.secure();
       bool isNormalSymbol = random.nextDouble() <= Constants.normalOdds;
-      String res;
+      String oldSymbol = _sShownSymbol;
+      String newSymbol;
       if (isNormalSymbol) {
-        res = Constants
-            .normalSymbols[random.nextInt(Constants.normalSymbols.length)];
+        while(oldSymbol == newSymbol) {
+          newSymbol = Constants
+              .normalSymbols[random.nextInt(Constants.normalSymbols.length)];
+        }
       } else {
-        res = Constants
+        newSymbol = Constants
             .killerSymbols[random.nextInt(Constants.killerSymbols.length)];
       }
-      return ShownSymbolField(res);
+      return ShownSymbolField(newSymbol);
     } else {
       return this;
     }
@@ -226,11 +228,8 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
 class ReactionWindowStatusField
     implements StateValueField<ReactionWindowStatus> {
   final bool _bStatus;
-  ReactionWindowStatus _status;
 
-  ReactionWindowStatusField(this._bStatus){
-    _status = ReactionWindowStatus(_bStatus);
-  }
+  ReactionWindowStatusField(this._bStatus);
 
   @override
   StateValueField<Value<bool>> transform(TestResults t) {
@@ -249,7 +248,6 @@ class ReactionWindowStatusField
 class ReactionWindowLengthField
     implements StateValueField<ReactionWindowLength> {
   final int _iWindowLength;
-  ReactionWindowLength _windowLength;
 
   final Minimum minimum; //0
   final Maximum maximum; //1

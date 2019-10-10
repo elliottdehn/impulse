@@ -56,7 +56,7 @@ class TestResults {
     bool start = true;
     for (PredicateID p in predicates) {
       TestResult res = get(p);
-      if (res = null) {
+      if (res == null) {
         return false;
       } else {
         start = start && res.y;
