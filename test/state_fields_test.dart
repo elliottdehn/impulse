@@ -49,15 +49,17 @@ import 'package:impulse/experiments/state_fields.dart';
 import 'package:test/test.dart';
 
 void main() {
-
   /*
   Reaction window
    */
 
   test('RW Closes on closing', () {
     var start = ReactionWindowStatusField(true);
-    var tests =
-        TestResults(values: [IsWindowClosed(false), IsWindowClosing(true), IsNewSymbol(false)]);
+    var tests = TestResults(values: [
+      IsWindowClosed(false),
+      IsWindowClosing(true),
+      IsNewSymbol(false)
+    ]);
     ReactionWindowStatusField result = start.transform(tests);
     expect(~result, false);
   });
@@ -65,12 +67,18 @@ void main() {
   test('RW opens on new symbol after closing', () {
     var start = ReactionWindowStatusField(true);
 
-    var closeWindow =
-    TestResults(values: [IsWindowClosed(false), IsWindowClosing(true), IsNewSymbol(false)]);
+    var closeWindow = TestResults(values: [
+      IsWindowClosed(false),
+      IsWindowClosing(true),
+      IsNewSymbol(false)
+    ]);
     ReactionWindowStatusField afterClose = start.transform(closeWindow);
 
-    var openWindow =
-    TestResults(values: [IsWindowClosed(true), IsWindowClosing(false), IsNewSymbol(true)]);
+    var openWindow = TestResults(values: [
+      IsWindowClosed(true),
+      IsWindowClosing(false),
+      IsNewSymbol(true)
+    ]);
     ReactionWindowStatusField afterOpen = afterClose.transform(openWindow);
 
     expect(~afterOpen, true);
@@ -79,16 +87,26 @@ void main() {
   test('RW stays closed after closing then opens on new symbol', () {
     var start = ReactionWindowStatusField(true);
 
-    var closeWindow =
-    TestResults(values: [IsWindowClosed(false), IsWindowClosing(true), IsNewSymbol(false)]);
+    var closeWindow = TestResults(values: [
+      IsWindowClosed(false),
+      IsWindowClosing(true),
+      IsNewSymbol(false)
+    ]);
     ReactionWindowStatusField afterClose = start.transform(closeWindow);
 
-    var nothingWindow =
-    TestResults(values: [IsWindowClosed(true), IsWindowClosing(false), IsNewSymbol(false)]);
-    ReactionWindowStatusField afterNothing = afterClose.transform(nothingWindow);
+    var nothingWindow = TestResults(values: [
+      IsWindowClosed(true),
+      IsWindowClosing(false),
+      IsNewSymbol(false)
+    ]);
+    ReactionWindowStatusField afterNothing =
+        afterClose.transform(nothingWindow);
 
-    var openWindow =
-    TestResults(values: [IsWindowClosed(true), IsWindowClosing(false), IsNewSymbol(true)]);
+    var openWindow = TestResults(values: [
+      IsWindowClosed(true),
+      IsWindowClosing(false),
+      IsNewSymbol(true)
+    ]);
     ReactionWindowStatusField afterOpen = afterNothing.transform(openWindow);
 
     expect(~afterOpen, true);
@@ -98,7 +116,7 @@ void main() {
   Lives
    */
 
-  test('Hurt player on tapping killer window closed', (){
+  test('Hurt player on tapping killer window closed', () {
     var start = LivesTotalField(5);
     var hurtPlayer = TestResults(values: [
       IsKillerSymbol(true),
@@ -109,7 +127,7 @@ void main() {
     expect(~end, 4);
   });
 
-  test('Hurt player on tapping killer window open', (){
+  test('Hurt player on tapping killer window open', () {
     var start = LivesTotalField(5);
     var hurtPlayer = TestResults(values: [
       IsKillerSymbol(true),
@@ -122,7 +140,7 @@ void main() {
     expect(~end, 4);
   });
 
-  test('Hurt player on tapping killer three times', (){
+  test('Hurt player on tapping killer three times', () {
     var start = LivesTotalField(5);
     var hurtPlayer = TestResults(values: [
       IsKillerSymbol(true),
@@ -135,7 +153,7 @@ void main() {
     expect(~end, 2);
   });
 
-  test('Hurt player on tapping killer window open 3 times', (){
+  test('Hurt player on tapping killer window open 3 times', () {
     var start = LivesTotalField(5);
     var hurtPlayer = TestResults(values: [
       IsKillerSymbol(true),
@@ -150,7 +168,7 @@ void main() {
     expect(~end, 2);
   });
 
-  test('Do not hurt if no taps before window on killer', (){
+  test('Do not hurt if no taps before window on killer', () {
     var start = LivesTotalField(5);
     var nothingToPlayer = TestResults(values: [
       IsKillerSymbol(true),
@@ -165,9 +183,9 @@ void main() {
     expect(~end, 5);
   });
 
-  test('Hurt if no taps before window on normal symbol', (){
+  test('Hurt if no taps before window on normal symbol', () {
     var start = LivesTotalField(5);
-    var hurtPlayer = TestResults(values:[
+    var hurtPlayer = TestResults(values: [
       IsTappedZero(true),
       IsWindowClosing(true),
       IsWindowClosed(false),
@@ -178,9 +196,9 @@ void main() {
     expect(~end, 4);
   });
 
-  test('Do not hurt if taps after window on normal symbol', (){
+  test('Do not hurt if taps after window on normal symbol', () {
     var start = LivesTotalField(5);
-    var nothingPlayer = TestResults(values:[
+    var nothingPlayer = TestResults(values: [
       IsTappedZero(true),
       IsWindowClosing(false),
       IsWindowClosed(true),
@@ -192,9 +210,9 @@ void main() {
     expect(~end, 5);
   });
 
-  test('Do not hurt if taps after window on normal symbol 2', (){
+  test('Do not hurt if taps after window on normal symbol 2', () {
     var start = LivesTotalField(5);
-    var nothingPlayer = TestResults(values:[
+    var nothingPlayer = TestResults(values: [
       IsTappedZero(false),
       IsWindowClosing(false),
       IsWindowClosed(true),
@@ -206,9 +224,9 @@ void main() {
     expect(~end, 5);
   });
 
-  test('Do not hurt if taps after window on normal symbol 3', (){
+  test('Do not hurt if taps after window on normal symbol 3', () {
     var start = LivesTotalField(5);
-    var nothingPlayer = TestResults(values:[
+    var nothingPlayer = TestResults(values: [
       IsTappedZero(true),
       DidFirstTap(true),
       IsWindowClosing(false),
@@ -220,4 +238,121 @@ void main() {
     var end = start.transform(nothingPlayer);
     expect(~end, 5);
   });
+
+  /*
+  tap count
+   */
+
+  test('Increase tap count for all tapping cases except new symbol', () {
+    List<TestResult> isKillerCases = [
+      IsKillerSymbol(true),
+      IsKillerSymbol(false)
+    ];
+    List<TestResult> isNormalCases = [
+      IsNormalSymbol(true),
+      IsNormalSymbol(true)
+    ];
+    List<TestResult> isTapZeroCases = [IsTappedZero(true), IsTappedZero(false)];
+    List<TestResult> isTapOneCases = [DidFirstTap(true), DidFirstTap(false)];
+    List<TestResult> isWindowOpenCases = [
+      IsWindowOpen(true),
+      IsWindowOpen(false)
+    ];
+    List<TestResult> isWindowCloseCases = [
+      IsWindowClosed(true),
+      IsWindowClosed(false)
+    ];
+    List<TestResult> isWindowClosingCases = [
+      IsWindowClosing(true),
+      IsWindowClosing(false)
+    ];
+
+    for (TestResult t in isKillerCases) {
+      for (TestResult t2 in isNormalCases) {
+        for (TestResult t3 in isTapZeroCases) {
+          for (TestResult t4 in isTapOneCases) {
+            for (TestResult t5 in isWindowOpenCases) {
+              for (TestResult t6 in isWindowCloseCases) {
+                for (TestResult t7 in isWindowClosingCases) {
+                  var start = TapCountField(0);
+                  var playerTaps = [DidPlayerReact(true), IsNewSymbol(false)];
+                  TestResults tr =
+                      TestResults(values: [t, t2, t3, t4, t5, t6, t7]);
+                  tr.addAll(playerTaps);
+                  var end = start.transform(tr);
+                  end = end.transform(tr);
+                  end = end.transform(tr);
+                  expect(~end, 3);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+
+  test('Tap count to zero for new symbol all cases', () {
+    List<TestResult> isKillerCases = [
+      IsKillerSymbol(true),
+      IsKillerSymbol(false)
+    ];
+    List<TestResult> isNormalCases = [
+      IsNormalSymbol(true),
+      IsNormalSymbol(true)
+    ];
+    List<TestResult> isTapZeroCases = [IsTappedZero(true), IsTappedZero(false)];
+    List<TestResult> isTapOneCases = [DidFirstTap(true), DidFirstTap(false)];
+    List<TestResult> isWindowOpenCases = [
+      IsWindowOpen(true),
+      IsWindowOpen(false)
+    ];
+    List<TestResult> isWindowCloseCases = [
+      IsWindowClosed(true),
+      IsWindowClosed(false)
+    ];
+    List<TestResult> isWindowClosingCases = [
+      IsWindowClosing(true),
+      IsWindowClosing(false)
+    ];
+
+    for (TestResult t in isKillerCases) {
+      for (TestResult t2 in isNormalCases) {
+        for (TestResult t3 in isTapZeroCases) {
+          for (TestResult t4 in isTapOneCases) {
+            for (TestResult t5 in isWindowOpenCases) {
+              for (TestResult t6 in isWindowCloseCases) {
+                for (TestResult t7 in isWindowClosingCases) {
+                  var start = TapCountField(100);
+                  var playerTaps = [DidPlayerReact(false), IsNewSymbol(true)];
+                  TestResults tr =
+                      TestResults(values: [t, t2, t3, t4, t5, t6, t7]);
+                  tr.addAll(playerTaps);
+                  var end = start.transform(tr);
+                  expect(~end, 0);
+                  end = end.transform(tr);
+                  expect(~end, 0);
+                  end = end.transform(tr);
+                  expect(~end, 0);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+
+  /*
+  normal count
+   */
+
+  test('Increase normal count one for multiple taps before and after', () {
+    var start = NormalSymbolTotalField(0);
+    var tr = TestResults(values: [IsNormalSymbol(true), DidPlayerReact(true)]);
+  });
+
+  /*
+  killer count
+   */
 }

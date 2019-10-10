@@ -86,17 +86,16 @@ End definitions-----------------
 
 class TapCountField implements StateValueField<TapCount> {
   final int _iTapCount;
-  TapCount _tapCount;
 
   TapCountField(this._iTapCount);
 
   @override
   StateValueField<TapCount> transform(TestResults t) {
-    DidPlayerReact didReact = t.get(PredicateID.DID_PLAYER_REACT);
-    IsNewSymbol isNewSymbol = t.get(PredicateID.DID_NEW_SYMBOL);
-    if (~didReact) {
-      return new TapCountField(~_tapCount + 1);
-    } else if (~isNewSymbol) {
+    bool didReact = ~t.get(PredicateID.DID_PLAYER_REACT);
+    bool isNewSymbol = ~t.get(PredicateID.DID_NEW_SYMBOL);
+    if (didReact) {
+      return new TapCountField(_iTapCount + 1);
+    } else if (isNewSymbol) {
       return new TapCountField(0);
     } else {
       return this;
