@@ -191,7 +191,7 @@ class LivesTotalField implements StateValueField<LivesTotal> {
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
   final String _sShownSymbol;
-  final Random random = Random(Constants.randomRandomSeed);
+  static final Random _random = Random(Constants.randomRandomSeed);
 
   ShownSymbolField(this._sShownSymbol);
 
@@ -199,17 +199,17 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
   StateValueField<ShownSymbol> transform(TestResults t) {
     IsNewSymbol isNewSymbol = t.get(PredicateID.DID_NEW_SYMBOL);
     if (~isNewSymbol) {
-      bool isNormalSymbol = random.nextDouble() <= Constants.normalOdds;
+      bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;
       String newSymbol;
       if (isNormalSymbol) {
         while (oldSymbol == newSymbol) {
           newSymbol = Constants
-              .normalSymbols[random.nextInt(Constants.normalSymbols.length)];
+              .normalSymbols[_random.nextInt(Constants.normalSymbols.length)];
         }
       } else {
         newSymbol = Constants
-            .killerSymbols[random.nextInt(Constants.killerSymbols.length)];
+            .killerSymbols[_random.nextInt(Constants.killerSymbols.length)];
       }
       return ShownSymbolField(newSymbol);
     } else {
@@ -281,7 +281,9 @@ class ReactionWindowLengthField
       Adjust newAdj = Adjust(~getAdj(t) * total);
 
       int newWindowLength = (~scalar * ~maximum) + ~newAdj;
+      //make sure that the window is not inhumanly fast
       int newWindowLengthBottomed = max(~minimum, newWindowLength);
+      //do not want window to be longer than the interval
       int actualMax = min(~intervalLengthField, ~maximum);
       int newWindowLengthTopped = min(~actualMax, newWindowLengthBottomed);
 
@@ -352,16 +354,16 @@ class ReactionWindowLengthField
 
 class IntervalLengthField extends StateValueField<IntervalLength> {
   final int _iIntervalLength;
-  final Random random = Random(Constants.randomRandomSeed);
+  static final Random _random = Random(Constants.randomRandomSeed);
 
   IntervalLengthField(this._iIntervalLength);
 
   @override
   StateValueField<Value> transform(TestResults t) {
     if (~t.get(PredicateID.DID_NEW_SYMBOL)) {
-      int randomLength =
-          random.nextInt(Constants.intervals.last - Constants.intervals.first) +
-              Constants.intervals.first;
+      int randomLength = _random
+              .nextInt(Constants.intervals.last - Constants.intervals.first) +
+          Constants.intervals.first;
       return IntervalLengthField(randomLength);
     } else {
       return this;
@@ -394,11 +396,27 @@ class ScoreField extends StateValueField<Score> {
     }
     int newScore =
         (50 * ~newNormalTotal) + (500 * ~newKillerTotal) - (25 * excessTaps);
-    return ScoreField(newScore, newTc, newNormalTotal, newKillerTotal);
+    double adjScore = getMultiplier(t) * newScore;
+    int roundScore = adjScore.round();
+    return ScoreField(roundScore, newTc, newNormalTotal, newKillerTotal);
   }
 
   @override
   operator ~() {
     return _iScore;
+  }
+
+  double getMultiplier(TestResults t) {
+    if (~t.get(PredicateID.IS_EASY)) {
+      return Constants.easyScoreMultiplier;
+    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+      return Constants.mediumScoreMultiplier;
+    } else if (~t.get(PredicateID.IS_HARD)) {
+      return Constants.hardScoreMultiplier;
+    } else if (~t.get(PredicateID.IS_HERO)) {
+      return Constants.heroScoreMultiplier;
+    } else {
+      throw Exception("How did you manage to do that?");
+    }
   }
 }
