@@ -9,6 +9,7 @@ enum PredicateID {
   DID_FIRST_TAP,
   DID_WINDOW_CLOSE,
   DID_NEW_SYMBOL,
+  DID_GAME_START,
   IS_NORMAL_SYMBOL,
   IS_KILLER_SYMBOL,
   IS_TAPPED_ZERO,
@@ -110,7 +111,6 @@ class TapCountField implements StateValueField<TapCount> {
 
 class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
   final int _iTotal;
-  NormalSymbolTotal _total;
 
   NormalSymbolTotalField(this._iTotal);
 
@@ -122,7 +122,7 @@ class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
       PredicateID.IS_WINDOW_OPEN
     ]);
     if (rewardPlayer) {
-      return NormalSymbolTotalField(~_total + 1);
+      return NormalSymbolTotalField(_iTotal + 1);
     } else {
       return this;
     }
@@ -136,19 +136,18 @@ class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
 
 class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
   final int _iKillerTotal;
-  KillerSymbolTotal _total;
 
   KillerSymbolTotalField(this._iKillerTotal);
 
   @override
   StateValueField<KillerSymbolTotal> transform(TestResults t) {
     bool rewardPlayer = t.and([
-      PredicateID.DID_NEW_SYMBOL,
       PredicateID.IS_TAPPED_ZERO,
+      PredicateID.DID_NEW_SYMBOL,
       PredicateID.IS_KILLER_SYMBOL
     ]);
     if (rewardPlayer) {
-      return KillerSymbolTotalField(~_total + 1);
+      return KillerSymbolTotalField(_iKillerTotal + 1);
     } else {
       return this;
     }
@@ -164,7 +163,7 @@ class LivesTotalField implements StateValueField<LivesTotal> {
   final int _iLives;
   LivesTotal _lives;
 
-  LivesTotalField(this._iLives){
+  LivesTotalField(this._iLives) {
     _lives = LivesTotal(_iLives);
   }
 
@@ -192,6 +191,7 @@ class LivesTotalField implements StateValueField<LivesTotal> {
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
   final String _sShownSymbol;
+  final Random random = Random(Constants.randomRandomSeed);
 
   ShownSymbolField(this._sShownSymbol);
 
@@ -199,12 +199,11 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
   StateValueField<ShownSymbol> transform(TestResults t) {
     IsNewSymbol isNewSymbol = t.get(PredicateID.DID_NEW_SYMBOL);
     if (~isNewSymbol) {
-      var random = Random.secure();
       bool isNormalSymbol = random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;
       String newSymbol;
       if (isNormalSymbol) {
-        while(oldSymbol == newSymbol) {
+        while (oldSymbol == newSymbol) {
           newSymbol = Constants
               .normalSymbols[random.nextInt(Constants.normalSymbols.length)];
         }
@@ -253,6 +252,7 @@ class ReactionWindowLengthField
 
   final NormalSymbolTotalField normalTotal;
   final KillerSymbolTotalField killerTotal;
+  final IntervalLengthField intervalLengthField;
 
   final Scalar scalar; //2
   final Multiplier multiplier; //3
@@ -266,32 +266,40 @@ class ReactionWindowLengthField
       this.killerTotal,
       this.scalar,
       this.multiplier,
-      this.adj);
+      this.adj,
+      this.intervalLengthField);
 
   @override
   StateValueField<ReactionWindowLength> transform(TestResults t) {
     NormalSymbolTotalField newNormTotal = normalTotal.transform(t);
     KillerSymbolTotalField newKillerTotal = killerTotal.transform(t);
+    IntervalLengthField newInterval = intervalLengthField.transform(t);
 
-    int total = ~~newNormTotal + ~~newKillerTotal;
+    if (~t.get(PredicateID.DID_NEW_SYMBOL)) {
+      int total = ~~newNormTotal + ~~newKillerTotal;
 
-    Adjust newAdj = Adjust(~getAdj(t) * total);
+      Adjust newAdj = Adjust(~getAdj(t) * total);
 
-    int newWindowLength = (~scalar * ~maximum) + ~newAdj;
-    newWindowLength = max(~minimum, newWindowLength);
-    newWindowLength = min(~maximum, newWindowLength);
+      int newWindowLength = (~scalar * ~maximum) + ~newAdj;
+      int newWindowLengthBottomed = max(~minimum, newWindowLength);
+      int actualMax = min(~intervalLengthField, ~maximum);
+      int newWindowLengthTopped = min(~actualMax, newWindowLengthBottomed);
 
-    ReactionWindowLengthField newIntervalField = ReactionWindowLengthField(
-        newWindowLength,
-        minimum,
-        maximum,
-        newNormTotal,
-        newKillerTotal,
-        scalar,
-        multiplier,
-        newAdj);
+      ReactionWindowLengthField newIntervalField = ReactionWindowLengthField(
+          newWindowLengthTopped,
+          minimum,
+          maximum,
+          newNormTotal,
+          newKillerTotal,
+          scalar,
+          multiplier,
+          newAdj,
+          newInterval);
 
-    return newIntervalField;
+      return newIntervalField;
+    } else {
+      return this;
+    }
   } //5
 
   Minimum getMin(TestResults t) {
@@ -339,5 +347,58 @@ class ReactionWindowLengthField
   @override
   int operator ~() {
     return _iWindowLength;
+  }
+}
+
+class IntervalLengthField extends StateValueField<IntervalLength> {
+  final int _iIntervalLength;
+  final Random random = Random(Constants.randomRandomSeed);
+
+  IntervalLengthField(this._iIntervalLength);
+
+  @override
+  StateValueField<Value> transform(TestResults t) {
+    if (~t.get(PredicateID.DID_NEW_SYMBOL)) {
+      int randomLength =
+          random.nextInt(Constants.intervals.last - Constants.intervals.first) +
+              Constants.intervals.first;
+      return IntervalLengthField(randomLength);
+    } else {
+      return this;
+    }
+  }
+
+  @override
+  operator ~() {
+    return _iIntervalLength;
+  }
+}
+
+class ScoreField extends StateValueField<Score> {
+  final int _iScore;
+  final TapCountField _tc;
+  final NormalSymbolTotalField _normalTotal;
+  final KillerSymbolTotalField _killerTotal;
+
+  ScoreField(this._iScore, this._tc, this._normalTotal, this._killerTotal);
+
+  @override
+  StateValueField<Value> transform(TestResults t) {
+    var newTc = _tc.transform(t);
+    var newNormalTotal = _normalTotal.transform(t);
+    var newKillerTotal = _killerTotal.transform(t);
+
+    int excessTaps = 0;
+    if (~t.get(PredicateID.IS_NORMAL_SYMBOL) && ~newTc > 1) {
+      excessTaps = ~newTc - 1;
+    }
+    int newScore =
+        (50 * ~newNormalTotal) + (500 * ~newKillerTotal) - (25 * excessTaps);
+    return ScoreField(newScore, newTc, newNormalTotal, newKillerTotal);
+  }
+
+  @override
+  operator ~() {
+    return _iScore;
   }
 }

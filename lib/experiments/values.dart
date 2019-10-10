@@ -28,6 +28,14 @@ class Value<T> {
   }
 }
 
+class RandomSeed extends Value<int> {
+  RandomSeed(int value) : super(value);
+}
+
+class IntervalLength extends Value<int> {
+  IntervalLength(int value) : super(value);
+}
+
 class TapCount extends Value<int> {
   TapCount(int value) : super(value);
 }

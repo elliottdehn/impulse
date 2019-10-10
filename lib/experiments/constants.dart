@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Constants {
   static const List<String> killerSymbols = ["X"];
   static const List<String> normalSymbols = [
@@ -59,4 +61,5 @@ class Constants {
   static const int reactionWindowAdjMedium = -3;
   static const int reactionWindowAdjHard = -4;
   static const int reactionWindowAdjHero = -5;
+  static final int randomRandomSeed = Random(98723489).nextInt(12341234);
 }

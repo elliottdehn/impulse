@@ -50,7 +50,7 @@ import 'package:test/test.dart';
 
 void main() {
   /*
-  Reaction window
+  Reaction window status
    */
 
   test('RW Closes on closing', () {
@@ -347,12 +347,58 @@ void main() {
   normal count
    */
 
-  test('Increase normal count one for multiple taps before and after', () {
+  test('Increase normal count one for first tap', () {
     var start = NormalSymbolTotalField(0);
-    var tr = TestResults(values: [IsNormalSymbol(true), DidPlayerReact(true)]);
+    var tr = TestResults(values: [IsNormalSymbol(true), DidFirstTap(true), IsWindowOpen(true)]);
+    var end = start.transform(tr);
+    expect(~end, 1);
+  });
+
+  test('Negative cases', (){
+    var start = NormalSymbolTotalField(0);
+    var tr2 = TestResults(values: [IsNormalSymbol(false), DidFirstTap(true), IsWindowOpen(true)]);
+    var tr3 = TestResults(values: [IsNormalSymbol(false), DidFirstTap(false), IsWindowOpen(true)]);
+    var tr1 = TestResults(values: [IsNormalSymbol(false), DidFirstTap(false), IsWindowOpen(false)]);
+    var tr4 = TestResults(values: [IsNormalSymbol(true), DidFirstTap(false), IsWindowOpen(true)]);
+    var tr6 = TestResults(values: [IsNormalSymbol(false), DidFirstTap(true), IsWindowOpen(false)]);
+    var tr5 = TestResults(values: [IsNormalSymbol(true), DidFirstTap(false), IsWindowOpen(false)]);
+    var tr7 = TestResults(values: [IsNormalSymbol(true), DidFirstTap(true), IsWindowOpen(false)]);
+    List<TestResults> trs = [tr1, tr2, tr3, tr4, tr5, tr6, tr7];
+    var end;
+    for(TestResults tr in trs) {
+      end = start.transform(tr);
+    }
+    expect(~end, 0);
   });
 
   /*
   killer count
+   */
+
+  test('Increase killer count for not tapping', (){
+    var start = KillerSymbolTotalField(0);
+    var tr = TestResults(values: [
+      IsKillerSymbol(true),
+      IsNewSymbol(true),
+      IsTappedZero(true)
+    ]);
+    var end = start.transform(tr);
+    expect(~end, 1);
+  });
+
+  /*
+  reaction window length
+   */
+
+  /*
+  interval
+   */
+
+  /*
+  score
+   */
+
+  /*
+  symbol
    */
 }
