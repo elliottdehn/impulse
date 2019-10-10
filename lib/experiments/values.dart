@@ -5,7 +5,7 @@ class Value<T> {
 
   Value(this.value);
 
-  //"get value""
+  //"get value"
   T operator ~() {
     return this.value;
   }
@@ -56,8 +56,8 @@ class ReactionWindowStatus extends Value<bool> {
   ReactionWindowStatus(bool value) : super(value);
 }
 
-class WindowLength extends Value<int> {
-  WindowLength(int value) : super(value);
+class ReactionWindowLength extends Value<int> {
+  ReactionWindowLength(int value) : super(value);
 }
 
 class Minimum extends Value<num> {

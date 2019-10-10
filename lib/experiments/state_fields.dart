@@ -22,39 +22,48 @@ enum PredicateID {
 }
 
 class DidPlayerReact extends TestResult {
-  DidPlayerReact(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.DID_PLAYER_REACT;
+  DidPlayerReact(y) : super(id, y);
 }
 
 class DidFirstTap extends TestResult {
-  DidFirstTap(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.DID_FIRST_TAP;
+  DidFirstTap(y) : super(id, y);
 }
 
 class IsNormalSymbol extends TestResult {
-  IsNormalSymbol(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.IS_NORMAL_SYMBOL;
+  IsNormalSymbol(y) : super(id, y);
 }
 
 class IsKillerSymbol extends TestResult {
-  IsKillerSymbol(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.IS_KILLER_SYMBOL;
+  IsKillerSymbol(y) : super(id, y);
 }
 
 class IsTappedZero extends TestResult {
-  IsTappedZero(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.IS_TAPPED_ZERO;
+  IsTappedZero(y) : super(id, y);
 }
 
 class IsNewSymbol extends TestResult {
-  IsNewSymbol(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.DID_NEW_SYMBOL;
+  IsNewSymbol(y) : super(id, y);
 }
 
 class IsWindowOpen extends TestResult {
-  IsWindowOpen(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.IS_WINDOW_OPEN;
+  IsWindowOpen(y) : super(id, y);
 }
 
 class IsWindowClosing extends TestResult {
-  IsWindowClosing(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.IS_WINDOW_CLOSING;
+  IsWindowClosing(y) : super(id, y);
 }
 
 class IsWindowClosed extends TestResult {
-  IsWindowClosed(x, y) : super(x, y);
+  static final PredicateID id = PredicateID.IS_WINDOW_CLOSED;
+  IsWindowClosed(y) : super(id, y);
 }
 
 /*
@@ -69,40 +78,42 @@ abstract class StateValueField<X extends Value>
     with Transform<StateValueField> {
   StateValueField<Value> transform(TestResults t);
 
-  X operator ~();
+  dynamic operator ~();
 }
 /*
 End definitions-----------------
  */
 
 class TapCountField implements StateValueField<TapCount> {
-  final TapCount tc;
+  final int _iTapCount;
+  TapCount _tapCount;
 
-  TapCountField(this.tc);
+  TapCountField(this._iTapCount);
 
   @override
   StateValueField<TapCount> transform(TestResults t) {
     DidPlayerReact didReact = t.get(PredicateID.DID_PLAYER_REACT);
     IsNewSymbol isNewSymbol = t.get(PredicateID.DID_NEW_SYMBOL);
     if (~didReact) {
-      return new TapCountField(new TapCount(~tc + 1));
+      return new TapCountField(~_tapCount + 1);
     } else if (~isNewSymbol) {
-      return new TapCountField(new TapCount(0));
+      return new TapCountField(0);
     } else {
       return this;
     }
   }
 
   @override
-  TapCount operator ~() {
-    return tc;
+  int operator ~() {
+    return _iTapCount;
   }
 }
 
 class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
-  final NormalSymbolTotal total;
+  final int _iTotal;
+  NormalSymbolTotal _total;
 
-  NormalSymbolTotalField(this.total);
+  NormalSymbolTotalField(this._iTotal);
 
   @override
   StateValueField<NormalSymbolTotal> transform(TestResults t) {
@@ -112,22 +123,23 @@ class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
       PredicateID.IS_WINDOW_OPEN
     ]);
     if (rewardPlayer) {
-      return NormalSymbolTotalField(NormalSymbolTotal(~total + 1));
+      return NormalSymbolTotalField(~_total + 1);
     } else {
       return this;
     }
   }
 
   @override
-  NormalSymbolTotal operator ~() {
-    return total;
+  int operator ~() {
+    return _iTotal;
   }
 }
 
 class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
-  final KillerSymbolTotal total;
+  final int _iKillerTotal;
+  KillerSymbolTotal _total;
 
-  KillerSymbolTotalField(this.total);
+  KillerSymbolTotalField(this._iKillerTotal);
 
   @override
   StateValueField<KillerSymbolTotal> transform(TestResults t) {
@@ -137,22 +149,25 @@ class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
       PredicateID.IS_KILLER_SYMBOL
     ]);
     if (rewardPlayer) {
-      return KillerSymbolTotalField(new KillerSymbolTotal(~total + 1));
+      return KillerSymbolTotalField(~_total + 1);
     } else {
       return this;
     }
   }
 
   @override
-  KillerSymbolTotal operator ~() {
-    return total;
+  int operator ~() {
+    return _iKillerTotal;
   }
 }
 
 class LivesTotalField implements StateValueField<LivesTotal> {
-  final LivesTotal lives;
+  final int _iLives;
+  LivesTotal _lives;
 
-  LivesTotalField(this.lives);
+  LivesTotalField(this._iLives){
+    _lives = LivesTotal(_iLives);
+  }
 
   @override
   StateValueField<LivesTotal> transform(TestResults t) {
@@ -164,22 +179,23 @@ class LivesTotalField implements StateValueField<LivesTotal> {
       PredicateID.IS_TAPPED_ZERO
     ]);
     if (playedReactedOnKiller || noReactsOnNormal) {
-      return LivesTotalField(LivesTotal(~lives - 1));
+      return LivesTotalField(~_lives - 1);
     } else {
       return this;
     }
   }
 
   @override
-  LivesTotal operator ~() {
-    return lives;
+  int operator ~() {
+    return ~_lives;
   }
 }
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
-  final ShownSymbol shownSymbol;
+  final String _sShownSymbol;
+  ShownSymbol _shownSymbol;
 
-  ShownSymbolField(this.shownSymbol);
+  ShownSymbolField(this._sShownSymbol);
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
@@ -195,41 +211,45 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
         res = Constants
             .killerSymbols[random.nextInt(Constants.killerSymbols.length)];
       }
-      return ShownSymbolField(ShownSymbol(res));
+      return ShownSymbolField(res);
     } else {
       return this;
     }
   }
 
   @override
-  ShownSymbol operator ~() {
-    return shownSymbol;
+  String operator ~() {
+    return _sShownSymbol;
   }
 }
 
 class ReactionWindowStatusField
     implements StateValueField<ReactionWindowStatus> {
-  final ReactionWindowStatus status;
+  final bool _bStatus;
+  ReactionWindowStatus _status;
 
-  ReactionWindowStatusField(this.status);
+  ReactionWindowStatusField(this._bStatus){
+    _status = ReactionWindowStatus(_bStatus);
+  }
 
   @override
-  StateValueField<ReactionWindowStatus> transform(TestResults t) {
+  StateValueField<Value<bool>> transform(TestResults t) {
     bool newSymbol = ~t.get(PredicateID.DID_NEW_SYMBOL);
     bool closingOrClosed =
         t.or([PredicateID.IS_WINDOW_CLOSED, PredicateID.IS_WINDOW_CLOSING]);
-    return ReactionWindowStatusField(
-        ReactionWindowStatus(!closingOrClosed || newSymbol));
+    return ReactionWindowStatusField(!closingOrClosed || newSymbol);
   }
 
   @override
-  ReactionWindowStatus operator ~() {
-    return status;
+  bool operator ~() {
+    return _bStatus;
   }
 }
 
-class ReactionWindowField implements StateValueField<WindowLength> {
-  final WindowLength windowLength;
+class ReactionWindowLengthField
+    implements StateValueField<ReactionWindowLength> {
+  final int _iWindowLength;
+  ReactionWindowLength _windowLength;
 
   final Minimum minimum; //0
   final Maximum maximum; //1
@@ -241,8 +261,8 @@ class ReactionWindowField implements StateValueField<WindowLength> {
   final Multiplier multiplier; //3
   final Adjust adj;
 
-  ReactionWindowField(
-      this.windowLength,
+  ReactionWindowLengthField(
+      this._iWindowLength,
       this.minimum,
       this.maximum,
       this.normalTotal,
@@ -252,7 +272,7 @@ class ReactionWindowField implements StateValueField<WindowLength> {
       this.adj);
 
   @override
-  StateValueField<WindowLength> transform(TestResults t) {
+  StateValueField<ReactionWindowLength> transform(TestResults t) {
     NormalSymbolTotalField newNormTotal = normalTotal.transform(t);
     KillerSymbolTotalField newKillerTotal = killerTotal.transform(t);
 
@@ -264,10 +284,8 @@ class ReactionWindowField implements StateValueField<WindowLength> {
     newWindowLength = max(~minimum, newWindowLength);
     newWindowLength = min(~maximum, newWindowLength);
 
-    WindowLength postHardeningLength = WindowLength(newWindowLength);
-
-    ReactionWindowField newIntervalField = ReactionWindowField(
-        postHardeningLength,
+    ReactionWindowLengthField newIntervalField = ReactionWindowLengthField(
+        newWindowLength,
         minimum,
         maximum,
         newNormTotal,
@@ -322,7 +340,7 @@ class ReactionWindowField implements StateValueField<WindowLength> {
   }
 
   @override
-  WindowLength operator ~() {
-    return windowLength;
+  int operator ~() {
+    return _iWindowLength;
   }
 }
