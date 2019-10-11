@@ -6,6 +6,92 @@ import 'test_results.dart';
 import '../values.dart';
 import 'transitioner.dart';
 
+//this is what happens when you want to stick to immutable values
+class StateFields {
+  static final TapCountField initTapCountField = TapCountField(0);
+  static final NormalSymbolTotalField initNormalSymbolTotalField =
+      NormalSymbolTotalField(0);
+  static final KillerSymbolTotalField initKillerSymbolTotalField =
+      KillerSymbolTotalField(0);
+  static final ScoreField initScoreField = ScoreField(0, initTapCountField,
+      initNormalSymbolTotalField, initKillerSymbolTotalField);
+  static final IntervalLengthField initIntervalLengthField =
+      IntervalLengthField(-1);
+  static final ReactionWindowStatusField initReactionWindowStatusField =
+      ReactionWindowStatusField(false);
+  static final ReactionWindowLengthField initReactionWindowLengthField =
+      ReactionWindowLengthField(null, initNormalSymbolTotalField,
+          initKillerSymbolTotalField, Scalar(1.0), initIntervalLengthField);
+  static final ShownSymbolField initShownSymbolField = ShownSymbolField("");
+  static final LivesTotalField initLivesTotalField = LivesTotalField(null);
+
+  final TapCountField tapCountField;
+  final NormalSymbolTotalField normalSymbolTotalField;
+  final KillerSymbolTotalField killerSymbolTotalField;
+  final ScoreField scoreField;
+  final IntervalLengthField intervalLengthField;
+  final ReactionWindowLengthField reactionWindowLengthField;
+  final ReactionWindowStatusField reactionWindowStatusField;
+  final ShownSymbolField shownSymbolField;
+  final LivesTotalField livesTotalField;
+
+  StateFields(
+      this.tapCountField,
+      this.normalSymbolTotalField,
+      this.killerSymbolTotalField,
+      this.scoreField,
+      this.intervalLengthField,
+      this.reactionWindowLengthField,
+      this.reactionWindowStatusField,
+      this.shownSymbolField,
+      this.livesTotalField);
+
+  StateFields transform(TestResults results) {
+    var newTapCountField = tapCountField.transform(results);
+    var newNormalSymbolTotalField = normalSymbolTotalField.transform(results);
+    var newKillerSymbolTotalField = killerSymbolTotalField.transform(results);
+    var newScoreField = scoreField.transform(results);
+    var newIntervalLengthField = intervalLengthField.transform(results);
+    var newReactionWindowStatusField =
+        reactionWindowStatusField.transform(results);
+    var newReactionWindowLengthField =
+        reactionWindowLengthField.transform(results);
+    var newShownSymbolField = shownSymbolField.transform(results);
+    var newLivesTotalField = livesTotalField.transform(results);
+
+    StateFields newFields = StateFields(
+        newTapCountField,
+        newNormalSymbolTotalField,
+        newKillerSymbolTotalField,
+        newScoreField,
+        newIntervalLengthField,
+        newReactionWindowLengthField,
+        newReactionWindowStatusField,
+        newShownSymbolField,
+        newLivesTotalField);
+
+    return newFields;
+  }
+
+  static StateFields init(){
+    return StateFields(
+        initTapCountField,
+        initNormalSymbolTotalField,
+        initKillerSymbolTotalField,
+        initScoreField,
+        initIntervalLengthField,
+        initReactionWindowLengthField,
+        initReactionWindowStatusField,
+        initShownSymbolField,
+        initLivesTotalField);
+  }
+
+}
+
+/*
+impl
+ */
+
 class TapCountField implements StateValueField<TapCount> {
   final int _iTapCount;
 
@@ -104,6 +190,20 @@ class LivesTotalField implements StateValueField<LivesTotal> {
     }
   }
 
+  Lives getStartLives(TestResults t) {
+    if (~t.get(PredicateID.IS_EASY)) {
+      return Lives(Constants.livesStartEasy);
+    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+      return Lives(Constants.livesStartMedium);
+    } else if (~t.get(PredicateID.IS_HARD)) {
+      return Lives(Constants.livesStartHard);
+    } else if (~t.get(PredicateID.IS_HERO)) {
+      return Lives(Constants.livesStartHero);
+    } else {
+      throw Exception("How did you manage to do that?");
+    }
+  }
+
   @override
   int operator ~() {
     return ~_lives;
@@ -151,7 +251,7 @@ class ReactionWindowStatusField
   ReactionWindowStatusField(this._bStatus);
 
   @override
-  StateValueField<Value<bool>> transform(TestResults t) {
+  StateValueField<ReactionWindowStatus> transform(TestResults t) {
     bool newSymbol = ~t.get(PredicateID.DID_NEW_SYMBOL);
     bool closingOrClosed =
         t.or([PredicateID.IS_WINDOW_CLOSED, PredicateID.IS_WINDOW_CLOSING]);
@@ -168,27 +268,14 @@ class ReactionWindowLengthField
     implements StateValueField<ReactionWindowLength> {
   final int _iWindowLength;
 
-  final Minimum minimum; //0
-  final Maximum maximum; //1
-
   final NormalSymbolTotalField normalTotal;
   final KillerSymbolTotalField killerTotal;
   final IntervalLengthField intervalLengthField;
 
   final Scalar scalar; //2
-  final Multiplier multiplier; //3
-  final Adjust adj;
 
-  ReactionWindowLengthField(
-      this._iWindowLength,
-      this.minimum,
-      this.maximum,
-      this.normalTotal,
-      this.killerTotal,
-      this.scalar,
-      this.multiplier,
-      this.adj,
-      this.intervalLengthField);
+  ReactionWindowLengthField(this._iWindowLength, this.normalTotal,
+      this.killerTotal, this.scalar, this.intervalLengthField);
 
   @override
   StateValueField<ReactionWindowLength> transform(TestResults t) {
@@ -201,6 +288,9 @@ class ReactionWindowLengthField
 
       Adjust newAdj = Adjust(~getAdj(t) * total);
 
+      Minimum minimum = getMin(t);
+      Maximum maximum = getMax(t);
+
       int newWindowLength = (~scalar * ~maximum) + ~newAdj;
       //make sure that the window is not inhumanly fast
       int newWindowLengthBottomed = max(~minimum, newWindowLength);
@@ -210,13 +300,9 @@ class ReactionWindowLengthField
 
       ReactionWindowLengthField newIntervalField = ReactionWindowLengthField(
           newWindowLengthTopped,
-          minimum,
-          maximum,
           newNormTotal,
           newKillerTotal,
           scalar,
-          multiplier,
-          newAdj,
           newInterval);
 
       return newIntervalField;

@@ -69,4 +69,9 @@ class Constants {
   static const double mediumScoreMultiplier = easyScoreMultiplier * 3;
   static const double hardScoreMultiplier = mediumScoreMultiplier * 3;
   static const double heroScoreMultiplier = hardScoreMultiplier * 3;
+
+  static const int livesStartEasy = 6;
+  static const int livesStartMedium = 5;
+  static const int livesStartHard = 4;
+  static const int livesStartHero = 3;
 }

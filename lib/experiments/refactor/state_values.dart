@@ -1,18 +1,16 @@
 import 'package:impulse/experiments/values.dart';
 
-import 'field_id.dart';
-import 'test_results.dart';
-
 class StateValues {
-  final Tuple<FieldID, TapCount> tapCount;
-  final Tuple<FieldID, NormalSymbolTotal> normalSymbolTotal;
-  final Tuple<FieldID, KillerSymbolTotal> killerSymbolTotal;
-  final Tuple<FieldID, ShownSymbol> shownSymbol;
-  final Tuple<FieldID, Score> score;
-  final Tuple<FieldID, IntervalLength> intervalLength;
-  final Tuple<FieldID, ReactionWindowLength> reactionWindowLength;
-  final Tuple<FieldID, ReactionWindowStatus> reactionWindowStatus;
-  final Tuple<FieldID, Lives> lives;
+
+  final TapCount tapCount;
+  final NormalSymbolTotal normalSymbolTotal;
+  final KillerSymbolTotal killerSymbolTotal;
+  final ShownSymbol shownSymbol;
+  final Score score;
+  final IntervalLength intervalLength;
+  final ReactionWindowLength reactionWindowLength;
+  final ReactionWindowStatus reactionWindowStatus;
+  final Lives lives;
 
   StateValues(
       this.tapCount,
