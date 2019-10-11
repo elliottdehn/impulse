@@ -44,8 +44,8 @@ model
 notifier
 */
 
-import 'package:impulse/experiments/predicates.dart';
-import 'package:impulse/experiments/state_fields.dart';
+import 'package:impulse/experiments/refactor/test_results.dart';
+import 'package:impulse/experiments/refactor/state_fields.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -397,6 +397,30 @@ void main() {
   /*
   score
    */
+
+  test('basic test for each field', () {
+    //all of these fields are expected to change outside and inside
+    var startN = NormalSymbolTotalField(0);
+    var startK = KillerSymbolTotalField(0);
+    var startTC = TapCountField(0);
+
+    var startScore = ScoreField(0, startTC, startN, startK);
+
+    //this is not a valid case. it is meant to test the limits of the method
+    var trs = TestResults(values: [
+      IsKillerSymbol(true),
+      IsNormalSymbol(true),
+      IsTappedZero(true),
+      DidFirstTap(true),
+      IsWindowOpen(true),
+      IsNewSymbol(true),
+      DidPlayerReact(false),
+      IsEasy(true)
+    ]);
+
+    var endScore = startScore.transform(trs);
+    assert(~endScore != startScore);
+  });
 
   /*
   symbol

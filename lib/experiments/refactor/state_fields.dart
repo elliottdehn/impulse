@@ -1,71 +1,9 @@
 import 'dart:math';
 
 import 'constants.dart';
-import 'predicates.dart';
-import 'values.dart';
-
-enum PredicateID {
-  DID_PLAYER_REACT,
-  DID_FIRST_TAP,
-  DID_WINDOW_CLOSE,
-  DID_NEW_SYMBOL,
-  DID_GAME_START,
-  IS_NORMAL_SYMBOL,
-  IS_KILLER_SYMBOL,
-  IS_TAPPED_ZERO,
-  IS_WINDOW_OPEN,
-  IS_WINDOW_CLOSING,
-  IS_WINDOW_CLOSED,
-  IS_EASY,
-  IS_MEDIUM,
-  IS_HARD,
-  IS_HERO,
-}
-
-class DidPlayerReact extends TestResult {
-  static final PredicateID id = PredicateID.DID_PLAYER_REACT;
-  DidPlayerReact(y) : super(id, y);
-}
-
-class DidFirstTap extends TestResult {
-  static final PredicateID id = PredicateID.DID_FIRST_TAP;
-  DidFirstTap(y) : super(id, y);
-}
-
-class IsNormalSymbol extends TestResult {
-  static final PredicateID id = PredicateID.IS_NORMAL_SYMBOL;
-  IsNormalSymbol(y) : super(id, y);
-}
-
-class IsKillerSymbol extends TestResult {
-  static final PredicateID id = PredicateID.IS_KILLER_SYMBOL;
-  IsKillerSymbol(y) : super(id, y);
-}
-
-class IsTappedZero extends TestResult {
-  static final PredicateID id = PredicateID.IS_TAPPED_ZERO;
-  IsTappedZero(y) : super(id, y);
-}
-
-class IsNewSymbol extends TestResult {
-  static final PredicateID id = PredicateID.DID_NEW_SYMBOL;
-  IsNewSymbol(y) : super(id, y);
-}
-
-class IsWindowOpen extends TestResult {
-  static final PredicateID id = PredicateID.IS_WINDOW_OPEN;
-  IsWindowOpen(y) : super(id, y);
-}
-
-class IsWindowClosing extends TestResult {
-  static final PredicateID id = PredicateID.IS_WINDOW_CLOSING;
-  IsWindowClosing(y) : super(id, y);
-}
-
-class IsWindowClosed extends TestResult {
-  static final PredicateID id = PredicateID.IS_WINDOW_CLOSED;
-  IsWindowClosed(y) : super(id, y);
-}
+import 'predicate_id.dart';
+import 'test_results.dart';
+import '../values.dart';
 
 /*
 Definitions---------------------
@@ -398,7 +336,8 @@ class ScoreField extends StateValueField<Score> {
         (50 * ~newNormalTotal) + (500 * ~newKillerTotal) - (25 * excessTaps);
     double adjScore = getMultiplier(t) * newScore;
     int roundScore = adjScore.round();
-    return ScoreField(roundScore, newTc, newNormalTotal, newKillerTotal);
+    int bottomedScore = max(0, roundScore);
+    return ScoreField(bottomedScore, newTc, newNormalTotal, newKillerTotal);
   }
 
   @override
