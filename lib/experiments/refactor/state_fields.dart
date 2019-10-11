@@ -4,24 +4,7 @@ import 'constants.dart';
 import 'predicate_id.dart';
 import 'test_results.dart';
 import '../values.dart';
-
-/*
-Definitions---------------------
- */
-
-mixin Transform<T extends Transform<T>> {
-  T transform(TestResults t);
-}
-
-abstract class StateValueField<X extends Value>
-    with Transform<StateValueField> {
-  StateValueField<Value> transform(TestResults t);
-
-  dynamic operator ~();
-}
-/*
-End definitions-----------------
- */
+import 'transitioner.dart';
 
 class TapCountField implements StateValueField<TapCount> {
   final int _iTapCount;
