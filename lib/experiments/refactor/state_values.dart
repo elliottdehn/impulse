@@ -17,18 +17,25 @@ class StateValues {
   final Lives lives;
    */
 
-  final List<StateValue> values;
+  final List<StateValue> _values;
 
-  StateValues(this.values);
+  StateValues(this._values);
 
   Value get(ValueID id) {
     values.retainWhere((element) => element.id == id);
     return values[0].val;
   }
+
+  List<StateValue> get values {
+    //can be shallow because values (will be) internally final
+    List<StateValue> shallowClone = [];
+    shallowClone.addAll(_values);
+    return shallowClone;
+  }
+
 }
 
 abstract class StateValue<ValueID, X extends Value<dynamic>> {
-  ValueID id;
   final X val;
 
   StateValue(this.val);
@@ -37,7 +44,7 @@ abstract class StateValue<ValueID, X extends Value<dynamic>> {
     return ~val;
   }
 
-  ValueID getId();
+  ValueID get id;
 
 }
 
@@ -45,7 +52,7 @@ class EventStateValue extends StateValue<ValueID, Event>{
   EventStateValue(Event val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.LAST_EVENT;
   }
 
@@ -55,17 +62,16 @@ class DifficultyStateValue extends StateValue<ValueID, Difficulty>{
   DifficultyStateValue(Difficulty val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.DIFFICULTY;
   }
-
 }
 
 class TapCountStateValue extends StateValue<ValueID, TapCount>{
   TapCountStateValue(TapCount val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.TAP_COUNT;
   }
 }
@@ -74,7 +80,7 @@ class NormalTotalStateValue extends StateValue<ValueID, NormalSymbolTotal>{
   NormalTotalStateValue(NormalSymbolTotal val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.NORMAL_SYMBOL_TOTAL;
   }
 }
@@ -83,7 +89,7 @@ class KillerTotalStateValue extends StateValue<ValueID, KillerSymbolTotal>{
   KillerTotalStateValue(KillerSymbolTotal val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.KILLER_SYMBOL_TOTAL;
   }
 }
@@ -92,7 +98,7 @@ class ShownSymbolStateValue extends StateValue<ValueID, ShownSymbol>{
   ShownSymbolStateValue(ShownSymbol val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.SHOWN_SYMBOL;
   }
 }
@@ -101,7 +107,7 @@ class ScoreStateValue extends StateValue<ValueID, Score>{
   ScoreStateValue(Score val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.SCORE;
   }
 }
@@ -110,7 +116,7 @@ class IntervalLengthStateValue extends StateValue<ValueID, IntervalLength>{
   IntervalLengthStateValue(IntervalLength val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.INTERVAL_LENGTH;
   }
 }
@@ -119,7 +125,7 @@ class ReactionWindowStatusStateValue extends StateValue<ValueID, ReactionWindowS
   ReactionWindowStatusStateValue(ReactionWindowStatus val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.REACTION_WINDOW_STATUS;
   }
 }
@@ -128,7 +134,7 @@ class ReactionWindowLengthStateValue extends StateValue<ValueID, ReactionWindowL
   ReactionWindowLengthStateValue(ReactionWindowLength val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.REACTION_WINDOW_LENGTH;
   }
 }
@@ -137,7 +143,7 @@ class LivesStateValue extends StateValue<ValueID, Lives>{
   LivesStateValue(Lives val) : super(val);
 
   @override
-  ValueID getId() {
+  ValueID get id {
     return ValueID.LIVES;
   }
 }

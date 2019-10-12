@@ -17,6 +17,8 @@ class TestResult extends Tuple<ResultID, bool> {
     return this.y || t.y;
   }
 
+  //I know this is a little confusing
+  //I just wanted to keep with the pattern of ~ being an "unwrap"
   bool operator ~() {
     return this.y;
   }

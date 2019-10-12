@@ -63,6 +63,8 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
       case EventID.DISPOSE:
         // For now: do nothing (info is used on death screen)
         break;
+      default:
+        //TODO difficulties
     }
     return build();
   }

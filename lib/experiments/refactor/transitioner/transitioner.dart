@@ -1,3 +1,6 @@
+import 'package:impulse/experiments/refactor/id/value_id.dart';
+
+import '../../values.dart';
 import 'interpreter/interpreter.dart';
 import 'predicator/predicator.dart';
 import 'transformer/transformer.dart';
@@ -10,11 +13,18 @@ class Transitioner {
 
   Transitioner(this._predicator, this._transformer, this._interpreter);
 
-  StateValues transition(StateValues sv) {
-    //separating reads from writes follow by reads
-    //allows us to do all of them in an async way
+  //This separation of concerns make async transitions possible
+  //and increases the robustness of the application's impl
+  StateValues transition(StateValues sv, Event event) {
+
+    //this is a little pants on head but i didn't really like other solutions
+    //note that this is invisibly shallow-cloning the values
+    sv.values.retainWhere((element) => element.id != ValueID.LAST_EVENT);
+    sv.values.add(EventStateValue(event));
+
     StateValues newValues =
         _interpreter.interpret(_transformer.transform(_predicator.test(sv)));
+
     return newValues;
   }
 }

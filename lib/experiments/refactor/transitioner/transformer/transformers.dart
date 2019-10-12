@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
+import 'package:impulse/widgets/EventID.dart';
+
 import '../../constants.dart';
 import '../../id/field_id.dart';
 import '../../id/result_id.dart';
@@ -36,7 +39,7 @@ impl
  */
 
 class DifficultyField implements StateValueField<Difficulty> {
-  final Difficulty difficulty;
+  final DifficultyID difficulty;
 
   DifficultyField(this.difficulty);
 
@@ -52,7 +55,7 @@ class DifficultyField implements StateValueField<Difficulty> {
 
   @override
   operator ~() {
-    return ~difficulty;
+    return difficulty;
   }
 }
 

@@ -1,5 +1,5 @@
 import 'package:impulse/experiments/refactor/id/value_id.dart';
-import 'package:impulse/experiments/refactor/transitioner/transformer/state_fields.dart';
+import 'package:impulse/experiments/refactor/transitioner/transformer/transformers.dart';
 
 import '../../../values.dart';
 import '../../state_values.dart';
@@ -19,6 +19,7 @@ class StateInterpreter {
     interpreters.add(ReactionWindowLengthInterpreter());
     interpreters.add(ReactionWindowStatusInterpreter());
     interpreters.add(IntervalLengthInterpreter());
+    interpreters.add(ScoreInterpreter());
   }
 
   StateValues interpret(StateFields fields) {

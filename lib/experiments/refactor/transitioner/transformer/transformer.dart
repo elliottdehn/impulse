@@ -1,5 +1,5 @@
 import '../predicator/test_results.dart';
-import 'state_fields.dart';
+import 'transformers.dart';
 
 class StateTransformer {
   final StateFields startState;
