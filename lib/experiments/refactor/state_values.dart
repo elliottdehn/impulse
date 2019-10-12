@@ -5,6 +5,7 @@ import 'id/value_id.dart';
 class StateValues {
   /*
   final Event lastEvent;
+  final Difficulty difficulty;
   final TapCount tapCount;
   final NormalSymbolTotal normalSymbolTotal;
   final KillerSymbolTotal killerSymbolTotal;
@@ -15,13 +16,14 @@ class StateValues {
   final ReactionWindowStatus reactionWindowStatus;
   final Lives lives;
    */
-
-  List<StateValue> values;
+  
+  final List<StateValue> values;
 
   StateValues(this.values);
 
   StateValue get(ValueID id) {
-    Map<ValueID, Value> map = Map();
+    values.retainWhere((element) => element.id == id);
+    return values[0];
   }
 }
 

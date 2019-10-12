@@ -13,9 +13,53 @@ abstract class Predicate<X extends TestResult> {
 }
 
 class Predicates {
+  static final DidPlayerReactPredicate didPlayerReactPredicate =
+      DidPlayerReactPredicate();
+  static final IsWindowClosedPredicate isWindowClosedPredicate =
+      IsWindowClosedPredicate();
+  static final IsWindowClosingPredicate isWindowClosingPredicate =
+      IsWindowClosingPredicate();
+  static final IsWindowOpenPredicate isWindowOpenPredicate =
+      IsWindowOpenPredicate();
+  static final IsTappedZeroPredicate isTappedZeroPredicate =
+      IsTappedZeroPredicate();
+  static final DidFirstTapPredicate didFirstTapPredicate =
+      DidFirstTapPredicate();
+  static final IsKillerSymbolPredicate isKillerSymbolPredicate =
+      IsKillerSymbolPredicate();
+  static final IsNormalSymbolPredicate isNormalSymbolPredicate =
+      IsNormalSymbolPredicate();
+  static final IsEasyPredicate isEasyPredicate = IsEasyPredicate();
+  static final IsMediumPredicate isMediumPredicate = IsMediumPredicate();
+  static final IsHardPredicate isHardPredicate = IsHardPredicate();
+  static final IsHeroPredicate isHeroPredicate = IsHeroPredicate();
+  static final DidNewSymbolPredicate didNewSymbolPredicate =
+      DidNewSymbolPredicate();
+
   final List<Predicate> predicates;
   Predicates(this.predicates);
-  static init() {}
+  static Predicates init() {
+    List<Predicate> predicates = [];
+    predicates.add(didPlayerReactPredicate);
+    predicates.add(didNewSymbolPredicate);
+    predicates.add(didFirstTapPredicate);
+
+    predicates.add(isNormalSymbolPredicate);
+    predicates.add(isKillerSymbolPredicate);
+
+    predicates.add(isWindowOpenPredicate);
+    predicates.add(isWindowClosingPredicate);
+    predicates.add(isWindowClosedPredicate);
+
+    predicates.add(isTappedZeroPredicate);
+
+    predicates.add(isEasyPredicate);
+    predicates.add(isMediumPredicate);
+    predicates.add(isHardPredicate);
+    predicates.add(isHeroPredicate);
+
+    return new Predicates(predicates);
+  }
 }
 
 class DidPlayerReactPredicate implements Predicate<DidPlayerReact> {
@@ -98,33 +142,30 @@ class DidNewSymbolPredicate implements Predicate<DidNewSymbol> {
   }
 }
 
-class IsEasyPredicate implements Predicate<IsEasy>{
+class IsEasyPredicate implements Predicate<IsEasy> {
   @override
   IsEasy test(StateValues sv) {
     return IsEasy(~sv.get(ValueID.DIFFICULTY) == DifficultyID.EASY);
   }
 }
 
-class IsMediumPredicate implements Predicate<IsMedium>{
+class IsMediumPredicate implements Predicate<IsMedium> {
   @override
   IsMedium test(StateValues sv) {
     return IsMedium(~sv.get(ValueID.DIFFICULTY) == DifficultyID.MEDIUM);
   }
-
 }
 
-class IsHardPredicate implements Predicate<IsHard>{
+class IsHardPredicate implements Predicate<IsHard> {
   @override
   IsHard test(StateValues sv) {
     return IsHard(~sv.get(ValueID.DIFFICULTY) == DifficultyID.HARD);
   }
-
 }
 
-class IsHeroPredicate implements Predicate<IsHero>{
+class IsHeroPredicate implements Predicate<IsHero> {
   @override
   IsHero test(StateValues sv) {
     return IsHero(~sv.get(ValueID.DIFFICULTY) == DifficultyID.HERO);
   }
-
 }
