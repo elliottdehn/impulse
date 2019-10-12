@@ -42,9 +42,9 @@ class Predicates {
   static final DidNewSymbolPredicate didNewSymbolPredicate =
       DidNewSymbolPredicate();
 
-  final List<Predicate> predicates;
+  final List<Predicate> predicates = [];
 
-  Predicates(this.predicates) {
+  Predicates() {
     predicates.add(didPlayerReactPredicate);
     predicates.add(didNewSymbolPredicate);
     predicates.add(didFirstTapPredicate);

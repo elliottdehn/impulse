@@ -18,7 +18,7 @@ class TransformerBuilder {
     initialFields.addAll([tcf, nstf, kstf, ssf, rwsf]);
   }
 
-  setDifficulty(DifficultyID difficultyID) {
+  TransformerBuilder setDifficulty(DifficultyID difficultyID) {
     //we can reuse these because I designed them to be immutable
     IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow);
     NormalSymbolTotalField nstf = NormalSymbolTotalField(0);
@@ -49,6 +49,8 @@ class TransformerBuilder {
     initialFields.add(df);
     initialFields.add(rwlf);
     initialFields.add(ltf);
+
+    return this;
   }
 
   build() {
