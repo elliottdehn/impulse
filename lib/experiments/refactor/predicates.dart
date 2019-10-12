@@ -2,6 +2,7 @@ import 'package:impulse/experiments/refactor/constants.dart';
 import 'package:impulse/widgets/EventID.dart';
 //I do not like depending on event id here...
 
+import 'id/difficulty_id.dart';
 import 'state_values.dart';
 import 'test_results.dart';
 import 'id/value_id.dart';
@@ -95,4 +96,35 @@ class DidNewSymbolPredicate implements Predicate<DidNewSymbol> {
     bool newSymbol = EventID.NEW_SYMBOL == ~sv.get(ValueID.LAST_EVENT);
     return DidNewSymbol(newSymbol);
   }
+}
+
+class IsEasyPredicate implements Predicate<IsEasy>{
+  @override
+  IsEasy test(StateValues sv) {
+    return IsEasy(~sv.get(ValueID.DIFFICULTY) == DifficultyID.EASY);
+  }
+}
+
+class IsMediumPredicate implements Predicate<IsMedium>{
+  @override
+  IsMedium test(StateValues sv) {
+    return IsMedium(~sv.get(ValueID.DIFFICULTY) == DifficultyID.MEDIUM);
+  }
+
+}
+
+class IsHardPredicate implements Predicate<IsHard>{
+  @override
+  IsHard test(StateValues sv) {
+    return IsHard(~sv.get(ValueID.DIFFICULTY) == DifficultyID.HARD);
+  }
+
+}
+
+class IsHeroPredicate implements Predicate<IsHero>{
+  @override
+  IsHero test(StateValues sv) {
+    return IsHero(~sv.get(ValueID.DIFFICULTY) == DifficultyID.HERO);
+  }
+
 }
