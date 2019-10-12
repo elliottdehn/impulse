@@ -2,6 +2,7 @@ import 'package:impulse/experiments/values.dart';
 
 class StateValues {
 
+  final Event lastEvent;
   final TapCount tapCount;
   final NormalSymbolTotal normalSymbolTotal;
   final KillerSymbolTotal killerSymbolTotal;
@@ -13,6 +14,7 @@ class StateValues {
   final Lives lives;
 
   StateValues(
+      this.lastEvent,
       this.tapCount,
       this.normalSymbolTotal,
       this.killerSymbolTotal,

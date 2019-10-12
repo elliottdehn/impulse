@@ -25,65 +25,24 @@ class StateFields {
   static final ShownSymbolField initShownSymbolField = ShownSymbolField("");
   static final LivesTotalField initLivesTotalField = LivesTotalField(null);
 
-  final TapCountField tapCountField;
-  final NormalSymbolTotalField normalSymbolTotalField;
-  final KillerSymbolTotalField killerSymbolTotalField;
-  final ScoreField scoreField;
-  final IntervalLengthField intervalLengthField;
-  final ReactionWindowLengthField reactionWindowLengthField;
-  final ReactionWindowStatusField reactionWindowStatusField;
-  final ShownSymbolField shownSymbolField;
-  final LivesTotalField livesTotalField;
+  static final List<StateValueField> initFields = [
+    initTapCountField,
+    initNormalSymbolTotalField,
+    initKillerSymbolTotalField,
+    initScoreField,
+    initIntervalLengthField,
+    initReactionWindowLengthField,
+    initReactionWindowStatusField,
+    initShownSymbolField,
+    initLivesTotalField,
+  ];
 
-  StateFields(
-      this.tapCountField,
-      this.normalSymbolTotalField,
-      this.killerSymbolTotalField,
-      this.scoreField,
-      this.intervalLengthField,
-      this.reactionWindowLengthField,
-      this.reactionWindowStatusField,
-      this.shownSymbolField,
-      this.livesTotalField);
+  final List<StateValueField> fields;
 
-  StateFields transform(TestResults results) {
-    var newTapCountField = tapCountField.transform(results);
-    var newNormalSymbolTotalField = normalSymbolTotalField.transform(results);
-    var newKillerSymbolTotalField = killerSymbolTotalField.transform(results);
-    var newScoreField = scoreField.transform(results);
-    var newIntervalLengthField = intervalLengthField.transform(results);
-    var newReactionWindowStatusField =
-        reactionWindowStatusField.transform(results);
-    var newReactionWindowLengthField =
-        reactionWindowLengthField.transform(results);
-    var newShownSymbolField = shownSymbolField.transform(results);
-    var newLivesTotalField = livesTotalField.transform(results);
-
-    StateFields newFields = StateFields(
-        newTapCountField,
-        newNormalSymbolTotalField,
-        newKillerSymbolTotalField,
-        newScoreField,
-        newIntervalLengthField,
-        newReactionWindowLengthField,
-        newReactionWindowStatusField,
-        newShownSymbolField,
-        newLivesTotalField);
-
-    return newFields;
-  }
+  StateFields(this.fields);
 
   static StateFields init(){
-    return StateFields(
-        initTapCountField,
-        initNormalSymbolTotalField,
-        initKillerSymbolTotalField,
-        initScoreField,
-        initIntervalLengthField,
-        initReactionWindowLengthField,
-        initReactionWindowStatusField,
-        initShownSymbolField,
-        initLivesTotalField);
+    return StateFields(initFields);
   }
 
 }
