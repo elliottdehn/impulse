@@ -2,64 +2,14 @@ import 'package:impulse/experiments/refactor/constants.dart';
 import 'package:impulse/widgets/EventID.dart';
 //I do not like depending on event id here...
 
-import 'id/difficulty_id.dart';
-import 'state_values.dart';
+import '../../id/difficulty_id.dart';
+import '../../state_values.dart';
 import 'test_results.dart';
-import 'id/value_id.dart';
+import '../../id/value_id.dart';
 
 abstract class Predicate<X extends TestResult> {
   Predicate();
   X test(StateValues sv);
-}
-
-class Predicates {
-  static final DidPlayerReactPredicate didPlayerReactPredicate =
-      DidPlayerReactPredicate();
-  static final IsWindowClosedPredicate isWindowClosedPredicate =
-      IsWindowClosedPredicate();
-  static final IsWindowClosingPredicate isWindowClosingPredicate =
-      IsWindowClosingPredicate();
-  static final IsWindowOpenPredicate isWindowOpenPredicate =
-      IsWindowOpenPredicate();
-  static final IsTappedZeroPredicate isTappedZeroPredicate =
-      IsTappedZeroPredicate();
-  static final DidFirstTapPredicate didFirstTapPredicate =
-      DidFirstTapPredicate();
-  static final IsKillerSymbolPredicate isKillerSymbolPredicate =
-      IsKillerSymbolPredicate();
-  static final IsNormalSymbolPredicate isNormalSymbolPredicate =
-      IsNormalSymbolPredicate();
-  static final IsEasyPredicate isEasyPredicate = IsEasyPredicate();
-  static final IsMediumPredicate isMediumPredicate = IsMediumPredicate();
-  static final IsHardPredicate isHardPredicate = IsHardPredicate();
-  static final IsHeroPredicate isHeroPredicate = IsHeroPredicate();
-  static final DidNewSymbolPredicate didNewSymbolPredicate =
-      DidNewSymbolPredicate();
-
-  final List<Predicate> predicates;
-  Predicates(this.predicates);
-  static Predicates init() {
-    List<Predicate> predicates = [];
-    predicates.add(didPlayerReactPredicate);
-    predicates.add(didNewSymbolPredicate);
-    predicates.add(didFirstTapPredicate);
-
-    predicates.add(isNormalSymbolPredicate);
-    predicates.add(isKillerSymbolPredicate);
-
-    predicates.add(isWindowOpenPredicate);
-    predicates.add(isWindowClosingPredicate);
-    predicates.add(isWindowClosedPredicate);
-
-    predicates.add(isTappedZeroPredicate);
-
-    predicates.add(isEasyPredicate);
-    predicates.add(isMediumPredicate);
-    predicates.add(isHardPredicate);
-    predicates.add(isHeroPredicate);
-
-    return new Predicates(predicates);
-  }
 }
 
 class DidPlayerReactPredicate implements Predicate<DidPlayerReact> {

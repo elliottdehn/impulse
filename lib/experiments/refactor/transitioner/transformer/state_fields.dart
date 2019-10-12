@@ -1,29 +1,25 @@
 import 'dart:math';
 
-import 'constants.dart';
-import 'id/field_id.dart';
-import 'id/result_id.dart';
-import 'test_results.dart';
-import '../values.dart';
-
-class StateFields {
-
-  final List<StateValueField> fields;
-
-  StateFields(this.fields);
-
-  StateValueField get(FieldID id){
-    fields.retainWhere((element) => element.getId() == id);
-    return fields[0];
-  }
-}
+import '../../constants.dart';
+import '../../id/field_id.dart';
+import '../../id/result_id.dart';
+import '../predicator/test_results.dart';
+import '../../../values.dart';
+import 'transformer.dart';
 
 /*
 definitions
  */
 
-mixin Transform<T extends Transform<T>> {
-  T transform(TestResults t);
+class StateFields {
+  final List<StateValueField> fields;
+
+  StateFields(this.fields);
+
+  StateValueField get(FieldID id) {
+    fields.retainWhere((element) => element.getId() == id);
+    return fields[0];
+  }
 }
 
 abstract class StateValueField<X extends Value>
@@ -39,8 +35,7 @@ abstract class StateValueField<X extends Value>
 impl
  */
 
-class DifficultyField implements StateValueField<Difficulty>{
-
+class DifficultyField implements StateValueField<Difficulty> {
   final Difficulty difficulty;
 
   DifficultyField(this.difficulty);
@@ -59,7 +54,6 @@ class DifficultyField implements StateValueField<Difficulty>{
   operator ~() {
     return ~difficulty;
   }
-
 }
 
 class TapCountField implements StateValueField<TapCount> {
@@ -116,7 +110,7 @@ class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.NORMAL_SYMBOL_TOTAL;
   }
 }
@@ -146,7 +140,7 @@ class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.KILLER_SYMBOL_TOTAL;
   }
 }
@@ -195,7 +189,7 @@ class LivesTotalField implements StateValueField<LivesTotal> {
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.LIVES;
   }
 }
@@ -234,7 +228,7 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.SHOWN_SYMBOL;
   }
 }
@@ -259,9 +253,9 @@ class ReactionWindowStatusField
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.REACTION_WINDOW_STATUS;
-}
+  }
 }
 
 class ReactionWindowLengthField
@@ -299,10 +293,7 @@ class ReactionWindowLengthField
       int newWindowLengthTopped = min(~actualMax, newWindowLengthBottomed);
 
       ReactionWindowLengthField newIntervalField = ReactionWindowLengthField(
-          newWindowLengthTopped,
-          newNormTotal,
-          newKillerTotal,
-          newInterval);
+          newWindowLengthTopped, newNormTotal, newKillerTotal, newInterval);
 
       return newIntervalField;
     } else {
@@ -358,7 +349,7 @@ class ReactionWindowLengthField
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.REACTION_WINDOW_LENGTH;
   }
 }
@@ -387,7 +378,7 @@ class IntervalLengthField extends StateValueField<IntervalLength> {
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.INTERVAL_LENGTH;
   }
 }
@@ -438,7 +429,7 @@ class ScoreField extends StateValueField<Score> {
   }
 
   @override
-  FieldID getId(){
+  FieldID getId() {
     return FieldID.SCORE;
   }
 }

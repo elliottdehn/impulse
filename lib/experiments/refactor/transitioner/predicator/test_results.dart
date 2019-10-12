@@ -1,4 +1,4 @@
-import 'id/result_id.dart';
+import '../../id/result_id.dart';
 
 abstract class Tuple<X, Y> {
   final X x;
