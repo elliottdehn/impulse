@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'constants.dart';
-import 'predicate_id.dart';
+import 'result_id.dart';
 import 'test_results.dart';
 import '../values.dart';
-import 'transitioner.dart';
 
 //this is what happens when you want to stick to immutable values
 class StateFields {
@@ -41,10 +40,24 @@ class StateFields {
 
   StateFields(this.fields);
 
-  static StateFields init(){
+  static StateFields init() {
     return StateFields(initFields);
   }
+}
 
+/*
+definitions
+ */
+
+mixin Transform<T extends Transform<T>> {
+  T transform(TestResults t);
+}
+
+abstract class StateValueField<X extends Value>
+    with Transform<StateValueField> {
+  StateValueField<Value> transform(TestResults t);
+
+  dynamic operator ~();
 }
 
 /*
@@ -58,8 +71,8 @@ class TapCountField implements StateValueField<TapCount> {
 
   @override
   StateValueField<TapCount> transform(TestResults t) {
-    bool didReact = ~t.get(PredicateID.DID_PLAYER_REACT);
-    bool isNewSymbol = ~t.get(PredicateID.DID_NEW_SYMBOL);
+    bool didReact = ~t.get(ResultID.DID_PLAYER_REACT);
+    bool isNewSymbol = ~t.get(ResultID.DID_NEW_SYMBOL);
     if (didReact) {
       return new TapCountField(_iTapCount + 1);
     } else if (isNewSymbol) {
@@ -83,9 +96,9 @@ class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
   @override
   StateValueField<NormalSymbolTotal> transform(TestResults t) {
     bool rewardPlayer = t.and([
-      PredicateID.DID_FIRST_TAP,
-      PredicateID.IS_NORMAL_SYMBOL,
-      PredicateID.IS_WINDOW_OPEN
+      ResultID.DID_FIRST_TAP,
+      ResultID.IS_NORMAL_SYMBOL,
+      ResultID.IS_WINDOW_OPEN
     ]);
     if (rewardPlayer) {
       return NormalSymbolTotalField(_iTotal + 1);
@@ -108,9 +121,9 @@ class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
   @override
   StateValueField<KillerSymbolTotal> transform(TestResults t) {
     bool rewardPlayer = t.and([
-      PredicateID.IS_TAPPED_ZERO,
-      PredicateID.DID_NEW_SYMBOL,
-      PredicateID.IS_KILLER_SYMBOL
+      ResultID.IS_TAPPED_ZERO,
+      ResultID.DID_NEW_SYMBOL,
+      ResultID.IS_KILLER_SYMBOL
     ]);
     if (rewardPlayer) {
       return KillerSymbolTotalField(_iKillerTotal + 1);
@@ -136,11 +149,11 @@ class LivesTotalField implements StateValueField<LivesTotal> {
   @override
   StateValueField<LivesTotal> transform(TestResults t) {
     bool playedReactedOnKiller =
-        t.and([PredicateID.DID_PLAYER_REACT, PredicateID.IS_KILLER_SYMBOL]);
+        t.and([ResultID.DID_PLAYER_REACT, ResultID.IS_KILLER_SYMBOL]);
     bool noReactsOnNormal = t.and([
-      PredicateID.IS_NORMAL_SYMBOL,
-      PredicateID.IS_WINDOW_CLOSING,
-      PredicateID.IS_TAPPED_ZERO
+      ResultID.IS_NORMAL_SYMBOL,
+      ResultID.IS_WINDOW_CLOSING,
+      ResultID.IS_TAPPED_ZERO
     ]);
     if (playedReactedOnKiller || noReactsOnNormal) {
       return LivesTotalField(~_lives - 1);
@@ -150,13 +163,13 @@ class LivesTotalField implements StateValueField<LivesTotal> {
   }
 
   Lives getStartLives(TestResults t) {
-    if (~t.get(PredicateID.IS_EASY)) {
+    if (~t.get(ResultID.IS_EASY)) {
       return Lives(Constants.livesStartEasy);
-    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+    } else if (~t.get(ResultID.IS_MEDIUM)) {
       return Lives(Constants.livesStartMedium);
-    } else if (~t.get(PredicateID.IS_HARD)) {
+    } else if (~t.get(ResultID.IS_HARD)) {
       return Lives(Constants.livesStartHard);
-    } else if (~t.get(PredicateID.IS_HERO)) {
+    } else if (~t.get(ResultID.IS_HERO)) {
       return Lives(Constants.livesStartHero);
     } else {
       throw Exception("How did you manage to do that?");
@@ -177,7 +190,7 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
-    IsNewSymbol isNewSymbol = t.get(PredicateID.DID_NEW_SYMBOL);
+    IsNewSymbol isNewSymbol = t.get(ResultID.DID_NEW_SYMBOL);
     if (~isNewSymbol) {
       bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;
@@ -211,9 +224,9 @@ class ReactionWindowStatusField
 
   @override
   StateValueField<ReactionWindowStatus> transform(TestResults t) {
-    bool newSymbol = ~t.get(PredicateID.DID_NEW_SYMBOL);
+    bool newSymbol = ~t.get(ResultID.DID_NEW_SYMBOL);
     bool closingOrClosed =
-        t.or([PredicateID.IS_WINDOW_CLOSED, PredicateID.IS_WINDOW_CLOSING]);
+        t.or([ResultID.IS_WINDOW_CLOSED, ResultID.IS_WINDOW_CLOSING]);
     return ReactionWindowStatusField(!closingOrClosed || newSymbol);
   }
 
@@ -242,7 +255,7 @@ class ReactionWindowLengthField
     KillerSymbolTotalField newKillerTotal = killerTotal.transform(t);
     IntervalLengthField newInterval = intervalLengthField.transform(t);
 
-    if (~t.get(PredicateID.DID_NEW_SYMBOL)) {
+    if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       int total = ~~newNormTotal + ~~newKillerTotal;
 
       Adjust newAdj = Adjust(~getAdj(t) * total);
@@ -271,13 +284,13 @@ class ReactionWindowLengthField
   } //5
 
   Minimum getMin(TestResults t) {
-    if (~t.get(PredicateID.IS_EASY)) {
+    if (~t.get(ResultID.IS_EASY)) {
       return Minimum(Constants.minReactionWindowEasy);
-    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+    } else if (~t.get(ResultID.IS_MEDIUM)) {
       return Minimum(Constants.minReactionWindowMedium);
-    } else if (~t.get(PredicateID.IS_HARD)) {
+    } else if (~t.get(ResultID.IS_HARD)) {
       return Minimum(Constants.minReactionWindowHard);
-    } else if (~t.get(PredicateID.IS_HERO)) {
+    } else if (~t.get(ResultID.IS_HERO)) {
       return Minimum(Constants.minReactionWindowHero);
     } else {
       throw Exception("How did you manage to do that?");
@@ -285,13 +298,13 @@ class ReactionWindowLengthField
   }
 
   Maximum getMax(TestResults t) {
-    if (~t.get(PredicateID.IS_EASY)) {
+    if (~t.get(ResultID.IS_EASY)) {
       return Maximum(Constants.maxReactionWindowEasy);
-    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+    } else if (~t.get(ResultID.IS_MEDIUM)) {
       return Maximum(Constants.maxReactionWindowMedium);
-    } else if (~t.get(PredicateID.IS_HARD)) {
+    } else if (~t.get(ResultID.IS_HARD)) {
       return Maximum(Constants.maxReactionWindowHard);
-    } else if (~t.get(PredicateID.IS_HERO)) {
+    } else if (~t.get(ResultID.IS_HERO)) {
       return Maximum(Constants.maxReactionWindowHero);
     } else {
       throw Exception("How did you manage to do that?");
@@ -299,13 +312,13 @@ class ReactionWindowLengthField
   }
 
   Adjust getAdj(TestResults t) {
-    if (~t.get(PredicateID.IS_EASY)) {
+    if (~t.get(ResultID.IS_EASY)) {
       return Adjust(Constants.reactionWindowAdjEasy);
-    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+    } else if (~t.get(ResultID.IS_MEDIUM)) {
       return Adjust(Constants.reactionWindowAdjMedium);
-    } else if (~t.get(PredicateID.IS_HARD)) {
+    } else if (~t.get(ResultID.IS_HARD)) {
       return Adjust(Constants.reactionWindowAdjHard);
-    } else if (~t.get(PredicateID.IS_HERO)) {
+    } else if (~t.get(ResultID.IS_HERO)) {
       return Adjust(Constants.reactionWindowAdjHero);
     } else {
       throw Exception("How did you manage to do that?");
@@ -326,7 +339,7 @@ class IntervalLengthField extends StateValueField<IntervalLength> {
 
   @override
   StateValueField<Value> transform(TestResults t) {
-    if (~t.get(PredicateID.DID_NEW_SYMBOL)) {
+    if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       int randomLength = _random
               .nextInt(Constants.intervals.last - Constants.intervals.first) +
           Constants.intervals.first;
@@ -357,7 +370,7 @@ class ScoreField extends StateValueField<Score> {
     var newKillerTotal = _killerTotal.transform(t);
 
     int excessTaps = 0;
-    if (~t.get(PredicateID.IS_NORMAL_SYMBOL) && ~newTc > 1) {
+    if (~t.get(ResultID.IS_NORMAL_SYMBOL) && ~newTc > 1) {
       excessTaps = ~newTc - 1;
     }
     int newScore =
@@ -374,13 +387,13 @@ class ScoreField extends StateValueField<Score> {
   }
 
   double getMultiplier(TestResults t) {
-    if (~t.get(PredicateID.IS_EASY)) {
+    if (~t.get(ResultID.IS_EASY)) {
       return Constants.easyScoreMultiplier;
-    } else if (~t.get(PredicateID.IS_MEDIUM)) {
+    } else if (~t.get(ResultID.IS_MEDIUM)) {
       return Constants.mediumScoreMultiplier;
-    } else if (~t.get(PredicateID.IS_HARD)) {
+    } else if (~t.get(ResultID.IS_HARD)) {
       return Constants.hardScoreMultiplier;
-    } else if (~t.get(PredicateID.IS_HERO)) {
+    } else if (~t.get(ResultID.IS_HERO)) {
       return Constants.heroScoreMultiplier;
     } else {
       throw Exception("How did you manage to do that?");

@@ -1,4 +1,5 @@
-enum FieldID {
+enum ValueID {
+  LAST_EVENT,
   TAP_COUNT,
   NORMAL_SYMBOL_TOTAL,
   KILLER_SYMBOL_TOTAL,

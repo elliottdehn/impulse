@@ -1,4 +1,4 @@
-enum PredicateID {
+enum ResultID {
   DID_PLAYER_REACT,
   DID_FIRST_TAP,
   DID_WINDOW_CLOSE,
