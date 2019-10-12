@@ -58,7 +58,7 @@ void main() {
     var tests = TestResults(values: [
       IsWindowClosed(false),
       IsWindowClosing(true),
-      IsNewSymbol(false)
+      DidNewSymbol(false)
     ]);
     ReactionWindowStatusField result = start.transform(tests);
     expect(~result, false);
@@ -70,14 +70,14 @@ void main() {
     var closeWindow = TestResults(values: [
       IsWindowClosed(false),
       IsWindowClosing(true),
-      IsNewSymbol(false)
+      DidNewSymbol(false)
     ]);
     ReactionWindowStatusField afterClose = start.transform(closeWindow);
 
     var openWindow = TestResults(values: [
       IsWindowClosed(true),
       IsWindowClosing(false),
-      IsNewSymbol(true)
+      DidNewSymbol(true)
     ]);
     ReactionWindowStatusField afterOpen = afterClose.transform(openWindow);
 
@@ -90,14 +90,14 @@ void main() {
     var closeWindow = TestResults(values: [
       IsWindowClosed(false),
       IsWindowClosing(true),
-      IsNewSymbol(false)
+      DidNewSymbol(false)
     ]);
     ReactionWindowStatusField afterClose = start.transform(closeWindow);
 
     var nothingWindow = TestResults(values: [
       IsWindowClosed(true),
       IsWindowClosing(false),
-      IsNewSymbol(false)
+      DidNewSymbol(false)
     ]);
     ReactionWindowStatusField afterNothing =
         afterClose.transform(nothingWindow);
@@ -105,7 +105,7 @@ void main() {
     var openWindow = TestResults(values: [
       IsWindowClosed(true),
       IsWindowClosing(false),
-      IsNewSymbol(true)
+      DidNewSymbol(true)
     ]);
     ReactionWindowStatusField afterOpen = afterNothing.transform(openWindow);
 
@@ -275,7 +275,7 @@ void main() {
               for (TestResult t6 in isWindowCloseCases) {
                 for (TestResult t7 in isWindowClosingCases) {
                   var start = TapCountField(0);
-                  var playerTaps = [DidPlayerReact(true), IsNewSymbol(false)];
+                  var playerTaps = [DidPlayerReact(true), DidNewSymbol(false)];
                   TestResults tr =
                       TestResults(values: [t, t2, t3, t4, t5, t6, t7]);
                   tr.addAll(playerTaps);
@@ -324,7 +324,7 @@ void main() {
               for (TestResult t6 in isWindowCloseCases) {
                 for (TestResult t7 in isWindowClosingCases) {
                   var start = TapCountField(100);
-                  var playerTaps = [DidPlayerReact(false), IsNewSymbol(true)];
+                  var playerTaps = [DidPlayerReact(false), DidNewSymbol(true)];
                   TestResults tr =
                       TestResults(values: [t, t2, t3, t4, t5, t6, t7]);
                   tr.addAll(playerTaps);
@@ -379,7 +379,7 @@ void main() {
     var start = KillerSymbolTotalField(0);
     var tr = TestResults(values: [
       IsKillerSymbol(true),
-      IsNewSymbol(true),
+      DidNewSymbol(true),
       IsTappedZero(true)
     ]);
     var end = start.transform(tr);
@@ -413,7 +413,7 @@ void main() {
       IsTappedZero(true),
       DidFirstTap(true),
       IsWindowOpen(true),
-      IsNewSymbol(true),
+      DidNewSymbol(true),
       DidPlayerReact(false),
       IsEasy(true)
     ]);

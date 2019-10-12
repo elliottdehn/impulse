@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'constants.dart';
-import 'result_id.dart';
+import 'id/result_id.dart';
 import 'test_results.dart';
 import '../values.dart';
 
@@ -190,7 +190,7 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
-    IsNewSymbol isNewSymbol = t.get(ResultID.DID_NEW_SYMBOL);
+    DidNewSymbol isNewSymbol = t.get(ResultID.DID_NEW_SYMBOL);
     if (~isNewSymbol) {
       bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;

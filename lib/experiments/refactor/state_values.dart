@@ -1,6 +1,6 @@
 import 'package:impulse/experiments/values.dart';
 
-import 'value_id.dart';
+import 'id/value_id.dart';
 
 class StateValues {
   /*
@@ -20,12 +20,15 @@ class StateValues {
 
   StateValues(this.values);
 
-  get(ValueID id) {
+  StateValue get(ValueID id) {
     Map<ValueID, Value> map = Map();
   }
 }
 
-abstract class StateValue<ValueID, Value> {
+abstract class StateValue<ValueID, X extends Value<dynamic>> {
   ValueID id;
   Value val;
+  operator ~() {
+    return ~val;
+  }
 }

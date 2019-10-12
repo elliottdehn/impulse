@@ -1,3 +1,4 @@
+import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
 import 'package:impulse/widgets/EventID.dart';
 
 class Value<T> {
@@ -131,4 +132,8 @@ class IsStopped extends Value<bool> {
 
 class IsReset extends Value<bool> {
   IsReset(bool value) : super(value);
+}
+
+class Difficulty extends Value<DifficultyID> {
+  Difficulty(DifficultyID value) : super(value);
 }

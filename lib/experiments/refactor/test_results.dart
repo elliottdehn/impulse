@@ -1,4 +1,4 @@
-import 'result_id.dart';
+import 'id/result_id.dart';
 
 abstract class Tuple<X, Y> {
   final X x;
@@ -107,9 +107,9 @@ class IsTappedZero extends TestResult {
   IsTappedZero(y) : super(id, y);
 }
 
-class IsNewSymbol extends TestResult {
+class DidNewSymbol extends TestResult {
   static final ResultID id = ResultID.DID_NEW_SYMBOL;
-  IsNewSymbol(y) : super(id, y);
+  DidNewSymbol(y) : super(id, y);
 }
 
 class IsWindowOpen extends TestResult {
