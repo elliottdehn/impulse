@@ -1,47 +1,20 @@
 import 'dart:math';
 
 import 'constants.dart';
+import 'id/field_id.dart';
 import 'id/result_id.dart';
 import 'test_results.dart';
 import '../values.dart';
 
-//this is what happens when you want to stick to immutable values
 class StateFields {
-  static final TapCountField initTapCountField = TapCountField(0);
-  static final NormalSymbolTotalField initNormalSymbolTotalField =
-      NormalSymbolTotalField(0);
-  static final KillerSymbolTotalField initKillerSymbolTotalField =
-      KillerSymbolTotalField(0);
-  static final ScoreField initScoreField = ScoreField(0, initTapCountField,
-      initNormalSymbolTotalField, initKillerSymbolTotalField);
-  static final IntervalLengthField initIntervalLengthField =
-      IntervalLengthField(-1);
-  static final ReactionWindowStatusField initReactionWindowStatusField =
-      ReactionWindowStatusField(false);
-  static final ReactionWindowLengthField initReactionWindowLengthField =
-      ReactionWindowLengthField(null, initNormalSymbolTotalField,
-          initKillerSymbolTotalField, Scalar(1.0), initIntervalLengthField);
-  static final ShownSymbolField initShownSymbolField = ShownSymbolField("");
-  static final LivesTotalField initLivesTotalField = LivesTotalField(null);
-
-  static final List<StateValueField> initFields = [
-    initTapCountField,
-    initNormalSymbolTotalField,
-    initKillerSymbolTotalField,
-    initScoreField,
-    initIntervalLengthField,
-    initReactionWindowLengthField,
-    initReactionWindowStatusField,
-    initShownSymbolField,
-    initLivesTotalField,
-  ];
 
   final List<StateValueField> fields;
 
   StateFields(this.fields);
 
-  static StateFields init() {
-    return StateFields(initFields);
+  StateValueField get(FieldID id){
+    fields.retainWhere((element) => element.getId() == id);
+    return fields[0];
   }
 }
 
@@ -58,11 +31,36 @@ abstract class StateValueField<X extends Value>
   StateValueField<Value> transform(TestResults t);
 
   dynamic operator ~();
+
+  FieldID getId();
 }
 
 /*
 impl
  */
+
+class DifficultyField implements StateValueField<Difficulty>{
+
+  final Difficulty difficulty;
+
+  DifficultyField(this.difficulty);
+
+  @override
+  FieldID getId() {
+    return FieldID.DIFFICULTY;
+  }
+
+  @override
+  StateValueField<Value> transform(TestResults t) {
+    return DifficultyField(difficulty);
+  }
+
+  @override
+  operator ~() {
+    return ~difficulty;
+  }
+
+}
 
 class TapCountField implements StateValueField<TapCount> {
   final int _iTapCount;
@@ -85,6 +83,11 @@ class TapCountField implements StateValueField<TapCount> {
   @override
   int operator ~() {
     return _iTapCount;
+  }
+
+  @override
+  FieldID getId() {
+    return FieldID.TAP_COUNT;
   }
 }
 
@@ -111,6 +114,11 @@ class NormalSymbolTotalField implements StateValueField<NormalSymbolTotal> {
   int operator ~() {
     return _iTotal;
   }
+
+  @override
+  FieldID getId(){
+    return FieldID.NORMAL_SYMBOL_TOTAL;
+  }
 }
 
 class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
@@ -135,6 +143,11 @@ class KillerSymbolTotalField implements StateValueField<KillerSymbolTotal> {
   @override
   int operator ~() {
     return _iKillerTotal;
+  }
+
+  @override
+  FieldID getId(){
+    return FieldID.KILLER_SYMBOL_TOTAL;
   }
 }
 
@@ -180,6 +193,11 @@ class LivesTotalField implements StateValueField<LivesTotal> {
   int operator ~() {
     return ~_lives;
   }
+
+  @override
+  FieldID getId(){
+    return FieldID.LIVES;
+  }
 }
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
@@ -214,6 +232,11 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
   String operator ~() {
     return _sShownSymbol;
   }
+
+  @override
+  FieldID getId(){
+    return FieldID.SHOWN_SYMBOL;
+  }
 }
 
 class ReactionWindowStatusField
@@ -234,6 +257,11 @@ class ReactionWindowStatusField
   bool operator ~() {
     return _bStatus;
   }
+
+  @override
+  FieldID getId(){
+    return FieldID.REACTION_WINDOW_STATUS;
+}
 }
 
 class ReactionWindowLengthField
@@ -244,10 +272,10 @@ class ReactionWindowLengthField
   final KillerSymbolTotalField killerTotal;
   final IntervalLengthField intervalLengthField;
 
-  final Scalar scalar; //2
+  final Scalar scalar = Scalar(1.0);
 
   ReactionWindowLengthField(this._iWindowLength, this.normalTotal,
-      this.killerTotal, this.scalar, this.intervalLengthField);
+      this.killerTotal, this.intervalLengthField);
 
   @override
   StateValueField<ReactionWindowLength> transform(TestResults t) {
@@ -274,14 +302,13 @@ class ReactionWindowLengthField
           newWindowLengthTopped,
           newNormTotal,
           newKillerTotal,
-          scalar,
           newInterval);
 
       return newIntervalField;
     } else {
       return this;
     }
-  } //5
+  }
 
   Minimum getMin(TestResults t) {
     if (~t.get(ResultID.IS_EASY)) {
@@ -329,6 +356,11 @@ class ReactionWindowLengthField
   int operator ~() {
     return _iWindowLength;
   }
+
+  @override
+  FieldID getId(){
+    return FieldID.REACTION_WINDOW_LENGTH;
+  }
 }
 
 class IntervalLengthField extends StateValueField<IntervalLength> {
@@ -352,6 +384,11 @@ class IntervalLengthField extends StateValueField<IntervalLength> {
   @override
   operator ~() {
     return _iIntervalLength;
+  }
+
+  @override
+  FieldID getId(){
+    return FieldID.INTERVAL_LENGTH;
   }
 }
 
@@ -381,11 +418,6 @@ class ScoreField extends StateValueField<Score> {
     return ScoreField(bottomedScore, newTc, newNormalTotal, newKillerTotal);
   }
 
-  @override
-  operator ~() {
-    return _iScore;
-  }
-
   double getMultiplier(TestResults t) {
     if (~t.get(ResultID.IS_EASY)) {
       return Constants.easyScoreMultiplier;
@@ -398,5 +430,15 @@ class ScoreField extends StateValueField<Score> {
     } else {
       throw Exception("How did you manage to do that?");
     }
+  }
+
+  @override
+  operator ~() {
+    return _iScore;
+  }
+
+  @override
+  FieldID getId(){
+    return FieldID.SCORE;
   }
 }

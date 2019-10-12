@@ -11,10 +11,6 @@ class Transitioner {
   Transitioner(this._predicator, this._transformer, this._interpreter);
 
   StateValues transition(StateValues sv) {
-    //note: lossy. This will not set the "last event" after transitioning
-    //which I guess makes some kind of logical sense if you think about it.
-    //I wanted it this way so it's an endo-morphic function
-
     //perform all necessary reads
     TestResults results = _predicator.test(sv);
 
