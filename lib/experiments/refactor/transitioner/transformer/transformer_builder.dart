@@ -21,31 +21,34 @@ class TransformerBuilder {
 
   TransformerBuilder setDifficulty(DifficultyID difficultyID) {
     //we can reuse these because I designed them to be immutable
-    IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow);
+
     NormalSymbolTotalField nstf = NormalSymbolTotalField(0);
     KillerSymbolTotalField kstf = KillerSymbolTotalField(0);
     TapCountField tcf = TapCountField(0);
     ScoreField sf = ScoreField(0, tcf, nstf, kstf);
 
     DifficultyField df = DifficultyField(difficultyID);
+
     ReactionWindowLengthField rwlf;
     LivesTotalField ltf;
+    IntervalLengthField ilfForReactionWindow = IntervalLengthField(Constants.intervalSlow);
+    IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow);
 
     if (DifficultyID.EASY == ~df) {
       rwlf = ReactionWindowLengthField(
-          Constants.maxReactionWindowEasy, nstf, kstf, ilf);
+          Constants.maxReactionWindowEasy, nstf, kstf, ilfForReactionWindow);
       ltf = LivesTotalField(Constants.livesStartEasy);
     } else if (DifficultyID.MEDIUM == ~df) {
       rwlf = ReactionWindowLengthField(
-          Constants.maxReactionWindowMedium, nstf, kstf, ilf);
+          Constants.maxReactionWindowMedium, nstf, kstf, ilfForReactionWindow);
       ltf = LivesTotalField(Constants.livesStartMedium);
     } else if (DifficultyID.HARD == ~df) {
       rwlf = ReactionWindowLengthField(
-          Constants.maxReactionWindowHard, nstf, kstf, ilf);
+          Constants.maxReactionWindowHard, nstf, kstf, ilfForReactionWindow);
       ltf = LivesTotalField(Constants.livesStartHard);
     } else if (DifficultyID.HERO == ~df) {
       rwlf = ReactionWindowLengthField(
-          Constants.maxReactionWindowHero, nstf, kstf, ilf);
+          Constants.maxReactionWindowHero, nstf, kstf, ilfForReactionWindow);
       ltf = LivesTotalField(Constants.livesStartHero);
     }
 

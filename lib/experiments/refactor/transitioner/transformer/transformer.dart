@@ -1,22 +1,28 @@
+import 'package:flutter/rendering.dart';
+
 import '../predicator/test_results.dart';
 import 'transformers.dart';
 
 class StateTransformer {
   final StateFields startState;
+  StateFields currState;
 
   StateTransformer(this.startState);
 
   StateFields transform(TestResults results) {
+    if(currState == null){
+      currState = startState;
+    }
     //this orderless transform is the entire reason behind the refactor
-    List<StateValueField> oldFields = startState.fields;
+    List<StateValueField> oldFields = currState.fields;
     List<StateValueField> newFields = [];
     for (StateValueField field in oldFields) {
       newFields.add(field.transform(results));
     }
 
-    StateFields newStateFields = StateFields(newFields);
+    currState = StateFields(newFields);
 
-    return newStateFields;
+    return currState;
   }
 }
 

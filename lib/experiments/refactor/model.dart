@@ -13,8 +13,8 @@ import 'transitioner/transitioner.dart';
 class Model {
   //Singleton that can have its data cleared and reset
   static Model _singleton = Model._privateConstructor();
-  static Transitioner _transitioner;
-  static StateValues _stateValues;
+  Transitioner _transitioner;
+  StateValues _stateValues;
 
   factory Model() {
     return _singleton;

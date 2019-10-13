@@ -197,7 +197,7 @@ class LivesTotalField implements StateValueField<LivesTotal> {
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
   final String _sShownSymbol;
-  static final Random _random = Random(Constants.randomRandomSeed);
+  final Random _random = Random(Constants.randomRandomSeed);
 
   ShownSymbolField(this._sShownSymbol);
 
@@ -206,7 +206,7 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;
-      String newSymbol;
+      String newSymbol = oldSymbol;
       if (isNormalSymbol) {
         while (oldSymbol == newSymbol) {
           newSymbol = Constants
@@ -289,7 +289,8 @@ class ReactionWindowLengthField
       //make sure that the window is not inhumanly fast
       int newWindowLengthBottomed = max(~minimum, newWindowLength);
       //do not want window to be longer than the interval
-      int actualMax = min(~intervalLengthField, ~maximum);
+      int nextIntervalLength = ~newInterval;
+      int actualMax = min(nextIntervalLength, ~maximum);
       int newWindowLengthTopped = min(actualMax, newWindowLengthBottomed);
 
       ReactionWindowLengthField newWindowField = ReactionWindowLengthField(
@@ -297,7 +298,8 @@ class ReactionWindowLengthField
 
       return newWindowField;
     } else {
-      return this;
+      return ReactionWindowLengthField(
+          ~this, newNormTotal, newKillerTotal, newInterval);
     }
   }
 
@@ -356,13 +358,15 @@ class ReactionWindowLengthField
 
 class IntervalLengthField extends StateValueField<IntervalLength> {
   final int _iIntervalLength;
-  static final Random _random = Random(Constants.randomRandomSeed);
+  final Random _random = Random(Constants.randomRandomSeed);
+  int idxTest = 0;
 
   IntervalLengthField(this._iIntervalLength);
 
   @override
   StateValueField<Value> transform(TestResults t) {
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
+      idxTest += 1;
       int randomLength = _random
               .nextInt(Constants.intervals.first - Constants.intervals.last) +
           Constants.intervals.last;

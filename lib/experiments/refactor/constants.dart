@@ -61,9 +61,8 @@ class Constants {
   static const int reactionWindowAdjMedium = -3;
   static const int reactionWindowAdjHard = -4;
   static const int reactionWindowAdjHero = -5;
-  static const int _randomSeed = 98723489;
-  static const int _randomSeedMax = 9330358;
-  static final randomRandomSeed = Random(_randomSeed).nextInt(_randomSeedMax);
+  static const int _randomSeedMax = 247383920;
+  static final randomRandomSeed = Random().nextInt(_randomSeedMax);
 
   static const double easyScoreMultiplier = 0.5;
   static const double mediumScoreMultiplier = easyScoreMultiplier * 3;
