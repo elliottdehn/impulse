@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/experiments/values.dart';
 import 'package:impulse/transcribers/ITranscriber.dart';
 import 'package:impulse/transcribers/impl/StartGameTranscriber.dart';
 import 'package:impulse/widgets/game/lives/LivesWidget.dart';
@@ -9,7 +10,7 @@ import 'package:impulse/widgets/game/window/ReactionWindowWidget.dart';
 
 class GameScreen extends NotificationListener {
 
-  GameScreen(){
+  GameScreen(Difficulty difficulty){
     ITranscriber start = StartGameTranscriber();
     start.writeToState();
   }

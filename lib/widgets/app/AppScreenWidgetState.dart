@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
+import 'package:impulse/experiments/values.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 import 'package:impulse/widgets/death/DeathScreen.dart';
 import 'package:impulse/widgets/game/GameScreen.dart';
@@ -10,6 +12,7 @@ import 'AppScreenWidget.dart';
 
 class AppScreenWidgetState extends State<AppScreenWidget> {
   ScreenID _screen;
+  Difficulty _difficulty;
 
   @override
   void initState() {
@@ -24,6 +27,7 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         onNotification: (notification) {
           setState(() {
             _screen = notification.screen;
+            _difficulty = Difficulty(notification.difficultyID);
           });
           return true; //cancel bubbling
         },
@@ -37,7 +41,7 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         return DeathScreen();
         break;
       case ScreenID.GAME:
-        return GameScreen();
+        return GameScreen(_difficulty);
         break;
       case ScreenID.START:
         // TODO: Handle this case.

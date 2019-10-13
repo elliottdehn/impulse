@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
 import 'package:impulse/experiments/refactor/transitioner/interpreter/interpreter.dart';
 import 'package:impulse/experiments/refactor/transitioner/predicator/predicator.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 
 import '../ScreenID.dart';
@@ -8,7 +9,7 @@ class StartGameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          ScreenChangeNotification(screen: ScreenID.GAME).dispatch(context);
+          ScreenChangeNotification(screen: ScreenID.GAME, difficultyID: DifficultyID.EASY).dispatch(context);
         },
         behavior: HitTestBehavior.opaque,
         child: Container(
