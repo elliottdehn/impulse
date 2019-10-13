@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
@@ -21,7 +22,7 @@ class SymbolWidgetState extends State<SymbolWidget>
   Timer _symbolVisibilityTimer; //auto-events
   Timer _symbolIntervalTimer;
 
-  SymbolWidgetState() {
+  SymbolWidgetState(Model m) {
     _presenter = new SymbolWidgetPresenter(this);
   }
 

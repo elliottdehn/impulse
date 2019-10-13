@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
@@ -15,7 +16,7 @@ class ScoreWidgetState extends State<ScoreWidget>
   ScoreWidgetPresenter presenter;
   bool created = false;
 
-  ScoreWidgetState() {
+  ScoreWidgetState(Model m) {
     presenter = ScoreWidgetPresenter(this);
   }
 

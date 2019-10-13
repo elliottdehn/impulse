@@ -1,4 +1,5 @@
 import 'package:impulse/experiments/refactor/constants.dart';
+import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
 import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
@@ -7,19 +8,14 @@ import 'package:impulse/widgets/EventID.dart';
 import 'package:test/test.dart';
 
 void main(){
-  test('Sanity: instantiated model', () {
-    Model();
-  });
 
   test('Sanity: initializing model', () {
-    Model m = Model();
-    m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
+    Model(Difficulty(DifficultyID.HERO));
   });
 
   test('Sanity: init and trigger new symbol', () {
-    Model m = Model();
-    StateValues sv = m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
-    sv = m.onEvent(Event(EventID.NEW_SYMBOL));
+    Model m = Model(Difficulty(DifficultyID.HERO));
+    StateValues sv = m.onEvent(Event(EventID.NEW_SYMBOL));
     assert(sv != null);
   });
 
@@ -27,11 +23,10 @@ void main(){
   //I'm planning on re-using the deterministic tests I originally wrote
   //for the original model. These are to work out basic kinks.
   test('Init, new symbol, tap', () {
-    Model m = Model();
-    StateValues sv = m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
-    sv = m.onEvent(Event(EventID.NEW_SYMBOL));
+    Model m = Model(Difficulty(DifficultyID.HERO));
+    StateValues sv = m.onEvent(Event(EventID.NEW_SYMBOL));
     sv = m.onEvent(Event(EventID.PLAYER_REACTED));
-    //TODO : real asserts, see why this is doing nothing
+
     assert(~sv.get(ValueID.SHOWN_SYMBOL) != "");
     assert(~sv.get(ValueID.TAP_COUNT) == 1);
     if(Constants.normalSymbols.contains(~sv.get(ValueID.SHOWN_SYMBOL))){
@@ -49,9 +44,9 @@ void main(){
   });
 
   test('Init, new symbol, tap, close, tap', () {
-    Model m = Model();
-    StateValues sv = m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
-    sv = m.onEvent(Event(EventID.NEW_SYMBOL));
+    Model m = Model(Difficulty(DifficultyID.HERO));
+
+    StateValues sv = m.onEvent(Event(EventID.NEW_SYMBOL));
     sv = m.onEvent(Event(EventID.PLAYER_REACTED));
     sv = m.onEvent(Event(EventID.ENFORCE_TAP));
     int originalScore = ~sv.get(ValueID.SCORE);
@@ -75,7 +70,8 @@ void main(){
   });
 
   test('Init, new symbol, tap, close, tap x 2', () {
-    Model m = Model();
+    Model m = Model(Difficulty(DifficultyID.HERO));
+
     StateValues sv = m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
     sv = m.onEvent(Event(EventID.NEW_SYMBOL));
     sv = m.onEvent(Event(EventID.PLAYER_REACTED));

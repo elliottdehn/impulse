@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/values.dart';
 import 'package:impulse/transcribers/ITranscriber.dart';
 import 'package:impulse/transcribers/impl/StartGameTranscriber.dart';
@@ -10,7 +11,11 @@ import 'package:impulse/widgets/game/window/ReactionWindowWidget.dart';
 
 class GameScreen extends NotificationListener {
 
-  GameScreen(Difficulty difficulty){
+  //This is mostly just to invert the dependency a little bit
+
+  final Model m;
+
+  GameScreen(this.m){
     ITranscriber start = StartGameTranscriber();
     start.writeToState();
   }
@@ -21,21 +26,21 @@ class GameScreen extends NotificationListener {
     return Stack(
       children: <Widget>[
         Container(
-            alignment: Alignment.bottomCenter, child: ReactionWindowWidget()),
+            alignment: Alignment.bottomCenter, child: ReactionWindowWidget(m)),
         Container(
             alignment: Alignment.topLeft,
             child: Padding(
                 padding: EdgeInsets.fromLTRB(20, statusBarHeight, 0, 0),
-                child: ScoreWidget())),
+                child: ScoreWidget(m))),
         Container(
           alignment: Alignment.topRight,
           child: new Padding(
               padding: EdgeInsets.fromLTRB(0, statusBarHeight, 20, 0),
-              child: LivesWidget()),
+              child: LivesWidget(m)),
         ),
         Container(
           alignment: Alignment.center,
-          child: SymbolWidget(),
+          child: SymbolWidget(m),
         )
       ],
     );

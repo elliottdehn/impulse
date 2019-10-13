@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
@@ -21,7 +22,7 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   ReactionWindowPresenter stateUpdater;
   bool created = false;
 
-  ReactionWindowWidgetState(){
+  ReactionWindowWidgetState(Model m){
     stateUpdater = new ReactionWindowPresenter(this);
   }
 

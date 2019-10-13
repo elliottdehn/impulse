@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/values.dart';
+import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 import 'package:impulse/widgets/death/DeathScreen.dart';
 import 'package:impulse/widgets/game/GameScreen.dart';
@@ -41,7 +43,8 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         return DeathScreen();
         break;
       case ScreenID.GAME:
-        return GameScreen(_difficulty);
+        Model m = Model(_difficulty);
+        return GameScreen(m);
         break;
       case ScreenID.START:
         // TODO: Handle this case.

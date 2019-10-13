@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/ScreenID.dart';
@@ -17,7 +17,7 @@ class LivesWidgetState extends State<LivesWidget>
   LivesWidgetPresenter presenter;
   bool created = false;
 
-  LivesWidgetState() {
+  LivesWidgetState(Model m) {
     presenter = LivesWidgetPresenter(this);
   }
 
