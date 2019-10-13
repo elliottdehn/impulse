@@ -14,7 +14,6 @@ class StateInterpreter {
     interpreters.add(KillerTotalInterpreter());
     interpreters.add(LivesInterpreter());
     interpreters.add(DifficultyInterpreter());
-    interpreters.add(EventInterpreter());
     interpreters.add(ShownSymbolInterpreter());
     interpreters.add(ReactionWindowLengthInterpreter());
     interpreters.add(ReactionWindowStatusInterpreter());

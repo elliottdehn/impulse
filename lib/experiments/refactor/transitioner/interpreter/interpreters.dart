@@ -5,6 +5,7 @@ import '../../id/field_id.dart';
 import '../../state_values.dart';
 import 'interpreter.dart';
 
+/*
 class EventInterpreter extends Interpreter<EventStateValue> {
   @override
   EventStateValue interpret(StateFields fields) {
@@ -12,6 +13,7 @@ class EventInterpreter extends Interpreter<EventStateValue> {
     return EventStateValue(e);
   }
 }
+*/
 
 class DifficultyInterpreter extends Interpreter<DifficultyStateValue> {
   @override

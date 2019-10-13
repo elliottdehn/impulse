@@ -1,4 +1,5 @@
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
+import 'package:impulse/experiments/values.dart';
 
 import '../../constants.dart';
 import 'transformer.dart';
@@ -23,32 +24,36 @@ class TransformerBuilder {
     IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow);
     NormalSymbolTotalField nstf = NormalSymbolTotalField(0);
     KillerSymbolTotalField kstf = KillerSymbolTotalField(0);
+    TapCountField tcf = TapCountField(0);
+    ScoreField sf = ScoreField(0, tcf, nstf, kstf);
 
     DifficultyField df = DifficultyField(difficultyID);
     ReactionWindowLengthField rwlf;
     LivesTotalField ltf;
 
     if (DifficultyID.EASY == ~df) {
-      rwlf = ReactionWindowLengthField(Constants.maxReactionWindowEasy,
-          nstf, kstf, ilf);
+      rwlf = ReactionWindowLengthField(
+          Constants.maxReactionWindowEasy, nstf, kstf, ilf);
       ltf = LivesTotalField(Constants.livesStartEasy);
     } else if (DifficultyID.MEDIUM == ~df) {
-      rwlf = ReactionWindowLengthField(Constants.maxReactionWindowMedium,
-          nstf, kstf, ilf);
+      rwlf = ReactionWindowLengthField(
+          Constants.maxReactionWindowMedium, nstf, kstf, ilf);
       ltf = LivesTotalField(Constants.livesStartMedium);
     } else if (DifficultyID.HARD == ~df) {
-      rwlf = ReactionWindowLengthField(Constants.maxReactionWindowHard,
-          nstf, kstf, ilf);
+      rwlf = ReactionWindowLengthField(
+          Constants.maxReactionWindowHard, nstf, kstf, ilf);
       ltf = LivesTotalField(Constants.livesStartHard);
     } else if (DifficultyID.HERO == ~df) {
-      rwlf = ReactionWindowLengthField(Constants.maxReactionWindowHero,
-          nstf, kstf, ilf);
+      rwlf = ReactionWindowLengthField(
+          Constants.maxReactionWindowHero, nstf, kstf, ilf);
       ltf = LivesTotalField(Constants.livesStartHero);
     }
 
     initialFields.add(df);
     initialFields.add(rwlf);
     initialFields.add(ltf);
+    initialFields.add(ilf);
+    initialFields.add(sf);
 
     return this;
   }

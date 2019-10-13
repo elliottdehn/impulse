@@ -16,15 +16,20 @@ class Transitioner {
   //This separation of concerns make async transitions possible
   //and increases the robustness of the application's impl
   StateValues transition(StateValues sv, Event event) {
-
     //this is a little pants on head but i didn't really like other solutions
     //note that this is invisibly shallow-cloning the values
     sv.values.retainWhere((element) => element.id != ValueID.LAST_EVENT);
-    sv.values.add(EventStateValue(event));
+    List<StateValue> shallowClone = sv.values;
+    shallowClone.add(EventStateValue(event));
+    StateValues clonedStateNewEvent = StateValues(shallowClone);
+    StateValues newValues = _interpreter.interpret(
+        _transformer.transform(_predicator.test(clonedStateNewEvent)));
 
-    StateValues newValues =
-        _interpreter.interpret(_transformer.transform(_predicator.test(sv)));
-
+    newValues.add(EventStateValue(event));
     return newValues;
+  }
+
+  StateValues readStartState() {
+    return _interpreter.interpret(_transformer.startState);
   }
 }

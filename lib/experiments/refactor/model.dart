@@ -22,23 +22,24 @@ class Model {
 
   Model._privateConstructor();
 
-  _reset() {
-  }
-
-  StateValues onEvent(Event e){
-    switch(~e){
+  StateValues onEvent(Event e) {
+    switch (~e) {
       case EventID.START_DIFFICULTY_EASY:
         _transitioner = buildTransitioner(DifficultyID.EASY);
-        break;
+        _stateValues = _transitioner.readStartState();
+        return _stateValues;
       case EventID.START_DIFFICULTY_MEDIUM:
         _transitioner = buildTransitioner(DifficultyID.MEDIUM);
-        break;
+        _stateValues = _transitioner.readStartState();
+        return _stateValues;
       case EventID.START_DIFFICULTY_HARD:
         _transitioner = buildTransitioner(DifficultyID.HARD);
-        break;
+        _stateValues = _transitioner.readStartState();
+        return _stateValues;
       case EventID.START_DIFFICULTY_HERO:
         _transitioner = buildTransitioner(DifficultyID.HERO);
-        break;
+        _stateValues = _transitioner.readStartState();
+        return _stateValues;
       default:
         StateValues newState = _transitioner.transition(_stateValues, e);
         _stateValues = newState;
@@ -46,13 +47,12 @@ class Model {
     }
   }
 
-  Transitioner buildTransitioner(DifficultyID diff){
-    Predicates preds = Predicates();
-    StatePredicator predicator = StatePredicator(preds);
+  Transitioner buildTransitioner(DifficultyID diff) {
+    Predicates predicates = Predicates();
+    StatePredicator predicator = StatePredicator(predicates);
 
-    StateTransformer transformer = TransformerBuilder()
-        .setDifficulty(diff)
-        .build();
+    StateTransformer transformer =
+        TransformerBuilder().setDifficulty(diff).build();
 
     StateInterpreter interpreter = StateInterpreter();
 

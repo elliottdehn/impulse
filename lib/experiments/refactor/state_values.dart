@@ -22,8 +22,7 @@ class StateValues {
   StateValues(this._values);
 
   Value get(ValueID id) {
-    values.retainWhere((element) => element.id == id);
-    return values[0].val;
+    return ~values.firstWhere((element) => element.id == id);
   }
 
   List<StateValue> get values {
@@ -33,6 +32,9 @@ class StateValues {
     return shallowClone;
   }
 
+  add(StateValue sv) {
+    _values.add(sv);
+  }
 }
 
 abstract class StateValue<ValueID, X extends Value<dynamic>> {
@@ -41,24 +43,22 @@ abstract class StateValue<ValueID, X extends Value<dynamic>> {
   StateValue(this.val);
 
   operator ~() {
-    return ~val;
+    return val;
   }
 
   ValueID get id;
-
 }
 
-class EventStateValue extends StateValue<ValueID, Event>{
+class EventStateValue extends StateValue<ValueID, Event> {
   EventStateValue(Event val) : super(val);
 
   @override
   ValueID get id {
     return ValueID.LAST_EVENT;
   }
-
 }
 
-class DifficultyStateValue extends StateValue<ValueID, Difficulty>{
+class DifficultyStateValue extends StateValue<ValueID, Difficulty> {
   DifficultyStateValue(Difficulty val) : super(val);
 
   @override
@@ -67,7 +67,7 @@ class DifficultyStateValue extends StateValue<ValueID, Difficulty>{
   }
 }
 
-class TapCountStateValue extends StateValue<ValueID, TapCount>{
+class TapCountStateValue extends StateValue<ValueID, TapCount> {
   TapCountStateValue(TapCount val) : super(val);
 
   @override
@@ -76,7 +76,7 @@ class TapCountStateValue extends StateValue<ValueID, TapCount>{
   }
 }
 
-class NormalTotalStateValue extends StateValue<ValueID, NormalSymbolTotal>{
+class NormalTotalStateValue extends StateValue<ValueID, NormalSymbolTotal> {
   NormalTotalStateValue(NormalSymbolTotal val) : super(val);
 
   @override
@@ -85,7 +85,7 @@ class NormalTotalStateValue extends StateValue<ValueID, NormalSymbolTotal>{
   }
 }
 
-class KillerTotalStateValue extends StateValue<ValueID, KillerSymbolTotal>{
+class KillerTotalStateValue extends StateValue<ValueID, KillerSymbolTotal> {
   KillerTotalStateValue(KillerSymbolTotal val) : super(val);
 
   @override
@@ -94,7 +94,7 @@ class KillerTotalStateValue extends StateValue<ValueID, KillerSymbolTotal>{
   }
 }
 
-class ShownSymbolStateValue extends StateValue<ValueID, ShownSymbol>{
+class ShownSymbolStateValue extends StateValue<ValueID, ShownSymbol> {
   ShownSymbolStateValue(ShownSymbol val) : super(val);
 
   @override
@@ -103,7 +103,7 @@ class ShownSymbolStateValue extends StateValue<ValueID, ShownSymbol>{
   }
 }
 
-class ScoreStateValue extends StateValue<ValueID, Score>{
+class ScoreStateValue extends StateValue<ValueID, Score> {
   ScoreStateValue(Score val) : super(val);
 
   @override
@@ -112,7 +112,7 @@ class ScoreStateValue extends StateValue<ValueID, Score>{
   }
 }
 
-class IntervalLengthStateValue extends StateValue<ValueID, IntervalLength>{
+class IntervalLengthStateValue extends StateValue<ValueID, IntervalLength> {
   IntervalLengthStateValue(IntervalLength val) : super(val);
 
   @override
@@ -121,7 +121,8 @@ class IntervalLengthStateValue extends StateValue<ValueID, IntervalLength>{
   }
 }
 
-class ReactionWindowStatusStateValue extends StateValue<ValueID, ReactionWindowStatus> {
+class ReactionWindowStatusStateValue
+    extends StateValue<ValueID, ReactionWindowStatus> {
   ReactionWindowStatusStateValue(ReactionWindowStatus val) : super(val);
 
   @override
@@ -130,7 +131,8 @@ class ReactionWindowStatusStateValue extends StateValue<ValueID, ReactionWindowS
   }
 }
 
-class ReactionWindowLengthStateValue extends StateValue<ValueID, ReactionWindowLength>{
+class ReactionWindowLengthStateValue
+    extends StateValue<ValueID, ReactionWindowLength> {
   ReactionWindowLengthStateValue(ReactionWindowLength val) : super(val);
 
   @override
@@ -139,7 +141,7 @@ class ReactionWindowLengthStateValue extends StateValue<ValueID, ReactionWindowL
   }
 }
 
-class LivesStateValue extends StateValue<ValueID, Lives>{
+class LivesStateValue extends StateValue<ValueID, Lives> {
   LivesStateValue(Lives val) : super(val);
 
   @override

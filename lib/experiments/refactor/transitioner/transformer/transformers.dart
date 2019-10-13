@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
-import 'package:impulse/widgets/EventID.dart';
 
 import '../../constants.dart';
 import '../../id/field_id.dart';
@@ -20,8 +19,7 @@ class StateFields {
   StateFields(this.fields);
 
   StateValueField get(FieldID id) {
-    fields.retainWhere((element) => element.getId() == id);
-    return fields[0];
+    return fields.firstWhere((element) => element.getId() == id);
   }
 }
 
@@ -205,8 +203,7 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
-    DidNewSymbol isNewSymbol = t.get(ResultID.DID_NEW_SYMBOL);
-    if (~isNewSymbol) {
+    if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;
       String newSymbol;
@@ -281,24 +278,24 @@ class ReactionWindowLengthField
     IntervalLengthField newInterval = intervalLengthField.transform(t);
 
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
-      int total = ~~newNormTotal + ~~newKillerTotal;
+      int total = ~newNormTotal + ~newKillerTotal;
 
       Adjust newAdj = Adjust(~getAdj(t) * total);
 
       Minimum minimum = getMin(t);
       Maximum maximum = getMax(t);
 
-      int newWindowLength = (~scalar * ~maximum) + ~newAdj;
+      int newWindowLength = ((~scalar * ~maximum) + ~newAdj).round();
       //make sure that the window is not inhumanly fast
       int newWindowLengthBottomed = max(~minimum, newWindowLength);
       //do not want window to be longer than the interval
       int actualMax = min(~intervalLengthField, ~maximum);
-      int newWindowLengthTopped = min(~actualMax, newWindowLengthBottomed);
+      int newWindowLengthTopped = min(actualMax, newWindowLengthBottomed);
 
-      ReactionWindowLengthField newIntervalField = ReactionWindowLengthField(
+      ReactionWindowLengthField newWindowField = ReactionWindowLengthField(
           newWindowLengthTopped, newNormTotal, newKillerTotal, newInterval);
 
-      return newIntervalField;
+      return newWindowField;
     } else {
       return this;
     }
@@ -367,8 +364,8 @@ class IntervalLengthField extends StateValueField<IntervalLength> {
   StateValueField<Value> transform(TestResults t) {
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       int randomLength = _random
-              .nextInt(Constants.intervals.last - Constants.intervals.first) +
-          Constants.intervals.first;
+              .nextInt(Constants.intervals.first - Constants.intervals.last) +
+          Constants.intervals.last;
       return IntervalLengthField(randomLength);
     } else {
       return this;
