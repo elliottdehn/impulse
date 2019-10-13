@@ -7,7 +7,7 @@ import 'package:impulse/widgets/EventID.dart';
 import 'package:test/test.dart';
 
 void main(){
-  test('Instantiated model', () {
+  test('Sanity: instantiated model', () {
     Model();
   });
 
@@ -24,6 +24,8 @@ void main(){
   });
 
   //I realize non-deterministic tests are pants-on-head
+  //I'm planning on re-using the deterministic tests I originally wrote
+  //for the original model. These are to work out basic kinks.
   test('Init, new symbol, tap', () {
     Model m = Model();
     StateValues sv = m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
@@ -35,7 +37,7 @@ void main(){
     if(Constants.normalSymbols.contains(~sv.get(ValueID.SHOWN_SYMBOL))){
       assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 1);
       assert(~sv.get(ValueID.KILLER_SYMBOL_TOTAL) == 0);
-      assert(~sv.get(ValueID.SCORE) != 0);
+      assert(~sv.get(ValueID.SCORE) > 0);
       assert(~sv.get(ValueID.LIVES) == Constants.livesStartHero);
     } else {
       assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 0);
@@ -52,6 +54,7 @@ void main(){
     sv = m.onEvent(Event(EventID.NEW_SYMBOL));
     sv = m.onEvent(Event(EventID.PLAYER_REACTED));
     sv = m.onEvent(Event(EventID.ENFORCE_TAP));
+    int originalScore = ~sv.get(ValueID.SCORE);
     sv = m.onEvent(Event(EventID.PLAYER_REACTED));
     //TODO : real asserts, see why this is doing nothing
     assert(~sv.get(ValueID.SHOWN_SYMBOL) != "");
@@ -59,7 +62,8 @@ void main(){
     if(Constants.normalSymbols.contains(~sv.get(ValueID.SHOWN_SYMBOL))){
       assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 1);
       assert(~sv.get(ValueID.KILLER_SYMBOL_TOTAL) == 0);
-      assert(~sv.get(ValueID.SCORE) != 0);
+      assert(~sv.get(ValueID.SCORE) > 0);
+      assert(~sv.get(ValueID.SCORE) < originalScore);
       assert(~sv.get(ValueID.LIVES) == Constants.livesStartHero);
     } else {
       assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 0);
