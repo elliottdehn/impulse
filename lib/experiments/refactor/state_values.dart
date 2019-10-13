@@ -1,3 +1,4 @@
+import 'package:impulse/experiments/updaters.dart';
 import 'package:impulse/experiments/values.dart';
 
 import 'id/value_id.dart';
@@ -16,6 +17,63 @@ class StateValues {
   final ReactionWindowStatus reactionWindowStatus;
   final Lives lives;
    */
+
+  /*
+  These getters and setters are for reusing the original model tests
+   */
+  Value get lives {
+    return get(ValueID.LIVES);
+  }
+
+  set lives(Lives lives) {
+    _values.retainWhere((element) => element.id != ValueID.LIVES);
+    _values.add(LivesStateValue(lives));
+  }
+
+  Value get score {
+    return get(ValueID.SCORE);
+  }
+
+  set score(Score score) {
+    _values.retainWhere((element) => element.id != ValueID.SCORE);
+    _values.add(ScoreStateValue(score));
+  }
+
+  Value get normalSymbolTotal {
+    return get(ValueID.NORMAL_SYMBOL_TOTAL);
+  }
+
+  set normalSymbolTotal(NormalSymbolTotal nst) {
+    _values.retainWhere((element) => element.id != ValueID.NORMAL_SYMBOL_TOTAL);
+    _values.add(NormalTotalStateValue(nst));
+  }
+
+  Value get killerSymbolTotal {
+    return get(ValueID.KILLER_SYMBOL_TOTAL);
+  }
+
+  set killerSymbolTotal(KillerSymbolTotal kst) {
+    _values.retainWhere((element) => element.id != ValueID.KILLER_SYMBOL_TOTAL);
+    _values.add(KillerTotalStateValue(lives));
+  }
+
+  Value get tapCount {
+    return get(ValueID.TAP_COUNT);
+  }
+
+  set tapCount(TapCount tapCount) {
+    _values.retainWhere((element) => element.id != ValueID.TAP_COUNT);
+    _values.add(TapCountStateValue(tapCount));
+  }
+
+  Value get shown {
+    return get(ValueID.SHOWN_SYMBOL);
+  }
+
+  set shown(ShownSymbol symbol){
+    _values.retainWhere(((element) => element.id != ValueID.SHOWN_SYMBOL));
+    _values.add(ShownSymbolStateValue(symbol));
+  }
 
   final List<StateValue> _values;
 

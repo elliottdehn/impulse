@@ -14,7 +14,13 @@ class Model {
   //Singleton that can have its data cleared and reset
   static Model _singleton = Model._privateConstructor();
   Transitioner _transitioner;
-  StateValues _stateValues;
+  StateValues _stateValues = StateValues([]);
+
+  //this is useful for re-using tests and it is immutable
+  //so I'm not worried about the accessibility
+  StateValues get state{
+    return _stateValues;
+  }
 
   factory Model() {
     return _singleton;

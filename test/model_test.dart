@@ -56,7 +56,7 @@ void main(){
     sv = m.onEvent(Event(EventID.ENFORCE_TAP));
     int originalScore = ~sv.get(ValueID.SCORE);
     sv = m.onEvent(Event(EventID.PLAYER_REACTED));
-    //TODO : real asserts, see why this is doing nothing
+
     assert(~sv.get(ValueID.SHOWN_SYMBOL) != "");
     assert(~sv.get(ValueID.TAP_COUNT) == 2);
     if(Constants.normalSymbols.contains(~sv.get(ValueID.SHOWN_SYMBOL))){
@@ -69,6 +69,36 @@ void main(){
       assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 0);
       assert(~sv.get(ValueID.KILLER_SYMBOL_TOTAL) == 0);
       assert(~sv.get(ValueID.LIVES) == Constants.livesStartHero - 2);
+      assert(~sv.get(ValueID.SCORE) == 0);
+    }
+    assert(sv != null);
+  });
+
+  test('Init, new symbol, tap, close, tap x 2', () {
+    Model m = Model();
+    StateValues sv = m.onEvent(Event(EventID.START_DIFFICULTY_HERO));
+    sv = m.onEvent(Event(EventID.NEW_SYMBOL));
+    sv = m.onEvent(Event(EventID.PLAYER_REACTED));
+    sv = m.onEvent(Event(EventID.ENFORCE_TAP));
+    sv = m.onEvent(Event(EventID.PLAYER_REACTED));
+    sv = m.onEvent(Event(EventID.NEW_SYMBOL));
+    sv = m.onEvent(Event(EventID.PLAYER_REACTED));
+    sv = m.onEvent(Event(EventID.ENFORCE_TAP));
+    int originalScore = ~sv.get(ValueID.SCORE);
+    sv = m.onEvent(Event(EventID.PLAYER_REACTED));
+
+    assert(~sv.get(ValueID.SHOWN_SYMBOL) != "");
+    assert(~sv.get(ValueID.TAP_COUNT) == 2);
+    if(Constants.normalSymbols.contains(~sv.get(ValueID.SHOWN_SYMBOL))){
+      assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 2);
+      assert(~sv.get(ValueID.KILLER_SYMBOL_TOTAL) == 0);
+      assert(~sv.get(ValueID.SCORE) > 0);
+      assert(~sv.get(ValueID.SCORE) < originalScore);
+      assert(~sv.get(ValueID.LIVES) == Constants.livesStartHero);
+    } else {
+      assert(~sv.get(ValueID.NORMAL_SYMBOL_TOTAL) == 0);
+      assert(~sv.get(ValueID.KILLER_SYMBOL_TOTAL) == 0);
+      assert(~sv.get(ValueID.LIVES) == Constants.livesStartHero - 4);
       assert(~sv.get(ValueID.SCORE) == 0);
     }
     assert(sv != null);
