@@ -12,6 +12,22 @@ abstract class Predicate<X extends TestResult> {
   X test(StateValues sv);
 }
 
+class TestSetKillerPredicate implements Predicate<TestSetKiller> {
+  @override
+  TestSetKiller test(StateValues sv) {
+    EventID eventID = ~sv.get(ValueID.LAST_EVENT);
+    return TestSetKiller(EventID.SET_KILLER_SYMBOL == eventID);
+  }
+}
+
+class TestSetNormalPredicate implements Predicate<TestSetNormal> {
+  @override
+  TestSetNormal test(StateValues sv) {
+    EventID event = ~sv.get(ValueID.LAST_EVENT);
+    return TestSetNormal(EventID.SET_NORMAL_SYMBOL == event);
+  }
+}
+
 class DidPlayerReactPredicate implements Predicate<DidPlayerReact> {
   @override
   DidPlayerReact test(StateValues sv) {

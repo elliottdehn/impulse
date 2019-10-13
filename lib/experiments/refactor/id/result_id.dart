@@ -14,4 +14,6 @@ enum ResultID {
   IS_MEDIUM,
   IS_HARD,
   IS_HERO,
+  TEST_SET_NORMAL,
+  TEST_SET_KILLER
 }

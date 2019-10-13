@@ -84,6 +84,16 @@ class TestResults {
 Impl
  */
 
+class TestSetKiller extends TestResult {
+  static final ResultID id = ResultID.TEST_SET_KILLER;
+
+  TestSetKiller(bool y) : super(id, y);
+}
+class TestSetNormal extends TestResult {
+  static final ResultID id = ResultID.TEST_SET_NORMAL;
+  TestSetNormal(bool y) : super(id, y);
+}
+
 class DidPlayerReact extends TestResult {
   static final ResultID id = ResultID.DID_PLAYER_REACT;
   DidPlayerReact(y) : super(id, y);

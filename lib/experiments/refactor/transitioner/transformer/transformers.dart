@@ -203,6 +203,11 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
+    if(~t.get(ResultID.TEST_SET_KILLER)){
+      return ShownSymbolField(Constants.killerSymbols[0]);
+    } else if (~t.get(ResultID.TEST_SET_NORMAL)){
+      return ShownSymbolField(Constants.normalSymbols[0]);
+    }
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
       String oldSymbol = _sShownSymbol;

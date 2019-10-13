@@ -19,22 +19,14 @@ void main() {
   Helpers
    */
 
-  String getNormalSymbol(){
-    return Constants.normalSymbols[0];
-  }
-
-  String getKillerSymbol(){
-    return Constants.killerSymbols[0];
-  }
-
   //return start lives
   int _setToSymbol(Model gm, {bool isNormal}){
     int startLives = ~gm.state.lives;
     gm.onEvent(Event(EventID.NEW_SYMBOL));
     if (isNormal != null && !isNormal) {
-      gm.state.shown = ShownSymbol(getKillerSymbol());
+      gm.onEvent(Event(EventID.SET_KILLER_SYMBOL));
     } else {
-      gm.state.shown = ShownSymbol(getNormalSymbol());
+      gm.onEvent(Event(EventID.SET_NORMAL_SYMBOL));
     }
     return startLives;
   }
@@ -72,8 +64,12 @@ void main() {
   int _doRound(Model gm, bool normal, {int preWindowTaps = 0, int postWindowTaps = 0, int times = 1}){
     for(int idx in listN(times)) {
       gm.onEvent(Event(EventID.NEW_SYMBOL));
-      String symbol = normal ? getNormalSymbol() : getKillerSymbol();
-      gm.state.shown = new ShownSymbol(symbol);
+
+      if(normal){
+        gm.onEvent(Event(EventID.SET_NORMAL_SYMBOL));
+      } else {
+        gm.onEvent(Event(EventID.SET_KILLER_SYMBOL));
+      }
 
       _tapX(gm, preWindowTaps);
       gm.onEvent(Event(EventID.ENFORCE_TAP));
@@ -81,9 +77,9 @@ void main() {
     }
 
     if (!normal) {
-      return preWindowTaps + postWindowTaps;
+      return (preWindowTaps + postWindowTaps) * times;
     } else {
-      return preWindowTaps == 0 ? 1 : 0;
+      return (preWindowTaps == 0 ? 1 : 0) * times;
     }
   }
 
@@ -98,8 +94,6 @@ void main() {
   int _doRoundPostTap(Model gm, {bool isNormal, int times = 1}){
     return _doRound(gm, isNormal, preWindowTaps: 0, postWindowTaps: 1, times: times);
   }
-
-
 
   /*
   "Meta" tests
