@@ -1,5 +1,5 @@
 import 'IState.dart';
 
-abstract class IStateUpdateListener {
+abstract class IView {
   onStateUpdate(IState newState);
 }

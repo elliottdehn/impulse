@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/IPresenter.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/IStateUpdateListener.dart';
 import 'package:impulse/widgets/game/score/ScoreState.dart';
@@ -11,13 +10,13 @@ import 'ScoreWidget.dart';
 import 'ScoreWidgetPresenter.dart';
 
 class ScoreWidgetState extends State<ScoreWidget>
-    implements IStateUpdateListener {
+    implements IView {
   int _score;
   ScoreWidgetPresenter presenter;
   bool created = false;
 
   ScoreWidgetState(Model m) {
-    presenter = ScoreWidgetPresenter(this);
+    presenter = ScoreWidgetPresenter(m, this);
   }
 
   @override

@@ -12,7 +12,7 @@ import '../../IStateUpdateListener.dart';
 import 'SymbolState.dart';
 
 class SymbolWidgetState extends State<SymbolWidget>
-    implements IStateUpdateListener {
+    implements IView {
   SymbolWidgetPresenter _presenter;
   bool created = false;
 
@@ -23,7 +23,7 @@ class SymbolWidgetState extends State<SymbolWidget>
   Timer _symbolIntervalTimer;
 
   SymbolWidgetState(Model m) {
-    _presenter = new SymbolWidgetPresenter(this);
+    _presenter = new SymbolWidgetPresenter(m, this);
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
 import 'package:impulse/transcribers/impl/PlayerReactedTranscriber.dart';
 import 'package:impulse/widgets/EventID.dart';
@@ -18,7 +19,7 @@ class SymbolWidgetPresenter
     with AppStateUpdateListener
     implements IPresenter, IStateUpdateHandler, IEventListener {
   //view(ish)
-  final IStateUpdateListener symbolWidgetState;
+  final IView symbolWidgetState;
   //config
   final List<AppStateKey> keyListeners = [AppStateKey.SYMBOL];
   //transcribers
@@ -27,7 +28,9 @@ class SymbolWidgetPresenter
   //state builder
   final IStateBuilder stateBuilder = SymbolStateBuilder();
 
-  SymbolWidgetPresenter(this.symbolWidgetState) {
+  final Model m;
+
+  SymbolWidgetPresenter(this.m, this.symbolWidgetState) {
     listen(this);
     symbolWidgetState.onStateUpdate(stateBuilder.initState());
   }

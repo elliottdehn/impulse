@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/oracles/IOracle.dart';
 import 'package:impulse/oracles/impl/score/ScoreOracle.dart';
 import 'package:impulse/state/AppStateStore.dart';
@@ -23,13 +24,15 @@ class ReactionWindowPresenter
   final IOracle currentScore = ScoreOracle();
   final ITranscriber enforceWindow = EnforceWindowTranscriber();
   final IStateBuilder windowStateBuilder = ReactionWindowStateBuilder();
-  final IStateUpdateListener stateUpdateListener;
+  final IView stateUpdateListener;
   final List<AppStateKey> stateKeyListeners = [
     AppStateKey.SYMBOL_TAPPED_COUNT,
     AppStateKey.SYMBOL
   ];
 
-  ReactionWindowPresenter(this.stateUpdateListener) {
+  final Model m;
+
+  ReactionWindowPresenter(this.m, this.stateUpdateListener) {
     listen(this);
     stateUpdateListener.onStateUpdate(stateBuilder.initState());
   }

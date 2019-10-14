@@ -9,7 +9,7 @@ import 'package:impulse/widgets/game/window/ReactionWindowState.dart';
 import 'ReactionWindowWidget.dart';
 
 class ReactionWindowWidgetState extends State<ReactionWindowWidget>
-    with SingleTickerProviderStateMixin implements IStateUpdateListener {
+    with SingleTickerProviderStateMixin implements IView {
 
   Widget animatedObject = Container(color: Color.fromRGBO(0, 0, 0, 1.0));
   Animation<double> _animation;
@@ -23,7 +23,7 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   bool created = false;
 
   ReactionWindowWidgetState(Model m){
-    stateUpdater = new ReactionWindowPresenter(this);
+    stateUpdater = new ReactionWindowPresenter(m, this);
   }
 
   @override

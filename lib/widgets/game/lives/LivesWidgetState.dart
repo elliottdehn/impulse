@@ -12,13 +12,13 @@ import 'LivesWidget.dart';
 import 'LivesWidgetPresenter.dart';
 
 class LivesWidgetState extends State<LivesWidget>
-    implements IStateUpdateListener {
+    implements IView {
   int _lives;
   LivesWidgetPresenter presenter;
   bool created = false;
 
   LivesWidgetState(Model m) {
-    presenter = LivesWidgetPresenter(this);
+    presenter = LivesWidgetPresenter(m, this);
   }
 
   @override

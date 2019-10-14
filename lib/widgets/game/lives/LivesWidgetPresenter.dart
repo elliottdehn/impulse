@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/state/AppStateStore.dart';
 import 'package:impulse/state/AppStateUpdateListener.dart';
 import 'package:impulse/widgets/EventID.dart';
@@ -14,11 +15,15 @@ import 'package:impulse/widgets/game/lives/LivesStateBuilder.dart';
 class LivesWidgetPresenter
     with AppStateUpdateListener
     implements IPresenter, IStateUpdateHandler, IEventListener {
+  
   final IStateBuilder stateBuilder = LivesStateBuilder();
-  final List<AppStateKey> keyListeners = [AppStateKey.LIVES];
-  final IStateUpdateListener stateUpdateListener;
 
-  LivesWidgetPresenter(this.stateUpdateListener) {
+  final List<AppStateKey> keyListeners = [AppStateKey.LIVES];
+
+  final IView stateUpdateListener;
+  final Model m;
+
+  LivesWidgetPresenter(this.m, this.stateUpdateListener) {
     listen(this);
     stateUpdateListener.onStateUpdate(stateBuilder.initState());
   }
