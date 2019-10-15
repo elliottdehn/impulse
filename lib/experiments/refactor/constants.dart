@@ -30,7 +30,7 @@ class Constants {
     "Z"
   ];
 
-  static const int visibilityTime = 140;
+  static const int visibilityTime = 200;
 
   static const double normalOdds = 0.8;
 
@@ -43,7 +43,7 @@ class Constants {
     intervalFast
   ];
 
-  static const int _maxReactionWindowLost = 200;
+  static const int _maxReactionWindowLost = 300;
 
   static const int maxReactionWindowEasy = 1000; //milliseconds
   static const int maxReactionWindowMedium = 800; //milliseconds
@@ -59,10 +59,10 @@ class Constants {
   static const int minReactionWindowHero =
       maxReactionWindowHero - _maxReactionWindowLost;
 
-  static const int reactionWindowAdjEasy = -2;
-  static const int reactionWindowAdjMedium = -3;
-  static const int reactionWindowAdjHard = -4;
-  static const int reactionWindowAdjHero = -5;
+  static const int reactionWindowAdjEasy = -5;
+  static const int reactionWindowAdjMedium = -10;
+  static const int reactionWindowAdjHard = -15;
+  static const int reactionWindowAdjHero = -20;
   static const int _randomSeedMax = 247383920;
   static final randomRandomSeed = Random().nextInt(_randomSeedMax);
 

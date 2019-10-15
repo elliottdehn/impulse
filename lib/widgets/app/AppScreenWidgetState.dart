@@ -15,6 +15,7 @@ import 'AppScreenWidget.dart';
 class AppScreenWidgetState extends State<AppScreenWidget> {
   ScreenID _screen;
   Difficulty _difficulty;
+  Model m;
 
   @override
   void initState() {
@@ -42,10 +43,10 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
   Widget _getScreen() {
     switch (_screen) {
       case ScreenID.DEATH:
-        return DeathScreen();
+        return DeathScreen(m);
         break;
       case ScreenID.GAME:
-        Model m = Model(_difficulty);
+        m = Model(_difficulty);
         return GameScreen(m);
         break;
       case ScreenID.START:

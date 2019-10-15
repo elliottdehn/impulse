@@ -1,5 +1,6 @@
+import 'dart:math';
+
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
-import 'package:impulse/experiments/values.dart';
 
 import '../../constants.dart';
 import 'transformer.dart';
@@ -13,7 +14,8 @@ class TransformerBuilder {
     TapCountField tcf = TapCountField(0);
     NormalSymbolTotalField nstf = NormalSymbolTotalField(0);
     KillerSymbolTotalField kstf = KillerSymbolTotalField(0);
-    ShownSymbolField ssf = ShownSymbolField("");
+    Random initRandom = Random(Constants.randomRandomSeed);
+    ShownSymbolField ssf = ShownSymbolField("", initRandom);
     ReactionWindowStatusField rwsf = ReactionWindowStatusField(false);
 
     initialFields.addAll([tcf, nstf, kstf, ssf, rwsf]);
@@ -31,8 +33,12 @@ class TransformerBuilder {
 
     ReactionWindowLengthField rwlf;
     LivesTotalField ltf;
-    IntervalLengthField ilfForReactionWindow = IntervalLengthField(Constants.intervalSlow);
-    IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow);
+
+    Random initRandomForWindow = Random(Constants.randomRandomSeed);
+    IntervalLengthField ilfForReactionWindow = IntervalLengthField(Constants.intervalSlow, initRandomForWindow);
+
+    Random initRandomForInterval = Random(Constants.randomRandomSeed);
+    IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow, initRandomForInterval);
 
     if (DifficultyID.EASY == ~df) {
       rwlf = ReactionWindowLengthField(

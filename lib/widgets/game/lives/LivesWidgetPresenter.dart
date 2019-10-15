@@ -27,13 +27,13 @@ class LivesWidgetPresenter
   }
 
   @override
-  void onModelChanged(StateValues s) {
+  void onModelChanged(StateValues s) async {
     IViewState newState = stateBuilder.buildState(s);
     stateUpdateListener.onStateUpdate(newState);
   }
 
   @override
-  onEvent(EventID id) {
+  onEvent(EventID id) async {
     if(EventID.DISPOSE == id){
       unsubscribe(this);
     }

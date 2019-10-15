@@ -28,7 +28,7 @@ class ReactionWindowPresenter
   }
 
   @override
-  onEvent(EventID id) {
+  onEvent(EventID id) async {
     if(EventID.ENFORCE_TAP == id){
       m.onEvent(Event(EventID.ENFORCE_TAP));
     } else if (EventID.DISPOSE == id){
@@ -37,7 +37,7 @@ class ReactionWindowPresenter
   }
 
   @override
-  void onModelChanged(StateValues newState) {
+  void onModelChanged(StateValues newState) async {
     ReactionWindowState state = stateBuilder.buildState(newState);
     if (EventID.PLAYER_REACTED == ~newState.get(ValueID.LAST_EVENT)) {
       state.isStopped = true;

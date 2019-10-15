@@ -197,16 +197,16 @@ class LivesTotalField implements StateValueField<LivesTotal> {
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
   final String _sShownSymbol;
-  static final Random _random = Random(Constants.randomRandomSeed);
+  final Random _random;
 
-  ShownSymbolField(this._sShownSymbol);
+  ShownSymbolField(this._sShownSymbol, this._random);
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
     if(~t.get(ResultID.TEST_SET_KILLER)){
-      return ShownSymbolField(Constants.killerSymbols[0]);
+      return ShownSymbolField(Constants.killerSymbols[0], _random);
     } else if (~t.get(ResultID.TEST_SET_NORMAL)){
-      return ShownSymbolField(Constants.normalSymbols[0]);
+      return ShownSymbolField(Constants.normalSymbols[0], _random);
     }
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       bool isNormalSymbol = _random.nextDouble() <= Constants.normalOdds;
@@ -221,7 +221,7 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
         newSymbol = Constants
             .killerSymbols[_random.nextInt(Constants.killerSymbols.length)];
       }
-      return ShownSymbolField(newSymbol);
+      return ShownSymbolField(newSymbol, _random);
     } else {
       return this;
     }
@@ -364,10 +364,11 @@ class ReactionWindowLengthField
 class IntervalLengthField extends StateValueField<IntervalLength> {
   final int _iIntervalLength;
   //TODO Figure out a solution to this "static random" problem
-  static final Random _random = Random(Constants.randomRandomSeed);
+  //The solution is to pass the random object into the class from the start
+  final Random _random;
   int idxTest = 0;
 
-  IntervalLengthField(this._iIntervalLength);
+  IntervalLengthField(this._iIntervalLength, this._random);
 
   @override
   StateValueField<Value> transform(TestResults t) {
@@ -376,7 +377,7 @@ class IntervalLengthField extends StateValueField<IntervalLength> {
       int randomLength = _random
               .nextInt(Constants.intervals.first - Constants.intervals.last) +
           Constants.intervals.last;
-      return IntervalLengthField(randomLength);
+      return IntervalLengthField(randomLength, _random);
     } else {
       return this;
     }

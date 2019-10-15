@@ -27,14 +27,14 @@ class ScoreWidgetPresenter
   }
 
   @override
-  void onModelChanged(StateValues s) {
+  void onModelChanged(StateValues s) async {
     ScoreState state = ScoreState();
     state.score = ~s.get(ValueID.SCORE);
     stateUpdateListener.onStateUpdate(state);
   }
 
   @override
-  onEvent(EventID id) {
+  onEvent(EventID id) async {
     if(EventID.DISPOSE == id){
       unsubscribe(this);
     }

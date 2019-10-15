@@ -56,6 +56,8 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
       _currReactionWindow = state.currReactionWindow;
       return;
     }
+    
+    _currReactionWindow = state.currReactionWindow;
 
     if(!state.isStopped || state.isReset) {
       _controller.reset();

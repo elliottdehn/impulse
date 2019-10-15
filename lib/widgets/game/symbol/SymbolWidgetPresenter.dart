@@ -30,7 +30,7 @@ class SymbolWidgetPresenter
   }
 
   @override
-  onEvent(EventID id) {
+  onEvent(EventID id) async {
     if(EventID.PLAYER_REACTED == id){
       m.onEvent(Event(EventID.PLAYER_REACTED));
     } else if(EventID.NEW_SYMBOL == id){
@@ -41,7 +41,7 @@ class SymbolWidgetPresenter
   }
 
   @override
-  void onModelChanged(StateValues s) {
+  void onModelChanged(StateValues s) async {
     if (EventID.NEW_SYMBOL == ~s.get(ValueID.LAST_EVENT)) {
       symbolWidgetState.onStateUpdate(stateBuilder.buildState(s));
     }
