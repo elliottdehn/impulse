@@ -137,3 +137,11 @@ class IsReset extends Value<bool> {
 class Difficulty extends Value<DifficultyID> {
   Difficulty(DifficultyID value) : super(value);
 }
+
+class VisibilityTime extends Value<int> {
+  VisibilityTime(int value) : super(value);
+}
+
+class IntervalTime extends Value<int> {
+  IntervalTime(int value) : super(value);
+}

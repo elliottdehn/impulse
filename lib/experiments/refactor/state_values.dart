@@ -1,4 +1,3 @@
-import 'package:impulse/experiments/updaters.dart';
 import 'package:impulse/experiments/values.dart';
 
 import 'id/value_id.dart';
