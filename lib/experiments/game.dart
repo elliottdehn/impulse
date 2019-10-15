@@ -40,7 +40,6 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
   Game onUpdate(EventID e) {
     switch (e) {
       case EventID.NEW_SYMBOL:
-        //TODO: update intervals, visibility time, window time, streak
         gs.isGameStarted = true;
         gs.killerSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
         gs.shown.updateForEventUsingFunction(e, this.newSymbolF);
@@ -52,7 +51,6 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
         gs.lives.updateForEventUsingFunction(e, livesF);
         break;
       case EventID.PLAYER_REACTED:
-        //TODO: update streak
         gs.shownTapCount += 1;
         gs.normalSymbolTotal.updateForEventUsingFunction(e, this.symbolTotalF);
         gs.lives.updateForEventUsingFunction(e, livesF);
@@ -64,7 +62,6 @@ class GameModel implements IModelBuilder<Game>, IEventListener {
         // For now: do nothing (info is used on death screen)
         break;
       default:
-        //TODO difficulties
     }
     return build();
   }

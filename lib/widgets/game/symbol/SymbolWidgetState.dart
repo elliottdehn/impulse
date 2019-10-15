@@ -8,7 +8,7 @@ import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidgetPresenter.dart';
 
-import '../../IStateUpdateListener.dart';
+import '../../i_view.dart';
 import 'SymbolState.dart';
 
 class SymbolWidgetState extends State<SymbolWidget>
@@ -48,7 +48,7 @@ class SymbolWidgetState extends State<SymbolWidget>
   //timer issues
 
   @override
-  onStateUpdate(IState newState) {
+  onStateUpdate(IViewState newState) {
     SymbolState newStateSymbol = newState as SymbolState;
     _visible = true;
     _visibleDuration = newStateSymbol.visibilityDuration;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
-import 'package:impulse/widgets/IStateUpdateListener.dart';
+import 'package:impulse/widgets/i_view.dart';
 import 'package:impulse/widgets/game/score/ScoreState.dart';
 
 import 'ScoreWidget.dart';
@@ -20,7 +20,7 @@ class ScoreWidgetState extends State<ScoreWidget>
   }
 
   @override
-  onStateUpdate(IState newState) {
+  onStateUpdate(IViewState newState) {
     _setState(newState as ScoreState);
     if(created) { //widget not yet created
       _updateView();

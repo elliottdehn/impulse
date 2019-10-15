@@ -1,30 +1,24 @@
 import 'package:flutter/cupertino.dart';
+import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/model.dart';
-import 'package:impulse/state/AppStateUpdateListener.dart';
-import 'package:impulse/transcribers/impl/PlayerReactedTranscriber.dart';
+import 'package:impulse/experiments/refactor/state_values.dart';
+import 'package:impulse/experiments/values.dart';
+import 'package:impulse/state/state_update_listener.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IEventListener.dart';
 import 'package:impulse/widgets/IStateUpdateHandler.dart';
-import 'package:impulse/state/AppStateStore.dart';
-import 'package:impulse/transcribers/ITranscriber.dart';
-import 'package:impulse/transcribers/impl/NewSymbolTranscriber.dart';
 import 'package:impulse/widgets/IStateBuilder.dart';
-import 'package:impulse/widgets/IStateUpdateListener.dart';
+import 'package:impulse/widgets/i_view.dart';
 import 'package:impulse/widgets/game/symbol/SymbolStateBuilder.dart';
 
 import '../../IPresenter.dart';
 
 @immutable
 class SymbolWidgetPresenter
-    with AppStateUpdateListener
+    with StateUpdateListener
     implements IPresenter, IStateUpdateHandler, IEventListener {
   //view(ish)
   final IView symbolWidgetState;
-  //config
-  final List<AppStateKey> keyListeners = [AppStateKey.SYMBOL];
-  //transcribers
-  final ITranscriber newSymbol = NewSymbolTranscriber();
-  final ITranscriber playerReacted = PlayerReactedTranscriber();
   //state builder
   final IStateBuilder stateBuilder = SymbolStateBuilder();
 
@@ -32,32 +26,25 @@ class SymbolWidgetPresenter
 
   SymbolWidgetPresenter(this.m, this.symbolWidgetState) {
     listen(this);
-    symbolWidgetState.onStateUpdate(stateBuilder.initState());
+    symbolWidgetState.onStateUpdate(stateBuilder.initState(m.readState()));
   }
 
   @override
   onEvent(EventID id) {
     if(EventID.PLAYER_REACTED == id){
-      playerReacted.writeToState();
+      m.onEvent(Event(EventID.PLAYER_REACTED));
     } else if(EventID.NEW_SYMBOL == id){
-      newSymbol.writeToState();
+      m.onEvent(Event(EventID.NEW_SYMBOL));
     } else if(EventID.DISPOSE == id){
       unsubscribe(this);
-    } else {
-      throw Exception("Invalid event");
     }
   }
 
   @override
-  void onModelChanged(AppStateKey key, value) {
-    if (key == AppStateKey.SYMBOL) {
-      symbolWidgetState.onStateUpdate(stateBuilder.buildState());
+  void onModelChanged(StateValues s) {
+    if (EventID.NEW_SYMBOL == ~s.get(ValueID.LAST_EVENT)) {
+      symbolWidgetState.onStateUpdate(stateBuilder.buildState(s));
     }
-  }
-
-  @override
-  bool shouldNotifyForKeyStateChange(AppStateKey key) {
-    return keyListeners.contains(key);
   }
 
 }

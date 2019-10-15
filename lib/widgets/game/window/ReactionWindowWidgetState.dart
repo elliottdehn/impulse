@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
-import 'package:impulse/widgets/IStateUpdateListener.dart';
+import 'package:impulse/widgets/i_view.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowPresenter.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowState.dart';
 
@@ -48,7 +48,7 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   }
 
   @override
-  onStateUpdate(IState newState) {
+  onStateUpdate(IViewState newState) {
     ReactionWindowState state = newState as ReactionWindowState;
 
     if(!created) {

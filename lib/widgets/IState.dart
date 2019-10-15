@@ -1,1 +1,1 @@
-abstract class IState {}
+abstract class IViewState {}

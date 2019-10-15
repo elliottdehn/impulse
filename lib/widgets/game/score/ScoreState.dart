@@ -1,6 +1,6 @@
 import '../../IState.dart';
 
-class ScoreState implements IState {
+class ScoreState implements IViewState {
   int score;
   int reactionTimeAvg;
   int successes;

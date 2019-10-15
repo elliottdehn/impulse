@@ -29,7 +29,9 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         onNotification: (notification) {
           setState(() {
             _screen = notification.screen;
-            _difficulty = Difficulty(notification.difficultyID);
+            if(notification.difficultyID != null) {
+              _difficulty = Difficulty(notification.difficultyID);
+            }
           });
           return true; //cancel bubbling
         },

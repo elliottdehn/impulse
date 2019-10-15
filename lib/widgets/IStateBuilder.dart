@@ -1,6 +1,8 @@
+import 'package:impulse/experiments/refactor/state_values.dart';
+
 import 'IState.dart';
 
 abstract class IStateBuilder {
-  IState initState();
-  IState buildState();
+  IViewState initState(StateValues s);
+  IViewState buildState(StateValues s);
 }

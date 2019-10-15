@@ -1,4 +1,5 @@
-import 'package:impulse/state/AppStateStore.dart';
+import 'package:impulse/experiments/refactor/id/value_id.dart';
+import 'package:impulse/experiments/refactor/state_values.dart';
 import 'package:impulse/widgets/IState.dart';
 
 import '../../StateBuilder.dart';
@@ -6,16 +7,16 @@ import 'LivesState.dart';
 
 class LivesStateBuilder extends StateBuilder {
   @override
-  IState buildState() {
+  IViewState buildState(StateValues s) {
     LivesState ls = LivesState();
-    ls.lives = manager.getStateValue(AppStateKey.LIVES);
+    ls.lives = ~s.get(ValueID.LIVES);
     return ls;
   }
 
   @override
-  IState initState() {
+  IViewState initState(StateValues s) {
     LivesState ls = LivesState();
-    ls.lives = manager.getConfigValue(AppConfigKey.LIVES_START);
+    ls.lives = ~s.get(ValueID.LIVES);
     return ls;
   }
 }

@@ -1,6 +1,6 @@
 import '../../IState.dart';
 
-class ReactionWindowState implements IState {
+class ReactionWindowState implements IViewState {
   int baseReactionWindow;
   int currReactionWindow;
   bool isStopped;

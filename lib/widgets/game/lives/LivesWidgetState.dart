@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/EventID.dart';
 import 'package:impulse/widgets/IState.dart';
-import 'package:impulse/widgets/IStateUpdateListener.dart';
+import 'package:impulse/widgets/i_view.dart';
 import 'package:impulse/widgets/ScreenID.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 
@@ -22,7 +22,7 @@ class LivesWidgetState extends State<LivesWidget>
   }
 
   @override
-  onStateUpdate(IState newState) {
+  onStateUpdate(IViewState newState) {
     LivesState livesState = newState as LivesState;
     _setState(livesState);
     if(created && _lives != null && _lives != 0) {

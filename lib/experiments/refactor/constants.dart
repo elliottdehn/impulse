@@ -30,6 +30,8 @@ class Constants {
     "Z"
   ];
 
+  static const int visibilityTime = 140;
+
   static const double normalOdds = 0.8;
 
   static const int intervalFast = 1000; //milliseconds

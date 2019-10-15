@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
-import 'package:impulse/experiments/values.dart';
-import 'package:impulse/transcribers/ITranscriber.dart';
-import 'package:impulse/transcribers/impl/StartGameTranscriber.dart';
+
 import 'package:impulse/widgets/game/lives/LivesWidget.dart';
 import 'package:impulse/widgets/game/score/ScoreWidget.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
@@ -15,10 +13,7 @@ class GameScreen extends NotificationListener {
 
   final Model m;
 
-  GameScreen(this.m){
-    ITranscriber start = StartGameTranscriber();
-    start.writeToState();
-  }
+  GameScreen(this.m);
 
   @override
   Widget build(BuildContext context) {

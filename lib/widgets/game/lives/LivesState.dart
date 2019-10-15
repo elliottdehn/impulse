@@ -1,5 +1,5 @@
 import '../../IState.dart';
 
-class LivesState implements IState {
+class LivesState implements IViewState {
   int lives;
 }

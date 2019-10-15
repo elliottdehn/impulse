@@ -1,8 +1,5 @@
-import 'package:impulse/state/AppStateStore.dart';
+import 'package:impulse/experiments/refactor/state_values.dart';
 
-class IStateUpdateHandler {
-  void onModelChanged(AppStateKey key, var value) {}
-  bool shouldNotifyForKeyStateChange(AppStateKey key) {
-    return false;
-  }
+abstract class IStateUpdateHandler {
+  void onModelChanged(StateValues newState);
 }

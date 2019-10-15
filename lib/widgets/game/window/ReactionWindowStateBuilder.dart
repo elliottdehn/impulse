@@ -1,6 +1,5 @@
-import 'package:impulse/oracles/IOracle.dart';
-import 'package:impulse/oracles/impl/window/OracleReactionWindowConstant.dart';
-import 'package:impulse/state/AppStateStore.dart';
+import 'package:impulse/experiments/refactor/id/value_id.dart';
+import 'package:impulse/experiments/refactor/state_values.dart';
 import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/StateBuilder.dart';
 
@@ -8,22 +7,20 @@ import 'ReactionWindowState.dart';
 
 class ReactionWindowStateBuilder extends StateBuilder {
 
-  final IOracle reactionWindowDuration = OracleReactionWindowConstant();
-
   @override
-  IState buildState() {
+  IViewState buildState(StateValues s) {
+    //we no longer keep track of the base window
     ReactionWindowState state = ReactionWindowState();
-    state.baseReactionWindow = manager.getConfigValue(AppConfigKey.BASE_REACTION_WINDOW);
-    state.currReactionWindow = reactionWindowDuration.getAnswer();
-
+    state.currReactionWindow = ~s.get(ValueID.REACTION_WINDOW_LENGTH);
     return state;
   }
 
   @override
-  IState initState() {
+  IViewState initState(StateValues s) {
     ReactionWindowState state = ReactionWindowState();
-    state.baseReactionWindow = manager.getConfigValue(AppConfigKey.BASE_REACTION_WINDOW);
-    state.currReactionWindow = manager.getConfigValue(AppConfigKey.BASE_REACTION_WINDOW);
+    int initialWindowLength = ~s.get(ValueID.REACTION_WINDOW_LENGTH);
+    state.baseReactionWindow = initialWindowLength;
+    state.currReactionWindow = initialWindowLength;
     state.isStopped = false;
     state.isReset = false;
     return state;
