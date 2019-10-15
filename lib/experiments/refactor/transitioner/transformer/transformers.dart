@@ -197,7 +197,7 @@ class LivesTotalField implements StateValueField<LivesTotal> {
 
 class ShownSymbolField implements StateValueField<ShownSymbol> {
   final String _sShownSymbol;
-  final Random _random = Random(Constants.randomRandomSeed);
+  static final Random _random = Random(Constants.randomRandomSeed);
 
   ShownSymbolField(this._sShownSymbol);
 
@@ -363,7 +363,8 @@ class ReactionWindowLengthField
 
 class IntervalLengthField extends StateValueField<IntervalLength> {
   final int _iIntervalLength;
-  final Random _random = Random(Constants.randomRandomSeed);
+  //TODO Figure out a solution to this "static random" problem
+  static final Random _random = Random(Constants.randomRandomSeed);
   int idxTest = 0;
 
   IntervalLengthField(this._iIntervalLength);
@@ -403,18 +404,26 @@ class ScoreField extends StateValueField<Score> {
   @override
   StateValueField<Value> transform(TestResults t) {
     var newTc = _tc.transform(t);
+    int oldNormTotal = ~_normalTotal;
+    int oldKillerTotal = ~_killerTotal;
     var newNormalTotal = _normalTotal.transform(t);
     var newKillerTotal = _killerTotal.transform(t);
+    int diffNormTotal = ~newNormalTotal - oldNormTotal;
+    int diffKillerTotal = ~newKillerTotal - oldKillerTotal;
 
     int excessTaps = 0;
     if (~t.get(ResultID.IS_NORMAL_SYMBOL) && ~newTc > 1) {
       excessTaps = ~newTc - 1;
     }
-    int newScore =
-        (50 * ~newNormalTotal) + (500 * ~newKillerTotal) - (25 * excessTaps);
-    double adjScore = getMultiplier(t) * newScore;
-    int roundScore = adjScore.round();
+
+    double adj = getMultiplier(t);
+    double newScore = _iScore.toDouble();
+    newScore += adj * 500 * diffKillerTotal;
+    newScore += adj * 50 * diffNormTotal;
+    newScore -= adj * 25 * excessTaps;
+    int roundScore = newScore.round();
     int bottomedScore = max(0, roundScore);
+
     return ScoreField(bottomedScore, newTc, newNormalTotal, newKillerTotal);
   }
 
