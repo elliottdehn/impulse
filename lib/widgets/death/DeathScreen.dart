@@ -14,51 +14,67 @@ class DeathScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
+    List<int> reactionTimes = ~m.readState().get(ValueID.REACTION_TIMES);
+    int reactionLength = reactionTimes.length;
+    String reactionLine = "";
+    if(reactionLength > 0) {
+      int reactionTotal = reactionTimes.reduce((value, element) =>
+      value + element);
+      int reactionAvg = (reactionTotal / reactionLength).round();
+      reactionLine = "⚡$reactionAvg ms⚡";
+    } else {
+      reactionLine = "👎";
+    }
+
     return Stack(children: <Widget>[
       GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             ScreenChangeNotification(screen: ScreenID.GAME).dispatch(context);
           },
-          child: Container(
-              alignment: Alignment.topCenter,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                      padding:
-                          EdgeInsets.fromLTRB(0, statusBarHeight * 2, 0, 0),
-                      child: Text(
-                        "💀",
-                        style: TextStyle(fontSize: 120),
-                      )),
-                  const SizedBox(height: 30),
-                  Text(
-                    "🔥 " +
-                        (~m.readState().get(ValueID.SCORE)).toString() +
-                        " 🔥",
-                    style: TextStyle(fontSize: 60),
-                  ),
-                  const SizedBox(height: 30),
-                  Text(
-                    "Tap anywhere to play again!",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                ],
-              ))),
+          child: SizedBox.expand(child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Text(
+                    "💀",
+                    style: TextStyle(fontSize: 120),
+                  )),
+              const SizedBox(height: 30),
+              Text(
+                "🔥" + (~m.readState().get(ValueID.SCORE)).toString() + "🔥",
+                style: TextStyle(fontSize: 60),
+              ),
+              const SizedBox(height: 30),
+              Text(
+                reactionLine,
+                style: TextStyle(fontSize: 60),
+              ),
+              const SizedBox(height: 30),
+              Text(
+                "Tap anywhere to play again!",
+                style: TextStyle(fontSize: 30),
+              ),
+            ],
+          ))),
       Container(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.topLeft,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, statusBarHeight),
+              padding: EdgeInsets.fromLTRB(0, statusBarHeight, 0, 0),
               child: RaisedButton(
-            color: Color.fromRGBO(0, 0, 0, 1.0),
-            onPressed: () {
-              ScreenChangeNotification(screen: ScreenID.START)
-                  .dispatch(context);
-            },
-            child: const Text('GIVE UP NOW',
-                style: TextStyle(
-                    fontSize: 40, color: Color.fromRGBO(255, 255, 255, 1.0))),
-          )))
+                color: Color.fromRGBO(0, 0, 0, 1.0),
+                onPressed: () {
+                  ScreenChangeNotification(screen: ScreenID.START)
+                      .dispatch(context);
+                },
+                child: const Text('ESCAPE',
+                    style: TextStyle(
+                        fontSize: 40,
+                        color: Color.fromRGBO(255, 255, 255, 1.0))),
+              )))
     ]);
   }
 }

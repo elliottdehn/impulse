@@ -18,7 +18,10 @@ class TransformerBuilder {
     ShownSymbolField ssf = ShownSymbolField("", initRandom);
     ReactionWindowStatusField rwsf = ReactionWindowStatusField(false);
 
-    initialFields.addAll([tcf, nstf, kstf, ssf, rwsf]);
+    NormalSymbolTotalField nstf2 = NormalSymbolTotalField(0);
+    ReactionTimesField rtf = ReactionTimesField([], nstf2, Stopwatch());
+
+    initialFields.addAll([tcf, nstf, kstf, ssf, rwsf, rtf]);
   }
 
   TransformerBuilder setDifficulty(DifficultyID difficultyID) {

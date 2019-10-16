@@ -5,4 +5,5 @@ class ReactionWindowState implements IViewState {
   int currReactionWindow;
   bool isStopped;
   bool isReset;
+  bool isNormal;
 }

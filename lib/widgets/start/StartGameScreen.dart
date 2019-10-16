@@ -33,6 +33,10 @@ class StartGameScreen extends StatelessWidget {
               Text(
                 "🔥 Do tap other letters! 🔥",
                 style: TextStyle(fontSize: 30),
+              ),
+              Text(
+                "⚡ Be fast! ⚡",
+                style: TextStyle(fontSize: 30),
               )
             ]),
       )),

@@ -36,6 +36,39 @@ abstract class StateValueField<X extends Value>
 impl
  */
 
+class ReactionTimesField implements StateValueField<ReactionTimes> {
+  final List<int> _times;
+  final NormalSymbolTotalField _nst;
+  final Stopwatch _stopwatch;
+
+  ReactionTimesField(this._times, this._nst, this._stopwatch);
+
+  @override
+  FieldID getId() {
+    return FieldID.REACTION_TIMES;
+  }
+
+  @override
+  StateValueField<Value> transform(TestResults t) {
+    int before = ~_nst;
+    int after = ~_nst.transform(t);
+    if(~t.get(ResultID.DID_PLAYER_REACT) && after > before){
+      _stopwatch.stop();
+      _times.add(_stopwatch.elapsedMilliseconds);
+    } else if(~t.get(ResultID.DID_NEW_SYMBOL)){
+      _stopwatch.reset();
+      _stopwatch.start();
+    }
+    return ReactionTimesField(_times, _nst, _stopwatch);
+  }
+
+  @override
+  operator ~() {
+    return _times;
+  }
+
+}
+
 class DifficultyField implements StateValueField<Difficulty> {
   final DifficultyID difficulty;
 
@@ -363,17 +396,13 @@ class ReactionWindowLengthField
 
 class IntervalLengthField extends StateValueField<IntervalLength> {
   final int _iIntervalLength;
-  //TODO Figure out a solution to this "static random" problem
-  //The solution is to pass the random object into the class from the start
   final Random _random;
-  int idxTest = 0;
 
   IntervalLengthField(this._iIntervalLength, this._random);
 
   @override
   StateValueField<Value> transform(TestResults t) {
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {
-      idxTest += 1;
       int randomLength = _random
               .nextInt(Constants.intervals.first - Constants.intervals.last) +
           Constants.intervals.last;

@@ -19,6 +19,7 @@ class StateInterpreter {
     interpreters.add(ReactionWindowStatusInterpreter());
     interpreters.add(IntervalLengthInterpreter());
     interpreters.add(ScoreInterpreter());
+    interpreters.add(ReactionTimesInterpreter());
   }
 
   StateValues interpret(StateFields fields) {

@@ -99,8 +99,8 @@ class Score extends Value<int> {
   Score(int value) : super(value);
 }
 
-class AvgReaction extends Value<int> {
-  AvgReaction(int value) : super(value);
+class ReactionTimes extends Value<List<int>> {
+  ReactionTimes(List<int> value) : super(value);
 }
 
 class Streak extends Value<int> {
@@ -109,13 +109,6 @@ class Streak extends Value<int> {
 
 class Lives extends Value<int> {
   Lives(int value) : super(value);
-}
-
-class Reaction {
-  final ReactionWindow reactionWindow;
-  final BaseReactionWindow baseReactionWindow;
-
-  const Reaction({this.reactionWindow, this.baseReactionWindow});
 }
 
 class ReactionWindow extends Value<int> {

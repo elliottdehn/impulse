@@ -1,49 +1,3 @@
-/*
-LIFE OF AN EVENT:
-
-presenter
-
-->e->
-
-model(presenter, notifier)
-
-->s,e->
-
-interpreter
-
-->s,e->
-
-predicates(s).test(e)
-
-->results->
-
-interpreter
-
-->results->
-
-model
-
-->results->
-
-transformer
-
-->results->
-
-transforms.transform(results)
-
-->s->
-
-transformer
-
-->s->
-
-model
-
-->s, e->
-
-notifier
-*/
-
 import 'package:impulse/experiments/refactor/transitioner/predicator/test_results.dart';
 import 'package:impulse/experiments/refactor/transitioner/transformer/transformers.dart';
 import 'package:test/test.dart';
@@ -425,4 +379,5 @@ void main() {
   /*
   symbol
    */
+
 }

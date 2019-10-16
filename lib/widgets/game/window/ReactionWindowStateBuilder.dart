@@ -1,3 +1,4 @@
+import 'package:impulse/experiments/refactor/constants.dart';
 import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
 import 'package:impulse/widgets/IState.dart';
@@ -12,6 +13,7 @@ class ReactionWindowStateBuilder extends StateBuilder {
     //we no longer keep track of the base window
     ReactionWindowState state = ReactionWindowState();
     state.currReactionWindow = ~s.get(ValueID.REACTION_WINDOW_LENGTH);
+    state.isNormal = Constants.normalSymbols.contains(~s.get(ValueID.SHOWN_SYMBOL));
     return state;
   }
 

@@ -32,7 +32,7 @@ class Constants {
 
   static const int visibilityTime = 200;
 
-  static const double normalOdds = 0.8;
+  static const double normalOdds = 0.75;
 
   static const int intervalFast = 1000; //milliseconds
   static const int intervalMedium = 2000; //milliseconds

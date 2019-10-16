@@ -206,3 +206,10 @@ class LivesStateValue extends StateValue<ValueID, Lives> {
     return ValueID.LIVES;
   }
 }
+
+class ReactionTimesStateValue extends StateValue<ValueID, ReactionTimes>{
+  ReactionTimesStateValue(ReactionTimes val) : super(val);
+
+  @override
+  ValueID get id => ValueID.REACTION_TIMES;
+}
