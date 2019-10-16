@@ -19,7 +19,7 @@ The game tests the user's impulse control, patience, working memory, focus, reac
 # Victories
 1. I learned a whole heck of a lot just by doing my own non-trivial project. It was a great idea, and I should do it often.
 2. I set a goal of creating a functional minimum viable product within two weeks. I was able to do this using a new language and framework that I've never used before, so I'm proud of it.
-3. I was able to exercise discipline and push through "the dip" and create an end result that I'm proud of.
+3. By unit and integration testing my code, I was able to integrate a 1500 line refactor, and only needed to fix a small handful of resulting bugs. This was really surprising to me and cemented the value of testing.
 
 # Lessons Learned
 1. Start from the top, every time! It seems I have a habit of starting with the most complicated parts of the application living at the bottom of the stack; this is almost always a mistake.
