@@ -7,6 +7,8 @@ import 'package:impulse/widgets/game/score/ScoreWidget.dart';
 import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowWidget.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class GameScreen extends NotificationListener {
   final Model m;
 
@@ -22,12 +24,12 @@ class GameScreen extends NotificationListener {
         Container(
             alignment: Alignment.topLeft,
             child: Padding(
-                padding: EdgeInsets.fromLTRB(20, statusBarHeight, 0, 0),
+                padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(20), ScreenUtil().setHeight(statusBarHeight), 0, 0),
                 child: ScoreWidget(m))),
         Container(
           alignment: Alignment.topRight,
           child: new Padding(
-              padding: EdgeInsets.fromLTRB(0, statusBarHeight, 20, 0),
+              padding: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(statusBarHeight), 20, 0),
               child: LivesWidget(m)),
         ),
         Container(

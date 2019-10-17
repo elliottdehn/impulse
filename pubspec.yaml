@@ -29,6 +29,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test: any
+  flutter_screenutil: ^0.5.3
 
 flutter_icons:
   android: true

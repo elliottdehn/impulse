@@ -4,6 +4,8 @@ import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../ScreenID.dart';
 
 class DeathScreen extends StatelessWidget {
@@ -41,38 +43,38 @@ class DeathScreen extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Text(
                     "💀",
-                    style: TextStyle(fontSize: 120),
+                    style: TextStyle(fontSize: ScreenUtil().setSp(120)),
                   )),
-              const SizedBox(height: 30),
+              SizedBox(height: ScreenUtil().setHeight(30)),
               Text(
                 "🔥" + (~m.readState().get(ValueID.SCORE)).toString() + "🔥",
-                style: TextStyle(fontSize: 60),
+                style: TextStyle(fontSize: ScreenUtil().setSp(60)),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ScreenUtil().setHeight(30)),
               Text(
                 reactionLine,
-                style: TextStyle(fontSize: 60),
+                style: TextStyle(fontSize: ScreenUtil().setSp(60)),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ScreenUtil().setHeight(30)),
               Text(
                 "Tap anywhere to play again!",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: ScreenUtil().setSp(30)),
               ),
             ],
           ))),
       Container(
           alignment: Alignment.topLeft,
           child: Padding(
-              padding: EdgeInsets.fromLTRB(0, statusBarHeight, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(statusBarHeight), 0, 0),
               child: RaisedButton(
                 color: Color.fromRGBO(0, 0, 0, 1.0),
                 onPressed: () {
                   ScreenChangeNotification(screen: ScreenID.START)
                       .dispatch(context);
                 },
-                child: const Text('ESCAPE',
+                child: Text('ESCAPE',
                     style: TextStyle(
-                        fontSize: 40,
+                        fontSize: ScreenUtil().setSp(40),
                         color: Color.fromRGBO(255, 255, 255, 1.0))),
               )))
     ]);

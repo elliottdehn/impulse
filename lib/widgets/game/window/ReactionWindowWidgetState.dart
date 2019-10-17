@@ -5,6 +5,7 @@ import 'package:impulse/widgets/IState.dart';
 import 'package:impulse/widgets/i_view.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowPresenter.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowState.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'ReactionWindowWidget.dart';
 
@@ -75,7 +76,7 @@ class ReactionWindowWidgetState extends State<ReactionWindowWidget>
   Widget build(BuildContext context) {
     created = true;
     return Container(
-        height: _baseHeight,
+        height: ScreenUtil().setHeight(_baseHeight),
         width: MediaQuery.of(context).size.width,
         color: Color.fromRGBO(255, 255, 255, 0.0),
         child: FractionallySizedBox(

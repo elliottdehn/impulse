@@ -16,7 +16,7 @@ class Notifier implements INotifier {
   List<IStateUpdateHandler> presenters = [];
 
   @override
-  notifyListeners(StateValues s) {
+  notifyListeners(StateValues s) async {
     for (IStateUpdateHandler presenter in presenters) {
       presenter.onModelChanged(s);
     }
