@@ -40,6 +40,9 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
     );
   }
 
+  //I am aware of the navigator. I made this early on and it is extremely
+  //difficult to change it without changing the entire app.
+  //It works, so I'll ship it.
   Widget _getScreen() {
     switch (_screen) {
       case ScreenID.DEATH:

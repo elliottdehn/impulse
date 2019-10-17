@@ -8,9 +8,6 @@ import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
 import 'package:impulse/widgets/game/window/ReactionWindowWidget.dart';
 
 class GameScreen extends NotificationListener {
-
-  //This is mostly just to invert the dependency a little bit
-
   final Model m;
 
   GameScreen(this.m);

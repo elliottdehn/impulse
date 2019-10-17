@@ -11,7 +11,7 @@ import 'LivesState.dart';
 import 'LivesWidget.dart';
 import 'LivesWidgetPresenter.dart';
 
-class LivesWidgetState extends State<LivesWidget>
+class LivesWidgetState extends State<LivesWidget> with WidgetsBindingObserver
     implements IView {
   int _lives;
   LivesWidgetPresenter presenter;
@@ -19,6 +19,14 @@ class LivesWidgetState extends State<LivesWidget>
 
   LivesWidgetState(Model m) {
     presenter = LivesWidgetPresenter(m, this);
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state.index != null){
+      ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
+    }
   }
 
   @override

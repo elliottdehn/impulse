@@ -8,14 +8,16 @@ import 'transformers.dart';
 
 class TransformerBuilder {
   final List<StateValueField> initialFields = [];
+  static final Random initRandomForWindow = Random(Constants.randomRandomSeed);
+  static final Random initRandomForInterval = Random(Constants.randomRandomSeed);
+  static final Random initRandomForSymbol = Random(Constants.randomRandomSeed);
 
   TransformerBuilder() {
     //these do not vary between difficulties
     TapCountField tcf = TapCountField(0);
     NormalSymbolTotalField nstf = NormalSymbolTotalField(0);
     KillerSymbolTotalField kstf = KillerSymbolTotalField(0);
-    Random initRandom = Random(Constants.randomRandomSeed);
-    ShownSymbolField ssf = ShownSymbolField("", initRandom);
+    ShownSymbolField ssf = ShownSymbolField("", initRandomForSymbol);
     ReactionWindowStatusField rwsf = ReactionWindowStatusField(false);
 
     NormalSymbolTotalField nstf2 = NormalSymbolTotalField(0);
@@ -37,10 +39,7 @@ class TransformerBuilder {
     ReactionWindowLengthField rwlf;
     LivesTotalField ltf;
 
-    Random initRandomForWindow = Random(Constants.randomRandomSeed);
     IntervalLengthField ilfForReactionWindow = IntervalLengthField(Constants.intervalSlow, initRandomForWindow);
-
-    Random initRandomForInterval = Random(Constants.randomRandomSeed);
     IntervalLengthField ilf = IntervalLengthField(Constants.intervalSlow, initRandomForInterval);
 
     if (DifficultyID.EASY == ~df) {
