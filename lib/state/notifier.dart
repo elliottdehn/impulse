@@ -1,11 +1,9 @@
 import 'package:impulse/experiments/refactor/state_values.dart';
-import 'package:impulse/widgets/IStateUpdateHandler.dart';
+import 'package:impulse/widgets/i_state_update_handler.dart';
 import 'package:impulse/state/i_notifier.dart';
 
 class Notifier implements INotifier {
-
-  static final Notifier _singleton =
-      new Notifier._privateConstructor();
+  static final Notifier _singleton = new Notifier._privateConstructor();
 
   factory Notifier() {
     return _singleton;
@@ -14,6 +12,10 @@ class Notifier implements INotifier {
   Notifier._privateConstructor();
 
   List<IStateUpdateHandler> presenters = [];
+
+  be(){
+    return null;
+  }
 
   @override
   notifyListeners(StateValues s) async {

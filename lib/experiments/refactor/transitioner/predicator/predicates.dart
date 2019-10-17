@@ -1,5 +1,5 @@
 import 'package:impulse/experiments/refactor/constants.dart';
-import 'package:impulse/widgets/EventID.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
 //I do not like depending on event id here...
 
 import '../../id/difficulty_id.dart';

@@ -21,8 +21,10 @@ class StatePredicator {
 class Predicates {
   static final DidPlayerReactPredicate didPlayerReactPredicate =
       DidPlayerReactPredicate();
-  static final TestSetKillerPredicate testSetKillerPredicate = TestSetKillerPredicate();
-  static final TestSetNormalPredicate testSetNormalPredicate = TestSetNormalPredicate();
+  static final TestSetKillerPredicate testSetKillerPredicate =
+      TestSetKillerPredicate();
+  static final TestSetNormalPredicate testSetNormalPredicate =
+      TestSetNormalPredicate();
   static final IsWindowClosedPredicate isWindowClosedPredicate =
       IsWindowClosedPredicate();
   static final IsWindowClosingPredicate isWindowClosingPredicate =

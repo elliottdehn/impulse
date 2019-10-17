@@ -1,4 +1,4 @@
-import 'package:impulse/widgets/EventID.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
 
 import 'values.dart';
 

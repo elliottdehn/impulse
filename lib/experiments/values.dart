@@ -1,5 +1,5 @@
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
-import 'package:impulse/widgets/EventID.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
 
 class Value<T> {
   T value;

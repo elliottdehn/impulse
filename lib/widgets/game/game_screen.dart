@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 
-import 'package:impulse/widgets/game/lives/LivesWidget.dart';
-import 'package:impulse/widgets/game/score/ScoreWidget.dart';
-import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
-import 'package:impulse/widgets/game/window/ReactionWindowWidget.dart';
+import 'package:impulse/widgets/game/lives/lives_widget.dart';
+import 'package:impulse/widgets/game/score/score_widget.dart';
+import 'package:impulse/widgets/game/symbol/symbol_widget.dart';
+import 'package:impulse/widgets/game/window/reaction_window_widget.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,12 +24,14 @@ class GameScreen extends NotificationListener {
         Container(
             alignment: Alignment.topLeft,
             child: Padding(
-                padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(20), ScreenUtil().setHeight(statusBarHeight), 0, 0),
+                padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(20),
+                    ScreenUtil().setHeight(statusBarHeight), 0, 0),
                 child: ScoreWidget(m))),
         Container(
           alignment: Alignment.topRight,
           child: new Padding(
-              padding: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(statusBarHeight), 20, 0),
+              padding: EdgeInsets.fromLTRB(
+                  0, ScreenUtil().setHeight(statusBarHeight), 20, 0),
               child: LivesWidget(m)),
         ),
         Container(

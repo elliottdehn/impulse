@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:impulse/experiments/refactor/model.dart';
-import 'package:impulse/widgets/game/symbol/SymbolWidgetState.dart';
+import 'package:impulse/widgets/game/symbol/symbol_widget_state.dart';
 
 class SymbolWidget extends StatefulWidget {
   final Model m;

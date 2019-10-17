@@ -4,19 +4,18 @@ import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
 import 'package:impulse/experiments/values.dart';
 import 'package:impulse/state/state_update_listener.dart';
-import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/IStateUpdateHandler.dart';
-import 'package:impulse/widgets/IPresenter.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
+import 'package:impulse/widgets/i_state_update_handler.dart';
 import 'package:impulse/widgets/i_view.dart';
-import 'package:impulse/widgets/game/window/ReactionWindowStateBuilder.dart';
+import 'package:impulse/widgets/game/window/reaction_window_state_builder.dart';
 
-import '../../IEventListener.dart';
-import 'ReactionWindowState.dart';
+import '../../i_event_listener.dart';
+import 'reaction_window_state.dart';
 
 @immutable
 class ReactionWindowPresenter
     with StateUpdateListener
-    implements IPresenter, IStateUpdateHandler, IEventListener  {
+    implements IStateUpdateHandler, IEventListener {
   final ReactionWindowStateBuilder stateBuilder = ReactionWindowStateBuilder();
   final IView stateUpdateListener;
 
@@ -29,9 +28,9 @@ class ReactionWindowPresenter
 
   @override
   onEvent(EventID id) async {
-    if(EventID.ENFORCE_TAP == id){
+    if (EventID.ENFORCE_TAP == id) {
       m.onEvent(Event(EventID.ENFORCE_TAP));
-    } else if (EventID.DISPOSE == id){
+    } else if (EventID.DISPOSE == id) {
       unsubscribe(this);
     }
   }
@@ -49,5 +48,4 @@ class ReactionWindowPresenter
       stateUpdateListener.onStateUpdate(state);
     }
   }
-
 }

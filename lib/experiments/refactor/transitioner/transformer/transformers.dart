@@ -52,10 +52,10 @@ class ReactionTimesField implements StateValueField<ReactionTimes> {
   StateValueField<Value> transform(TestResults t) {
     int before = ~_nst;
     int after = ~_nst.transform(t);
-    if(~t.get(ResultID.DID_PLAYER_REACT) && after > before){
+    if (~t.get(ResultID.DID_PLAYER_REACT) && after > before) {
       _stopwatch.stop();
       _times.add(_stopwatch.elapsedMilliseconds);
-    } else if(~t.get(ResultID.DID_NEW_SYMBOL)){
+    } else if (~t.get(ResultID.DID_NEW_SYMBOL)) {
       _stopwatch.reset();
       _stopwatch.start();
     }
@@ -66,7 +66,6 @@ class ReactionTimesField implements StateValueField<ReactionTimes> {
   operator ~() {
     return _times;
   }
-
 }
 
 class DifficultyField implements StateValueField<Difficulty> {
@@ -236,9 +235,9 @@ class ShownSymbolField implements StateValueField<ShownSymbol> {
 
   @override
   StateValueField<ShownSymbol> transform(TestResults t) {
-    if(~t.get(ResultID.TEST_SET_KILLER)){
+    if (~t.get(ResultID.TEST_SET_KILLER)) {
       return ShownSymbolField(Constants.killerSymbols[0], _random);
-    } else if (~t.get(ResultID.TEST_SET_NORMAL)){
+    } else if (~t.get(ResultID.TEST_SET_NORMAL)) {
       return ShownSymbolField(Constants.normalSymbols[0], _random);
     }
     if (~t.get(ResultID.DID_NEW_SYMBOL)) {

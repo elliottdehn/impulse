@@ -3,16 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:impulse/experiments/refactor/model.dart';
-import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/IState.dart';
-import 'package:impulse/widgets/game/symbol/SymbolWidget.dart';
-import 'package:impulse/widgets/game/symbol/SymbolWidgetPresenter.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
+import 'package:impulse/widgets/i_view_state.dart';
+import 'package:impulse/widgets/game/symbol/symbol_widget.dart';
+import 'package:impulse/widgets/game/symbol/symbol_widget_presenter.dart';
 
 import '../../i_view.dart';
-import 'SymbolState.dart';
+import 'symbol_state.dart';
 
-class SymbolWidgetState extends State<SymbolWidget>
-    implements IView {
+class SymbolWidgetState extends State<SymbolWidget> implements IView {
   SymbolWidgetPresenter _presenter;
   bool created = false;
 
@@ -32,14 +31,13 @@ class SymbolWidgetState extends State<SymbolWidget>
     _visible = false;
   }
 
-  _createHideSymbolTimer(BuildContext context){
-    if(_visible){
-      if(_symbolVisibilityTimer != null) {
+  _createHideSymbolTimer(BuildContext context) {
+    if (_visible) {
+      if (_symbolVisibilityTimer != null) {
         _symbolVisibilityTimer.cancel();
       }
       _symbolVisibilityTimer = new Timer(
-          Duration(milliseconds: _visibleDuration),
-              () => _onSymbolHide());
+          Duration(milliseconds: _visibleDuration), () => _onSymbolHide());
     }
   }
   //when to damage you
@@ -56,15 +54,15 @@ class SymbolWidgetState extends State<SymbolWidget>
 
     print(newStateSymbol.nextSymbolInterval.toString() + "\n");
 
-    if(_symbolIntervalTimer != null) {
+    if (_symbolIntervalTimer != null) {
       _symbolIntervalTimer.cancel();
     }
 
     _symbolIntervalTimer = new Timer(
         Duration(milliseconds: newStateSymbol.nextSymbolInterval),
-            () => _onNewSymbol());
+        () => _onNewSymbol());
 
-    if(created) {
+    if (created) {
       setState(() {});
     }
   }
@@ -78,8 +76,10 @@ class SymbolWidgetState extends State<SymbolWidget>
   }
 
   _onSymbolHide() {
-    if(created) {
-      setState(() { _visible = false; });
+    if (created) {
+      setState(() {
+        _visible = false;
+      });
     }
   }
 
@@ -89,7 +89,7 @@ class SymbolWidgetState extends State<SymbolWidget>
     //this is a call back to create the timer, which hides the symbol, strictly
     //after the widget is done rendering. This way, we don't screw the player
     //due to slow or inconsistent rendering speeds.
-    if(_visible) {
+    if (_visible) {
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _createHideSymbolTimer(context));
     }
@@ -99,17 +99,16 @@ class SymbolWidgetState extends State<SymbolWidget>
       },
       behavior: HitTestBehavior.opaque,
       child: AnimatedOpacity(
-          opacity: _visible ? 1.0 : 0.0,
-          duration: Duration(milliseconds: 25),
-          child: Center(
-              child:
-                Text('$_symbol',
-                    style: Theme.of(context).textTheme.display1.apply(
-                        fontSizeFactor: 8.0,
-                        color: Color.fromRGBO(0, 0, 0, 1.0)),
-            ),
+        opacity: _visible ? 1.0 : 0.0,
+        duration: Duration(milliseconds: 25),
+        child: Center(
+          child: Text(
+            '$_symbol',
+            style: Theme.of(context).textTheme.display1.apply(
+                fontSizeFactor: 8.0, color: Color.fromRGBO(0, 0, 0, 1.0)),
           ),
         ),
+      ),
     );
   }
 

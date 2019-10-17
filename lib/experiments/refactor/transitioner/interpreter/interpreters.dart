@@ -18,7 +18,8 @@ class EventInterpreter extends Interpreter<EventStateValue> {
 class ReactionTimesInterpreter extends Interpreter<ReactionTimesStateValue> {
   @override
   ReactionTimesStateValue interpret(StateFields fields) {
-    return ReactionTimesStateValue(ReactionTimes(~fields.get(FieldID.REACTION_TIMES)));
+    return ReactionTimesStateValue(
+        ReactionTimes(~fields.get(FieldID.REACTION_TIMES)));
   }
 }
 

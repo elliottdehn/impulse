@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
-import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/IState.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
+import 'package:impulse/widgets/i_view_state.dart';
 import 'package:impulse/widgets/i_view.dart';
-import 'package:impulse/widgets/game/score/ScoreState.dart';
+import 'package:impulse/widgets/game/score/score_state.dart';
 
-import 'ScoreWidget.dart';
-import 'ScoreWidgetPresenter.dart';
+import 'score_widget.dart';
+import 'score_widget_presenter.dart';
 
-class ScoreWidgetState extends State<ScoreWidget>
-    implements IView {
+class ScoreWidgetState extends State<ScoreWidget> implements IView {
   int _score;
   ScoreWidgetPresenter presenter;
   bool created = false;
@@ -22,7 +21,8 @@ class ScoreWidgetState extends State<ScoreWidget>
   @override
   onStateUpdate(IViewState newState) {
     _setState(newState as ScoreState);
-    if(created) { //widget not yet created
+    if (created) {
+      //widget not yet created
       _updateView();
     }
   }

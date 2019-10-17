@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
-import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
+import 'package:impulse/widgets/app/screen_change_notification.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../ScreenID.dart';
+import '../../experiments/refactor/id/screen_id.dart';
 
 class StartGameScreen extends StatelessWidget {
   @override

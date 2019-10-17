@@ -19,7 +19,7 @@ class Model {
 
   //this is useful for re-using tests and it is immutable
   //so I'm not worried
-  StateValues get state{
+  StateValues get state {
     return _stateValues;
   }
 
@@ -32,13 +32,13 @@ class Model {
   Model._privateConstructor();
 
   StateValues onEvent(Event e) {
-      StateValues newState = _transitioner.transition(_stateValues, e);
-      _stateValues = newState;
-      _notifierSingleton.notifyListeners(_stateValues);
-      return _stateValues;
+    StateValues newState = _transitioner.transition(_stateValues, e);
+    _stateValues = newState;
+    _notifierSingleton.notifyListeners(_stateValues);
+    return _stateValues;
   }
 
-  StateValues readState(){
+  StateValues readState() {
     return _stateValues;
   }
 
@@ -53,5 +53,4 @@ class Model {
 
     return Transitioner(predicator, transformer, interpreter);
   }
-
 }

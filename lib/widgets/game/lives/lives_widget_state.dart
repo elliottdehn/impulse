@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/model.dart';
-import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/IState.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
+import 'package:impulse/widgets/i_view_state.dart';
 import 'package:impulse/widgets/i_view.dart';
-import 'package:impulse/widgets/ScreenID.dart';
-import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
+import 'package:impulse/experiments/refactor/id/screen_id.dart';
+import 'package:impulse/widgets/app/screen_change_notification.dart';
 
-import 'LivesState.dart';
-import 'LivesWidget.dart';
-import 'LivesWidgetPresenter.dart';
+import 'lives_state.dart';
+import 'lives_widget.dart';
+import 'lives_widget_presenter.dart';
 
-class LivesWidgetState extends State<LivesWidget> with WidgetsBindingObserver
+class LivesWidgetState extends State<LivesWidget>
+    with WidgetsBindingObserver
     implements IView {
   int _lives;
   LivesWidgetPresenter presenter;
@@ -24,7 +25,7 @@ class LivesWidgetState extends State<LivesWidget> with WidgetsBindingObserver
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if(state.index != null){
+    if (state.index != null) {
       ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);
     }
   }
@@ -33,7 +34,7 @@ class LivesWidgetState extends State<LivesWidget> with WidgetsBindingObserver
   onStateUpdate(IViewState newState) {
     LivesState livesState = newState as LivesState;
     _setState(livesState);
-    if(created && _lives != null && _lives != 0) {
+    if (created && _lives != null && _lives != 0) {
       _updateState();
     } else if (created && _lives != null && _lives == 0) {
       ScreenChangeNotification(screen: ScreenID.DEATH).dispatch(context);

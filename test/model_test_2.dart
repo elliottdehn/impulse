@@ -1,7 +1,7 @@
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/values.dart';
-import 'package:impulse/widgets/EventID.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
 import 'package:test/test.dart';
 
 /*

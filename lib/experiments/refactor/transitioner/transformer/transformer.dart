@@ -10,7 +10,7 @@ class StateTransformer {
   StateTransformer(this.startState);
 
   StateFields transform(TestResults results) {
-    if(currState == null){
+    if (currState == null) {
       currState = startState;
     }
     //this orderless transform is the entire reason behind the refactor

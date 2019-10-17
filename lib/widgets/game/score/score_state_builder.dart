@@ -1,9 +1,9 @@
 import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
-import 'package:impulse/widgets/IState.dart';
-import 'package:impulse/widgets/IStateBuilder.dart';
+import 'package:impulse/widgets/i_view_state.dart';
+import 'package:impulse/widgets/i_state_builder.dart';
 
-import 'ScoreState.dart';
+import 'score_state.dart';
 
 class ScoreStateBuilder implements IStateBuilder {
   @override

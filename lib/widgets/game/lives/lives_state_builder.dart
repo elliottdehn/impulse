@@ -1,11 +1,11 @@
 import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
-import 'package:impulse/widgets/IState.dart';
+import 'package:impulse/widgets/i_state_builder.dart';
+import 'package:impulse/widgets/i_view_state.dart';
 
-import '../../StateBuilder.dart';
-import 'LivesState.dart';
+import 'lives_state.dart';
 
-class LivesStateBuilder extends StateBuilder {
+class LivesStateBuilder implements IStateBuilder {
   @override
   IViewState buildState(StateValues s) {
     LivesState ls = LivesState();

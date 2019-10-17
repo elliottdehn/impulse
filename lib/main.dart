@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:impulse/widgets/app/AppScreenWidget.dart';
+import 'package:impulse/widgets/app/app_screen_widget.dart';
 
 void main() => runApp(MyApp());
 

@@ -89,6 +89,7 @@ class TestSetKiller extends TestResult {
 
   TestSetKiller(bool y) : super(id, y);
 }
+
 class TestSetNormal extends TestResult {
   static final ResultID id = ResultID.TEST_SET_NORMAL;
   TestSetNormal(bool y) : super(id, y);

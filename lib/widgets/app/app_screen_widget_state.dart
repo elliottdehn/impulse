@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:impulse/experiments/refactor/id/difficulty_id.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/values.dart';
-import 'package:impulse/widgets/EventID.dart';
-import 'package:impulse/widgets/app/ScreenChangeNotification.dart';
-import 'package:impulse/widgets/death/DeathScreen.dart';
-import 'package:impulse/widgets/game/GameScreen.dart';
-import 'package:impulse/widgets/start/StartGameScreen.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
+import 'package:impulse/widgets/app/screen_change_notification.dart';
+import 'package:impulse/widgets/death/death_screen.dart';
+import 'package:impulse/widgets/game/game_screen.dart';
+import 'package:impulse/widgets/start/start_game_screen.dart';
 
-import '../ScreenID.dart';
-import 'AppScreenWidget.dart';
+import '../../experiments/refactor/id/screen_id.dart';
+import 'app_screen_widget.dart';
 
 class AppScreenWidgetState extends State<AppScreenWidget> {
   ScreenID _screen;
@@ -22,6 +22,7 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
     _screen = ScreenID.START;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         onNotification: (notification) {
           setState(() {
             _screen = notification.screen;
-            if(notification.difficultyID != null) {
+            if (notification.difficultyID != null) {
               _difficulty = Difficulty(notification.difficultyID);
             }
           });

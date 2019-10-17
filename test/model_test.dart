@@ -4,7 +4,7 @@ import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/model.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
 import 'package:impulse/experiments/values.dart';
-import 'package:impulse/widgets/EventID.dart';
+import 'package:impulse/experiments/refactor/id/event_id.dart';
 import 'package:test/test.dart';
 
 void main(){

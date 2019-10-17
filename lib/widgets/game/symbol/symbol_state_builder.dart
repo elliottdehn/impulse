@@ -1,13 +1,12 @@
 import 'package:impulse/experiments/refactor/constants.dart';
 import 'package:impulse/experiments/refactor/id/value_id.dart';
 import 'package:impulse/experiments/refactor/state_values.dart';
-import 'package:impulse/widgets/IState.dart';
+import 'package:impulse/widgets/i_state_builder.dart';
+import 'package:impulse/widgets/i_view_state.dart';
 
-import '../../StateBuilder.dart';
-import 'SymbolState.dart';
+import 'symbol_state.dart';
 
-class SymbolStateBuilder extends StateBuilder {
-
+class SymbolStateBuilder implements IStateBuilder {
   @override
   IViewState buildState(StateValues s) {
     SymbolState state = SymbolState();

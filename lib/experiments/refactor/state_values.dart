@@ -69,7 +69,7 @@ class StateValues {
     return get(ValueID.SHOWN_SYMBOL);
   }
 
-  set shown(ShownSymbol symbol){
+  set shown(ShownSymbol symbol) {
     _values.retainWhere(((element) => element.id != ValueID.SHOWN_SYMBOL));
     _values.add(ShownSymbolStateValue(symbol));
   }
@@ -207,7 +207,7 @@ class LivesStateValue extends StateValue<ValueID, Lives> {
   }
 }
 
-class ReactionTimesStateValue extends StateValue<ValueID, ReactionTimes>{
+class ReactionTimesStateValue extends StateValue<ValueID, ReactionTimes> {
   ReactionTimesStateValue(ReactionTimes val) : super(val);
 
   @override
