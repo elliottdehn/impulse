@@ -3,7 +3,6 @@
 *.log
 *.pyc
 *.swp
-*.properties
 .DS_Store
 .atom/
 .buildlog/
@@ -37,6 +36,7 @@
 **/android/gradlew
 **/android/gradlew.bat
 **/android/local.properties
+**/android/key.properties
 **/android/**/GeneratedPluginRegistrant.java
 
 # iOS/XCode related
