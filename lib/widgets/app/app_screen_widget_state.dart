@@ -54,7 +54,6 @@ class AppScreenWidgetState extends State<AppScreenWidget> {
         return GameScreen(m);
         break;
       case ScreenID.START:
-        // TODO: Handle this case.
         return StartGameScreen();
         break;
     }
