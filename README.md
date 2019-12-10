@@ -1,7 +1,7 @@
 # IMPULSE!
 Just a simple 2D mobile game made purely in Flutter + Dart
 
-You may download the application from the Google Play Store. Search: "IMPULSE!"
+You may download the application from the Google Play Store. Search: "IMPULSE! - Are You Slow Enough?"
 
 # Gameplay
 Users are flashed a symbol, and are expected to respond within a certain time frame by tapping the screen. If the user does not tap in time, they lose a life. If the user taps a special symbol (the letter X, for now), they lose a life.
