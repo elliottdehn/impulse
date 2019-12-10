@@ -1,5 +1,5 @@
 # IMPULSE!
-Just a simple 2D mobile game made purely in Flutter + Dart using a Model-View-ViewModel-Presenter design (inspired by a medical exam)
+Just a simple 2D mobile game made purely in Flutter + Dart
 
 You may download the application from the Google Play Store. Search: "IMPULSE!"
 
